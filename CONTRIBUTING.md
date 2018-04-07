@@ -16,7 +16,7 @@ For further info, please read http://chris.beams.io/posts/git-commit/
 
 ## Implementing new features and working with branches
 
-Never commit to the master branch unless it's a really small change - this is because the master branch should always contain a working copy of the project.
+Never commit to the master branch (This feature is blocked anyways) - this is because the master branch should always contain a working copy of the project.
 
 But it's still important to commit often (and not commit too many things at once, which can clutter up your commit messages), so when working on something, create a new branch like this:
 
