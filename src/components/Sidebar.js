@@ -5,8 +5,8 @@ import "../css/Sidebar.scss";
 
 function Sidebar({ lists }) {
   return (
-    <div className="sidebar">
-      <h1 className="logo">WatchIt</h1>
+    <div id="sidebar">
+      <h1 id="logo">WatchIt</h1>
 
       <nav>
         <SidebarNavLink exact to="/">
