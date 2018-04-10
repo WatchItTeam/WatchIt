@@ -1,0 +1,37 @@
+#app-header {
+  display: grid;
+  grid-template-columns: minmax(100px, 500px) auto;
+  grid-gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 30px;
+
+  #toggle-btn {
+    // don't show menu btn by default, only on small screens (see responsive.scss)
+    display: none;
+    -webkit-appearance: none; // remove default iOS styling
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: inherit;
+    border-radius: 0;
+    padding: 0;
+
+    &:active { color: black; }
+  }
+
+  #user-info {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    align-items: center;
+    grid-gap: 20px;
+
+    .user-img {
+      height: 40px;
+      width: 40px;
+      background: gray;
+      border-radius: 50%;
+    }
+  }
+}
