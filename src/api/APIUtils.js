@@ -24,16 +24,12 @@ export function getNowPlayingMovies() {
   const nowPlayingMovieUrl = `${baseUrl}/movie/now_playing?api_key=${API_KEY}&language=SE&page=1`;
   return fetch(nowPlayingMovieUrl)
     .then(res => res.json())
-    .then((json) => {
-      return json.results;
-    });
+    .then(json => json.results);
 }
 
 export function getNowAiringTVShows() {
   const nowAiringTVShowsUrl = `${baseUrl}/tv/on_the_air?api_key=${API_KEY}&language=SE&page=1`;
   return fetch(nowAiringTVShowsUrl)
     .then(res => res.json())
-    .then((json) => {
-      return json.results;
-    });
+    .then(json => json.results);
 }
