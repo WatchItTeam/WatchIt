@@ -3,6 +3,7 @@ import { withRouter, Switch, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
 import Sidebar from "../components/Sidebar";
 import "../css/App.scss";
+import HomepageContainer from "./HomepageContainer";
 
 class App extends Component {
   /**
@@ -54,7 +55,7 @@ class App extends Component {
 
         <div id="main-container">
           <Switch>
-            <Route exact path="/" render={() => <div>Hello world!</div>} />
+            <Route exact path="/" component={HomepageContainer} />
             <Route render={() => <div>404</div>} />
           </Switch>
         </div>
