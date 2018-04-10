@@ -1,0 +1,20 @@
+@import "global";
+
+$side-padding: 40px;
+$border-size: 7px;
+
+.sidebar-navlink {
+  display: block;
+  padding: 10px $side-padding;
+  color: #aaaaaa;
+  text-decoration: none;
+  border-color: rgba($primary-color, 0);
+
+  &.active {
+    // compensate for border size
+    padding-left: $side-padding - $border-size;
+    border-left: $border-size solid $primary-color;
+    color: inherit;
+    font-weight: bold;
+  }
+}

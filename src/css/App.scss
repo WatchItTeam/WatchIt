@@ -1,0 +1,15 @@
+@import "global";
+
+#main-container {
+  margin-left: $sidebar-size;
+}
+
+#overlay {
+  // see responsive.scss
+  display: none;
+}
+
+#toggle-btn {
+  // don't show menu btn by default, only on small screens (see responsive.scss)
+  display: none;
+}
