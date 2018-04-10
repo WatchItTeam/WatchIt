@@ -4,13 +4,19 @@ import PosterCard from "./PosterCard";
 import "../css/PosterGrid.scss";
 
 function PosterGrid({ movies, type }) {
+  const getTitle = (movie) => {
+    if (type === "tv") {
+      return movie.name;
+    }
+    return movie.title;
+  }
   return (
     <div className="poster-grid">
       {movies.map(movie => (
         <PosterCard
           key={movie.id}
           linkTo={`/${type}/${movie.id}`}
-          title={movie.title}
+          title={getTitle(movie)}
           posterPath={movie.poster_path}
           releaseDate={movie.release_date}
         />
