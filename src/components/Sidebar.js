@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import SidebarNavLink from "./SidebarNavLink";
 import "../css/Sidebar.scss";
 
-function Sidebar({ lists }) {
+function Sidebar({ isOpen, lists }) {
   return (
-    <div id="sidebar">
+    <div id="sidebar" className={isOpen ? "open" : "closed"}>
       <h1 id="logo">WatchIt</h1>
 
       <nav>
@@ -31,6 +31,7 @@ function Sidebar({ lists }) {
 }
 
 Sidebar.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   lists: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,

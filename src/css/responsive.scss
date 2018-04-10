@@ -1,0 +1,44 @@
+@import "global";
+
+@media (max-width: 575px) {
+  #main-container {
+    margin-left: 0;
+  }
+
+  #overlay {
+    display: inherit;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: black;
+    transition: opacity 300ms;
+
+    &.open {
+      opacity: 0.1;
+      pointer-events: inherit;
+    }
+
+    &.closed {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  #toggle-btn {
+    display: inherit;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  #sidebar {
+    transition: transform 300ms;
+
+    &.closed { transform: translateX(-1 * $sidebar-size); }
+    &.open { transform: translateX(0); }
+  }
+}
