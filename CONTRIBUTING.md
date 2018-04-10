@@ -40,6 +40,10 @@ your code and merge it to `master` if it looks good :thumbsup:
 
 Make sure to delete the branch after it is merged!
 
+## API key
+
+To be able to have a working project on your local computer you need to add the API key of TMDb to the APIKey.js file since we will not be pushing our API key to the repository.
+
 ## Using Issues
 
 The project will use Github issues when there are new requirements, features or bugs for the project. Explain each
