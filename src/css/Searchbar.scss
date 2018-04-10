@@ -4,13 +4,9 @@
   border-radius: 20px;
   display: grid;
   grid-template-columns: auto 1fr;
+  align-items: center;
   grid-gap: 10px;
   border: 1px solid #D6D6D6;
-
-  .search-icon {
-    display: flex;
-    align-self: center;
-  }
 
   input {
     background: white;
