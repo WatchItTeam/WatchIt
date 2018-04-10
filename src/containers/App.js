@@ -12,7 +12,6 @@ class App extends Component {
   render() {
     const { lists } = this.state;
     return (
-      <Router>
         <ScrollToTop>
           <Sidebar lists={lists} />
           <div id="main-container">
@@ -22,7 +21,6 @@ class App extends Component {
             </Switch>
           </div>
         </ScrollToTop>
-      </Router>
     );
   }
 }
