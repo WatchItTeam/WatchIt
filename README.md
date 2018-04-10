@@ -19,3 +19,7 @@ The app will now open in your browser in `localhost:3000`.
 $ npm run build
 ```
 This command will compile the project and output the production ready files in the `dist` folder.
+
+## API key
+
+To be able to have a working project on your local computer you need to add the API key of TMDb to the src/api/APIKey.js file since we will not be pushing our API key to the repository.
