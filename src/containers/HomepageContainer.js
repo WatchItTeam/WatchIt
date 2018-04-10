@@ -11,27 +11,13 @@ class HomepageContainer extends Component {
   componentDidMount() {
     getNowPlayingMovies()
       .then((movies) => {
-        this.setState({ movies });
-        this.limitMovies(18);
+        this.setState({ movies: movies.splice(0, 18) });
       }).catch(error => console.log(error)); // TODO: fix better error handling
 
     getNowAiringTVShows()
       .then((series) => {
-        this.setState({ series });
-        this.limitSeries(18);
+        this.setState({ series: series.splice(0, 18) });
       }).catch(error => console.log(error)); // TODO: fix better error handling here too xD
-  }
-
-  limitMovies(amount) {
-    this.setState({
-      movies: this.state.movies.splice(0, amount),
-    });
-  }
-
-  limitSeries(amount) {
-    this.setState({
-      series: this.state.series.splice(0, amount),
-    });
   }
 
   render() {
