@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter, Switch, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
 import Sidebar from "../components/Sidebar";
+import Header from "../components/Header";
 import "../css/App.scss";
 import HomepageContainer from "./HomepageContainer";
 
@@ -23,6 +24,7 @@ class App extends Component {
   state = {
     lists: [],
     sidebarIsOpen: false, // only affects mobile
+    searchWords: "",
   }
 
   toggleSidebar = () => {
@@ -31,6 +33,16 @@ class App extends Component {
 
   closeSidebar = () => {
     this.setState({ sidebarIsOpen: false });
+  }
+
+  searchHandler = (e) => {
+    this.setState({ searchWords: e.target.value });
+    // TODO what happens when the search input changes
+  }
+
+  signOut = () => {
+    // TODO what happens when the sign out button is clicked
+    console.log("sign out clicked");
   }
 
   render() {
@@ -46,14 +58,16 @@ class App extends Component {
 
     return (
       <ScrollToTop>
-        {/* temporary placement of menu toggle btn */}
-        <button id="toggle-btn" onClick={this.toggleSidebar}>
-          <i className="fa fa-bars" />
-        </button>
         {sidebarOverlay}
         <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} lists={lists} />
-
         <div id="main-container">
+          <Header
+            username="Robert Kindwall"
+            toggleSidebar={this.toggleSidebar}
+            onSearchChange={this.searchHandler}
+            searchbarValue={this.state.searchWords}
+            onSignOutClick={this.signOut}
+          />
           <Switch>
             <Route exact path="/" component={HomepageContainer} />
             <Route render={() => <div>404</div>} />
