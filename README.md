@@ -22,4 +22,4 @@ This command will compile the project and output the production ready files in t
 
 ## API key
 
-To be able to have a working project on your local computer you need to add the API key of TMDb to the src/api/APIKeyPlaceholder.js file since we will not be pushing our API key to the repository. You will also have to rename the src/api/APIKeyPlaceholder.js to src/api/APIKey.js.
+To be able to have a working project on your local computer you need to add the API key of TMDb to the src/api/APIKey.js file since we will not be pushing our API key to the repository.
