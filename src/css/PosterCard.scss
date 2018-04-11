@@ -7,7 +7,15 @@
 
   .poster {
     width: 100%;
-    box-shadow: 0 4px 7px rgba(black, 0.5);
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+
+  .poster:hover {
+    opacity: 0.7;
+    border: 1px solid rgb(87, 87, 87);
+    transition: all 0.4s ease;
   }
 
   .title {
