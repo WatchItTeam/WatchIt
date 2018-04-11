@@ -9,7 +9,8 @@ function PosterGrid({ movies, type }) {
       return movie.name;
     }
     return movie.title;
-  }
+  };
+
   return (
     <div className="poster-grid">
       {movies.map(movie => (
