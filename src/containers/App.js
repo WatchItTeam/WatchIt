@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { withRouter, Switch, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
+import HomepageContainer from "./HomepageContainer";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../css/App.scss";
-import HomepageContainer from "./HomepageContainer";
 
 class App extends Component {
   /**
@@ -25,6 +25,16 @@ class App extends Component {
     lists: [],
     sidebarIsOpen: false, // only affects mobile
     searchWords: "",
+    nowPlayingMovies: [],
+    nowAiringTVShows: [],
+  }
+
+  setNowPlayingMovies = (nowPlayingMovies) => {
+    this.setState({ nowPlayingMovies });
+  }
+
+  setNowAiringTVShows = (nowAiringTVShows) => {
+    this.setState({ nowAiringTVShows });
   }
 
   toggleSidebar = () => {
@@ -46,7 +56,7 @@ class App extends Component {
   }
 
   render() {
-    const { lists, sidebarIsOpen } = this.state;
+    const { lists, sidebarIsOpen, nowPlayingMovies, nowAiringTVShows } = this.state;
     const sidebarOverlay = (
       <div
         id="overlay"
@@ -69,7 +79,17 @@ class App extends Component {
             onSignOutClick={this.signOut}
           />
           <Switch>
-            <Route exact path="/" component={HomepageContainer} />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <HomepageContainer
+                  movies={nowPlayingMovies}
+                  series={nowAiringTVShows}
+                  setNowPlayingMovies={this.setNowPlayingMovies}
+                  setNowAiringTVShows={this.setNowAiringTVShows}
+                />)}
+            />
             <Route render={() => <div>404</div>} />
           </Switch>
         </div>

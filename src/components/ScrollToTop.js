@@ -9,12 +9,16 @@ import PropTypes from "prop-types";
 class ScrollToTop extends Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0);
+      // action is POP when the user goes back in their browser
+      if (this.props.history.action !== "POP") {
+        window.scrollTo(0, 0);
+      }
     }
   }
 
