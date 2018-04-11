@@ -1,0 +1,38 @@
+@import "global";
+
+#app-header {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: minmax(100px, 500px) auto;
+  grid-gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background: rgba($bg-color, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: $header-z;
+
+  #toggle-btn {
+    // don't show menu btn by default, only on small screens (see responsive.scss)
+    display: none;
+    font-size: 20px;
+    padding: 0;
+  }
+
+  #user-info {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    align-items: center;
+    grid-gap: 20px;
+
+    .user-img {
+      height: 40px;
+      width: 40px;
+      background: gray;
+      border-radius: 50%;
+    }
+  }
+}

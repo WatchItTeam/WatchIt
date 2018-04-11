@@ -26,13 +26,18 @@
     }
   }
 
-  #toggle-btn {
-    display: inherit;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    font-size: 20px;
-    cursor: pointer;
+  #app-header {
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 15px;
+    padding: 10px 0px 10px 20px;
+
+    #user-info {
+      display: none;
+    }
+
+    #toggle-btn {
+      display: inherit;
+    }
   }
 
   #sidebar {

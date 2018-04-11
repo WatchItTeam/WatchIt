@@ -1,0 +1,19 @@
+@import "global";
+
+.searchbar {
+  background: white;
+  padding: 7px 15px;
+  border-radius: 25px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  grid-gap: 10px;
+  border: 1px solid $border-color;
+
+  input {
+    background: white;
+    border: none;
+    outline: none;
+    width: 98%;
+  }
+}
