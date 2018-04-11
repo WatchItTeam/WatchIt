@@ -9,7 +9,7 @@ function ErrorMessage({ children }) {
 }
 
 ErrorMessage.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default ErrorMessage;
