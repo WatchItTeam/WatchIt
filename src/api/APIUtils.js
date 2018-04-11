@@ -1,11 +1,13 @@
 /**
  * This file contains helper functions to use TheMovieDB API
  */
-import { API_KEY } from "./APIkey";
+import API_KEY from "./APIkey";
 
 const baseImgUrl = "https://image.tmdb.org/t/p/";
 
 const baseUrl = "https://api.themoviedb.org/3";
+
+const API_ERROR_CODE = 7;
 
 /**
  * Takes the poster_path or backdrop_path value from the API and an optional
@@ -24,6 +26,10 @@ export function getNowPlayingMovies() {
   const nowPlayingMovieUrl = `${baseUrl}/movie/now_playing?api_key=${API_KEY}&language=SE&page=1`;
   return fetch(nowPlayingMovieUrl)
     .then(res => res.json())
+    .then((json) => {
+      if (json.status_code === API_ERROR_CODE) throw new Error();
+      return json;
+    })
     .then(json => json.results);
 }
 
@@ -31,5 +37,9 @@ export function getNowAiringTVShows() {
   const nowAiringTVShowsUrl = `${baseUrl}/tv/on_the_air?api_key=${API_KEY}&language=SE&page=1`;
   return fetch(nowAiringTVShowsUrl)
     .then(res => res.json())
+    .then((json) => {
+      if (json.status_code === API_ERROR_CODE) throw new Error();
+      return json;
+    })
     .then(json => json.results);
 }
