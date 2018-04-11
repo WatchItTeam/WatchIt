@@ -23,6 +23,16 @@ class App extends Component {
   state = {
     lists: [],
     sidebarIsOpen: false, // only affects mobile
+    nowPlayingMovies: [],
+    nowAiringTVShows: [],
+  }
+
+  setNowPlayingMovies = (nowPlayingMovies) => {
+    this.setState({ nowPlayingMovies });
+  }
+
+  setNowAiringTVShows = (nowAiringTVShows) => {
+    this.setState({ nowAiringTVShows });
   }
 
   toggleSidebar = () => {
@@ -34,7 +44,7 @@ class App extends Component {
   }
 
   render() {
-    const { lists, sidebarIsOpen } = this.state;
+    const { lists, sidebarIsOpen, nowPlayingMovies, nowAiringTVShows } = this.state;
     const sidebarOverlay = (
       <div
         id="overlay"
@@ -55,7 +65,17 @@ class App extends Component {
 
         <div id="main-container">
           <Switch>
-            <Route exact path="/" component={HomepageContainer} />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <HomepageContainer
+                  movies={nowPlayingMovies}
+                  series={nowAiringTVShows}
+                  setNowPlayingMovies={this.setNowPlayingMovies}
+                  setNowAiringTVShows={this.setNowAiringTVShows}
+                />)}
+            />
             <Route render={() => <div>404</div>} />
           </Switch>
         </div>

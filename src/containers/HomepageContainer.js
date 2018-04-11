@@ -1,28 +1,36 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { getNowPlayingMovies, getNowAiringTVShows } from "../api/APIUtils";
 import Homepage from "../components/Homepage";
 
 class HomepageContainer extends Component {
-  state = {
-    movies: [],
-    series: [],
+  static propTypes = {
+    movies: PropTypes.array.isRequired,
+    series: PropTypes.array.isRequired,
+    setNowPlayingMovies: PropTypes.func.isRequired,
+    setNowAiringTVShows: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
+    const { movies: m, series: s } = this.props;
+    if (m.length !== 0 && s.length !== 0) return;
+
     getNowPlayingMovies()
       .then((movies) => {
-        this.setState({ movies: movies.splice(0, 18) });
+        this.props.setNowPlayingMovies(movies.splice(0, 18));
       }).catch(error => console.log(error)); // TODO: fix better error handling
 
     getNowAiringTVShows()
       .then((series) => {
-        this.setState({ series: series.splice(0, 18) });
+        this.props.setNowAiringTVShows(series.splice(0, 18));
       }).catch(error => console.log(error)); // TODO: fix better error handling here too xD
   }
 
   render() {
+    const { movies, series } = this.props;
+    if (!movies || !series) return null;
     return (
-      <Homepage movies={this.state.movies} series={this.state.series} />
+      <Homepage movies={this.props.movies} series={this.props.series} />
     );
   }
 }
