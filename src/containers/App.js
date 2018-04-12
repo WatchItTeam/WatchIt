@@ -27,6 +27,11 @@ class App extends Component {
     searchWords: "",
     nowPlayingMovies: [],
     nowAiringTVShows: [],
+    currentMovie: {},
+  }
+
+  setCurrentMovie = (currentMovie) => {
+    this.setState({ currentMovie });
   }
 
   setNowPlayingMovies = (nowPlayingMovies) => {
@@ -88,6 +93,16 @@ class App extends Component {
                   series={nowAiringTVShows}
                   setNowPlayingMovies={this.setNowPlayingMovies}
                   setNowAiringTVShows={this.setNowAiringTVShows}
+                />)}
+            />
+            <Route
+              exact
+              path="/movie/:id"
+              render={({ match }) => (
+                <Detailspage
+                  id={match.params.id}
+                  currentMovie={currentMovie}
+                  setCurrentMovie={this.setCurrentMovie}
                 />)}
             />
             <Route render={() => <div>404</div>} />
