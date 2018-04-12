@@ -90,6 +90,7 @@ class App extends Component {
                   setNowAiringTVShows={this.setNowAiringTVShows}
                 />)}
             />
+
             <Route render={() => <div>404</div>} />
           </Switch>
         </div>
