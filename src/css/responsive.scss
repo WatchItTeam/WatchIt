@@ -46,4 +46,23 @@
     &.closed { transform: translateX(-1 * $sidebar-size); }
     &.open { transform: translateX(0); }
   }
+
+  .details-title {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    grid-gap: 20px;
+
+    .poster {
+      margin-top: -150px;
+    }
+
+    .text {
+      text-align: center;
+      .title {
+        font-size: 36px;
+        margin: 0 0 10px 0;
+      }
+      .bottom { justify-content: center; }
+    }
+  }
 }
