@@ -1,5 +1,5 @@
 #homepage {
-  margin-left: 45px;
+  padding: 0 40px;
 
   h1 {
     font-size: 36px;
@@ -9,5 +9,9 @@
   h2 {
     font-size: 24px;
     font-weight: normal;
+  }
+
+  .poster-grid {
+    margin-bottom: 60px;
   }
 }
