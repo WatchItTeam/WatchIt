@@ -1,16 +1,22 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withRouter, Switch, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
 import HomepageContainer from "./HomepageContainer";
+import SearchpageContainer from "./SearchpageContainer";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../css/App.scss";
 
 class App extends Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired, // from react-router
+  }
+
   /**
- * This function makes the sidebar close whenever
- * the user clicks a link in the sidebar
- */
+   * This function makes the sidebar close whenever
+   * the user clicks a link in the sidebar
+   */
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.location !== nextProps.location) {
       return {
@@ -45,9 +51,13 @@ class App extends Component {
     this.setState({ sidebarIsOpen: false });
   }
 
-  searchHandler = (e) => {
-    this.setState({ searchWords: e.target.value });
-    // TODO what happens when the search input changes
+  searchHandler = (query) => {
+    this.setSearchbarValue(query);
+    this.props.history.push(`/search?query=${query}`);
+  }
+
+  setSearchbarValue = (searchWords) => {
+    this.setState({ searchWords });
   }
 
   signOut = () => {
@@ -74,7 +84,8 @@ class App extends Component {
           <Header
             username="Robert Kindwall"
             toggleSidebar={this.toggleSidebar}
-            onSearchChange={this.searchHandler}
+            searchHandler={this.searchHandler}
+            setSearchbarValue={this.setSearchbarValue}
             searchbarValue={this.state.searchWords}
             onSignOutClick={this.signOut}
           />
@@ -90,6 +101,7 @@ class App extends Component {
                   setNowAiringTVShows={this.setNowAiringTVShows}
                 />)}
             />
+            <Route path="/search" component={SearchpageContainer} />
             <Route render={() => <div>404</div>} />
           </Switch>
         </div>
