@@ -9,10 +9,11 @@ class Searchbar extends Component {
     setSearchbarValue: PropTypes.func.isRequired,
   }
 
+  inputRef = React.createRef();
+
   onSubmit = (e) => {
     e.preventDefault();
-    const { searchbar } = e.target.elements;
-    const { value } = searchbar;
+    const { value } = this.inputRef.current;
     this.props.search(value);
   }
 
@@ -24,6 +25,7 @@ class Searchbar extends Component {
   clearText = (e) => {
     e.preventDefault();
     this.props.setSearchbarValue("");
+    this.inputRef.current.focus();
   }
 
   render() {
@@ -33,9 +35,15 @@ class Searchbar extends Component {
     return (
       <form className="searchbar" onSubmit={onSubmit}>
         <i className="fa fa-search" />
-        <input type="text" name="searchbar" value={value} onChange={onChange} placeholder="Search" />
+        <input
+          type="text"
+          ref={this.inputRef}
+          value={value}
+          onChange={onChange}
+          placeholder="Search"
+        />
         {value && (
-          <button onClick={this.clearText}>
+          <button type="button" onClick={this.clearText}>
             <i className="fa fa-times" />
           </button>
         )}
