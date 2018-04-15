@@ -149,6 +149,8 @@ if (production) {
       historyApiFallback: true,
       // terminal will only log errors, makes output prettier
       stats: "errors-only",
+      // shows an error overlay when there is a compile error
+      overlay: true,
       // should also enable hot and inline, but they
       // don't always work when enabled thru config files
       // hot: hot module replacement
