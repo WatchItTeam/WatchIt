@@ -1,32 +1,24 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
 import "../css/Searchbar.scss";
 
 class Searchbar extends Component {
   static propTypes = {
-    location: PropTypes.object.isRequired, // from react-router
     value: PropTypes.string.isRequired,
-    searchHandler: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired,
     setSearchbarValue: PropTypes.func.isRequired,
-  }
-
-  componentDidMount() {
-    const url = new URLSearchParams(this.props.location.search);
-    const query = url.get("query");
-    this.props.setSearchbarValue(query);
   }
 
   onSubmit = (e) => {
     e.preventDefault();
     const { searchbar } = e.target.elements;
     const { value } = searchbar;
-    this.props.searchHandler(value);
+    this.props.search(value);
   }
 
   onChange = (e) => {
     const { value } = e.target;
-    this.props.searchHandler(value);
+    this.props.search(value);
   }
 
   clearText = (e) => {
@@ -52,4 +44,4 @@ class Searchbar extends Component {
   }
 }
 
-export default withRouter(Searchbar);
+export default Searchbar;
