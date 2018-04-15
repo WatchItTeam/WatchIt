@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import { multiSearch } from "../api/APIUtils";
 import Searchpage from "../components/Searchpage";
 
+const DEBOUNCE_TIME = 500;
+
 class SearchpageContainer extends Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
@@ -38,7 +40,7 @@ class SearchpageContainer extends Component {
     this.timeout = setTimeout(async () => {
       const res = await multiSearch(query);
       this.setState({ res });
-    }, 2000);
+    }, DEBOUNCE_TIME);
   }
 
   render() {
