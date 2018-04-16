@@ -15,10 +15,9 @@
  *   debouncedSearch(query);
  * }
  *
- * @export
- * @param {any} fn
- * @param {any} time
- * @returns
+ * @param {Function} fn  Function to debounce
+ * @param {Number} time  How long to debounce
+ * @returns {Function}
  */
 export default function createDebouncedFunc(fn, time) {
   let timeout;
