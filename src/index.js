@@ -1,3 +1,6 @@
+import "babel-polyfill"; // async await
+import "whatwg-fetch"; // fetch polyfill
+import "url-search-params-polyfill"; // URLSearchParams polyfill
 import "normalize.css";
 import React from "react";
 import ReactDOM from "react-dom";

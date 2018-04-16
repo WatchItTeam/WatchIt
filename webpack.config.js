@@ -43,7 +43,7 @@ const publicPath = "/";
 
 // common config options for both dev and prod
 const config = {
-  entry: ["babel-polyfill", "./src/index.js"],
+  entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, outputDirName),
     filename: jsBundleName,
