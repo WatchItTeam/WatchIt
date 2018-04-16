@@ -6,7 +6,10 @@ import HomepageContainer from "./HomepageContainer";
 import SearchpageContainer from "./SearchpageContainer";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import createDebouncedFunc from "../utils/createDebouncedFunc";
 import "../css/App.scss";
+
+const SEARCH_DEBOUNCE_TIME = 500;
 
 class App extends Component {
   static propTypes = {
@@ -53,8 +56,13 @@ class App extends Component {
 
   searchHandler = (query) => {
     this.setSearchbarValue(query);
-    this.props.history.push(`/search?query=${query}`);
+    this.search(query);
   }
+
+  search = createDebouncedFunc((query) => {
+    console.log("DID IT");
+    this.props.history.push(`/search?query=${query}`);
+  }, SEARCH_DEBOUNCE_TIME)
 
   setSearchbarValue = (searchWords) => {
     this.setState({ searchWords });
