@@ -11,10 +11,15 @@
   grid-gap: 10px;
   border: 1px solid $border-color;
 
+  .fa-search, .fa-times {
+    opacity: 0.5;
+  }
+
   input {
     background: white;
     border: none;
     outline: none;
     width: 98%;
+    padding: 0;
   }
 }
