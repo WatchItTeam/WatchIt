@@ -23,7 +23,9 @@ class SearchpageContainer extends Component {
 
   componentDidUpdate() {
     const query = this.getQuery();
-    this.search(query);
+    if (query !== this.state.query) {
+      this.search(query);
+    }
   }
 
   getQuery() {
