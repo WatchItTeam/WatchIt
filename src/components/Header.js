@@ -7,7 +7,7 @@ import "../css/Header.scss";
 class Header extends Component {
   componentDidMount() {
     const url = new URLSearchParams(this.props.location.search);
-    const query = url.get("query");
+    const query = url.get("query") || "";
     this.props.setSearchbarValue(query);
   }
 
