@@ -60,7 +60,6 @@ class App extends Component {
   }
 
   search = createDebouncedFunc((query) => {
-    console.log("DID IT");
     this.props.history.push(`/search?query=${query}`);
   }, SEARCH_DEBOUNCE_TIME)
 
