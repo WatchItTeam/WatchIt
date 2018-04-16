@@ -8,10 +8,11 @@ import Searchpage from "../components/Searchpage";
 class SearchpageContainer extends Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
+    searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+    setSearchResults: PropTypes.func.isRequired,
   }
 
   state = {
-    res: [],
     query: "",
   }
 
@@ -34,16 +35,18 @@ class SearchpageContainer extends Component {
     if (!query) return;
 
     const res = await multiSearch(query);
-    this.setState({ res, query });
+    this.setState({ query });
+    this.props.setSearchResults(res);
   }
 
   render() {
-    const { res, query } = this.state;
+    const { searchResults } = this.props;
+    const { query } = this.state;
 
-    if (!res) return null;
+    if (!searchResults) return null;
 
     return (
-      <Searchpage results={res} query={query} />
+      <Searchpage results={searchResults} query={query} />
     );
   }
 }

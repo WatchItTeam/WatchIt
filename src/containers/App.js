@@ -36,6 +36,7 @@ class App extends Component {
     searchWords: "",
     nowPlayingMovies: [],
     nowAiringTVShows: [],
+    searchResults: [],
   }
 
   setNowPlayingMovies = (nowPlayingMovies) => {
@@ -44,6 +45,10 @@ class App extends Component {
 
   setNowAiringTVShows = (nowAiringTVShows) => {
     this.setState({ nowAiringTVShows });
+  }
+
+  setSearchResults = (searchResults) => {
+    this.setState({ searchResults });
   }
 
   toggleSidebar = () => {
@@ -73,7 +78,7 @@ class App extends Component {
   }
 
   render() {
-    const { lists, sidebarIsOpen, nowPlayingMovies, nowAiringTVShows } = this.state;
+    const { lists, sidebarIsOpen, nowPlayingMovies, nowAiringTVShows, searchResults } = this.state;
     const sidebarOverlay = (
       <div
         id="overlay"
@@ -108,7 +113,15 @@ class App extends Component {
                   setNowAiringTVShows={this.setNowAiringTVShows}
                 />)}
             />
-            <Route path="/search" component={SearchpageContainer} />
+            <Route
+              path="/search"
+              render={() => (
+                <SearchpageContainer
+                  searchResults={searchResults}
+                  setSearchResults={this.setSearchResults}
+                />
+              )}
+            />
             <Route render={() => <div>404</div>} />
           </Switch>
         </div>
