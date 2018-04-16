@@ -65,6 +65,8 @@ class App extends Component {
   }
 
   search = createDebouncedFunc((query) => {
+    // don't need to search if the user just clears the search bar
+    if (query === "") return;
     this.props.history.push(`/search?query=${query}`);
   }, SEARCH_DEBOUNCE_TIME)
 

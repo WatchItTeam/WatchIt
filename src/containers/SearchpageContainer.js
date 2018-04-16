@@ -7,6 +7,7 @@ import Searchpage from "../components/Searchpage";
 
 class SearchpageContainer extends Component {
   static propTypes = {
+    history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
     setSearchResults: PropTypes.func.isRequired,
@@ -17,6 +18,10 @@ class SearchpageContainer extends Component {
   }
 
   componentDidMount() {
+    // if the component is mounted by the user backing in the browser,
+    // no need to search again
+    if (this.props.history.action === "POP") return;
+
     const query = this.getQuery();
     this.search(query);
   }
