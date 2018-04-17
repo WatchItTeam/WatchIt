@@ -47,6 +47,15 @@
     &.open { transform: translateX(0); }
   }
 
+  .container {
+    padding: 0 25px;
+  }
+
+  .poster-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    grid-gap: 20px;
+  }
+
   .details-title {
     grid-template-columns: 1fr;
     justify-items: center;
