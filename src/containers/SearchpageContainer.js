@@ -15,7 +15,7 @@ class SearchpageContainer extends Component {
 
   state = {
     query: "",
-    isLoading: true,
+    isLoading: false,
     error: null,
   }
 
