@@ -104,8 +104,6 @@ class SearchpageContainer extends Component {
       );
     }
 
-    if (!(results && currentPage && totalPages && totalResults)) return null;
-
     return (
       <Searchpage
         results={results}
