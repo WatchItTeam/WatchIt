@@ -11,6 +11,7 @@ class DetailspageContainer extends Component {
   }
   state = {
     error: false,
+    hasLoaded: false,
   }
 
   componentDidMount() {
@@ -20,6 +21,7 @@ class DetailspageContainer extends Component {
       .then((currentMovie) => {
         if (!currentMovie) return;
         this.props.setCurrentMovie(currentMovie);
+        this.setState({ hasLoaded: true });
       }).catch(() => {
         this.setState({ error: true });
       });
@@ -30,6 +32,9 @@ class DetailspageContainer extends Component {
       return (
         <ErrorMessage>Oops! Could not load detailspage :(</ErrorMessage>
       );
+    }
+    if (!this.state.hasLoaded) {
+      return null;
     }
     return (
       <DetailsPage currentMovie={this.props.currentMovie} />
