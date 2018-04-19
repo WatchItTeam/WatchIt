@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import InfiniteScroll from "react-infinite-scroller";
 import PosterGrid from "./PosterGrid";
 import PrimaryButton from "./PrimaryButton";
 import "../css/Searchpage.scss";
@@ -19,13 +20,13 @@ function Searchpage({ results, currentPage, totalPages, totalResults, query, loa
       </p>
       <section>
         <h1>Search results for {query}</h1>
-        {content}
+        <InfiniteScroll
+          loadMore={loadMoreFunc}
+          hasMore={currentPage !== totalPages}
+        >
+          {content}
+        </InfiniteScroll>
       </section>
-      <div className="btn-container">
-        <PrimaryButton onClick={loadMoreFunc}>
-          Load more
-        </PrimaryButton>
-      </div>
     </section>
   );
 }
