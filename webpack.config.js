@@ -13,6 +13,7 @@
  * npm i -D webpack webpack-cli webpack-dev-server
  * npm i -D uglifyjs-webpack-plugin clean-webpack-plugin webpack-merge
  * npm i -D node-sass sass-loader css-loader style-loader
+ * npm i -D interpolate-html-plugin copy-webpack-plugin
  * npm i -D html-webpack-plugin extract-text-webpack-plugin@^4.0.0-beta.0
  * npm i -D babel-core babel-loader babel-preset-react babel-preset-env
  */
@@ -22,6 +23,9 @@ const merge = require("webpack-merge");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const InterpolateHtmlPlugin = require("interpolate-html-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const packagejson = require("./package.json");
 
 const production = process.env.NODE_ENV === "production";
 
@@ -38,16 +42,22 @@ const outputDirName = "./dist";
 // file name of entry HTML file
 const htmlFile = "index.html";
 
-// the public path, must be specified so historyApiFallback works for nested/paths/
-const publicPath = "/";
+// `publicUrl` is just like `publicPath`, but we will provide it to our app
+// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
+// Omit trailing shlash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
+// In production, we read the `homepage` value from the package.json file
+// (ensure the homepage value does not contain a trailing slash)
+// and use "" as public url in development since Webpack Dev Server will serve
+// the project at localhost:3000, aka from the root
+const publicUrl = production ? (packagejson.homepage || "") : "";
 
 // common config options for both dev and prod
 const config = {
-  entry: ["babel-polyfill", "./src/index.js"],
+  entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, outputDirName),
     filename: jsBundleName,
-    publicPath,
+    publicPath: `${publicUrl}/`,
   },
   module: {
     rules: [
@@ -109,6 +119,18 @@ if (production) {
           minifyURLs: true,
         },
       }),
+      // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
+      // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+      // In development, this will be an empty string.
+      new InterpolateHtmlPlugin({
+        PUBLIC_URL: publicUrl,
+      }),
+      // Copy all static files to the build folder except HTML files, which
+      // should be handled by HtmlWebpackPlugin
+      new CopyWebpackPlugin([{
+        from: contentBaseDir,
+        ignore: ["*.html"],
+      }]),
     ],
   });
 } else {
@@ -127,6 +149,8 @@ if (production) {
       historyApiFallback: true,
       // terminal will only log errors, makes output prettier
       stats: "errors-only",
+      // shows an error overlay when there is a compile error
+      overlay: true,
       // should also enable hot and inline, but they
       // don't always work when enabled thru config files
       // hot: hot module replacement
@@ -153,6 +177,12 @@ if (production) {
       new HtmlWebpackPlugin({
         filename: htmlFile,
         template: path.resolve(__dirname, `${contentBaseDir}/${htmlFile}`),
+      }),
+      // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
+      // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+      // In development, this will be an empty string.
+      new InterpolateHtmlPlugin({
+        PUBLIC_URL: publicUrl,
       }),
     ],
   });

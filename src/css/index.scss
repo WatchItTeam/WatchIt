@@ -25,3 +25,21 @@ button {
 
   &:active { color: black; }
 }
+
+h1 {
+  font-size: 36px;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+section {
+  margin-bottom: 60px;
+}
+
+.container {
+  padding: 0 40px;
+}
