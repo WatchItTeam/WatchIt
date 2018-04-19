@@ -65,6 +65,23 @@ class SearchpageContainer extends Component {
     this.setState({ isLoading: false });
   }
 
+  loadMoreAndAppend = async () => {
+    const { currentPage } = this.props.searchResults;
+
+    try {
+      const resp = await multiSearch(this.state.query, currentPage + 1);
+      this.props.setSearchResults({
+        results: [...this.props.searchResults.results, ...resp.results],
+        currentPage: resp.page,
+        totalPages: resp.total_pages,
+        totalResults: resp.total_results,
+      });
+    } catch (error) {
+      console.error(error);
+      this.setState({ error });
+    }
+  }
+
   render() {
     const { searchResults } = this.props;
     const { results, currentPage, totalPages, totalResults } = searchResults;
@@ -96,6 +113,7 @@ class SearchpageContainer extends Component {
         totalPages={totalPages}
         totalResults={totalResults}
         query={query}
+        loadMoreFunc={this.loadMoreAndAppend}
       />
     );
   }
