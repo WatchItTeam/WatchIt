@@ -53,3 +53,11 @@ export function getMovieInfo(id) {
       return json;
     });
 }
+
+export async function multiSearch(query, page = 1) {
+  const multiSearchUrl = `${baseUrl}/search/multi?api_key=${API_KEY}&query=${query}&page=${page}`;
+  const res = await fetch(multiSearchUrl);
+  const json = await res.json();
+  if (json.status_code === API_ERROR_CODE) throw new Error("Invalid API key");
+  return json;
+}

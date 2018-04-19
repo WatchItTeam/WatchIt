@@ -15,7 +15,7 @@ class DetailspageContainer extends Component {
   }
 
   componentDidMount() {
-    //if (this.props.currentMovie !== {}) return;
+    // if (this.props.currentMovie !== {}) return;
 
     getMovieInfo(this.props.match.params.id)
       .then((currentMovie) => {
