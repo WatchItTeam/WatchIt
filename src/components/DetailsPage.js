@@ -5,6 +5,7 @@ import MovieInformation from "./MovieInformation";
 import "../css/Homepage.scss";
 
 function DetailsPage({ currentMovie }) {
+  
   return (
     <div id="detailspage">
       { /* <DetailsBanner />

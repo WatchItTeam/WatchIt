@@ -47,12 +47,9 @@ export function getNowAiringTVShows() {
 export function getMovieInfo(id) {
   const currentMovieUrl = `${baseUrl}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits,recommendations`;
   return fetch(currentMovieUrl)
-  .then(res => res.json())
-  .then((json) => {
-    if (json.status_code === API_ERROR_CODE) throw new Error();
-    return json;
-  })
-  .then(json => json.results);
-
-
+    .then(res => res.json())
+    .then((json) => {
+      if (json.status_code === API_ERROR_CODE) throw new Error();
+      return json;
+    });
 }

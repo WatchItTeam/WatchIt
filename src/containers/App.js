@@ -4,6 +4,7 @@ import ScrollToTop from "../components/ScrollToTop";
 import HomepageContainer from "./HomepageContainer";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import DetailspageContainer from "./DetailspageContainer";
 import "../css/App.scss";
 
 class App extends Component {
@@ -61,7 +62,7 @@ class App extends Component {
   }
 
   render() {
-    const { lists, sidebarIsOpen, nowPlayingMovies, nowAiringTVShows } = this.state;
+    const { lists, sidebarIsOpen, nowPlayingMovies, nowAiringTVShows, currentMovie } = this.state;
     const sidebarOverlay = (
       <div
         id="overlay"
@@ -98,9 +99,9 @@ class App extends Component {
             <Route
               exact
               path="/movie/:id"
-              render={({ match }) => (
-                <Detailspage
-                  id={match.params.id}
+              render={props => (
+                <DetailspageContainer
+                  {...props}
                   currentMovie={currentMovie}
                   setCurrentMovie={this.setCurrentMovie}
                 />)}
