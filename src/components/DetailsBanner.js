@@ -5,9 +5,9 @@ import "../css/DetailsBanner.scss";
 
 function DetailsBanner({ backdropPath }) {
   return (
-    <div>
-      <img id="banner" src={getFullImgPath(backdropPath)} alt="banner of movie" />
-      <div id="banner-gradient" />
+    <div id="banner">
+      <img src={getFullImgPath(backdropPath)} alt="banner of movie" />
+      <div className="gradient" />
     </div>
   );
 }
