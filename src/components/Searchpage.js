@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroller";
 import PosterGrid from "./PosterGrid";
-import PrimaryButton from "./PrimaryButton";
 import "../css/Searchpage.scss";
 
 function Searchpage({ results, currentPage, totalPages, totalResults, query, loadMoreFunc }) {
@@ -31,12 +30,18 @@ function Searchpage({ results, currentPage, totalPages, totalResults, query, loa
   );
 }
 
+Searchpage.defaultProps = {
+  currentPage: 1,
+  totalPages: 1,
+  totalResults: 0,
+};
+
 Searchpage.propTypes = {
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   query: PropTypes.string.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  totalPages: PropTypes.number.isRequired,
-  totalResults: PropTypes.number.isRequired,
+  currentPage: PropTypes.number,
+  totalPages: PropTypes.number,
+  totalResults: PropTypes.number,
   loadMoreFunc: PropTypes.func.isRequired,
 };
 
