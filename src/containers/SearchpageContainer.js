@@ -9,7 +9,12 @@ class SearchpageContainer extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+    searchResults: PropTypes.shape({
+      results: PropTypes.arrayOf(PropTypes.object).isRequired,
+      currentPage: PropTypes.number,
+      totalResults: PropTypes.number,
+      totalPages: PropTypes.number,
+    }).isRequired,
     setSearchResults: PropTypes.func.isRequired,
   }
 
@@ -45,8 +50,13 @@ class SearchpageContainer extends Component {
 
     try {
       this.setState({ query, isLoading: true });
-      const res = await multiSearch(query);
-      this.props.setSearchResults(res);
+      const resp = await multiSearch(query);
+      this.props.setSearchResults({
+        results: resp.results,
+        currentPage: resp.page,
+        totalPages: resp.total_pages,
+        totalResults: resp.total_results,
+      });
     } catch (error) {
       console.error(error);
       this.setState({ error });
@@ -57,6 +67,7 @@ class SearchpageContainer extends Component {
 
   render() {
     const { searchResults } = this.props;
+    const { results, currentPage, totalPages, totalResults } = searchResults;
     const { query, error, isLoading } = this.state;
 
     if (isLoading) {
@@ -76,8 +87,16 @@ class SearchpageContainer extends Component {
       );
     }
 
+    if (!(results && currentPage && totalPages && totalResults)) return null;
+
     return (
-      <Searchpage results={searchResults} query={query} />
+      <Searchpage
+        results={results}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalResults={totalResults}
+        query={query}
+      />
     );
   }
 }

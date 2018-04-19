@@ -18,6 +18,7 @@
 
   .no-poster {
     @include poster;
+    height: 80%;
     background: #eeeeee;
     font-size: 2em;
     color: #d3d3d3;

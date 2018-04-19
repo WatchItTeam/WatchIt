@@ -49,5 +49,5 @@ export async function multiSearch(query, page = 1) {
   const res = await fetch(multiSearchUrl);
   const json = await res.json();
   if (json.status_code === API_ERROR_CODE) throw new Error("Invalid API key");
-  return json.results;
+  return json;
 }

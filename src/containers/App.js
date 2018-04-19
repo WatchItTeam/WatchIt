@@ -36,7 +36,12 @@ class App extends Component {
     searchWords: "",
     nowPlayingMovies: [],
     nowAiringTVShows: [],
-    searchResults: [],
+    searchResults: {
+      results: [],
+      currentPage: null,
+      totalResults: null,
+      totalPages: null,
+    },
   }
 
   setNowPlayingMovies = (nowPlayingMovies) => {
