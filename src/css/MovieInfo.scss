@@ -1,0 +1,65 @@
+@import "global";
+
+.movieInfo {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.trailer-grid {
+    display: grid;
+    grid-gap: 20px 40px;
+    grid-auto-rows: 300px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+
+    object {
+        width: 100%;
+        height: 100%;
+    }
+  }
+
+.cast-grid { 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    grid-gap: 20px 60px;
+    }
+.cast {
+        width: 100%;
+        min-height: 195px;
+        object-fit: cover;
+        border-radius: 4px;
+        padding-right:10px;
+        padding-left:10px;
+      }
+.nameBorder {
+    font-weight: 800;
+    padding-right: 20px;
+}
+.slick-arrow:before {
+    color: $primary-color !important;
+}
+.slick-prev:before {
+    color: $primary-color !important;
+}
+
+h2 {
+    padding-top: 10px;
+}
+
+.no-poster {
+    text-align: center;
+    border-radius: 4px;
+    width: 85%;
+    min-height: 195px;
+    height: 100%;
+    background: #eeeeee;
+    font-size: 2em;
+    color: #d3d3d3;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-right:10px !important;
+    margin-left:10px !important;
+  }
+  .botPadd {
+      padding-bottom: 100px;
+  }
