@@ -7,7 +7,6 @@ import SearchpageContainer from "./SearchpageContainer";
 import Sidebar from "../components/Sidebar";
 import DynamicHeader from "../containers/DynamicHeader";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
-import DetailsBanner from "../components/DetailsBanner";
 import "../css/App.scss";
 
 const SEARCH_DEBOUNCE_TIME = 500;
@@ -120,21 +119,6 @@ class App extends Component {
                   setNowPlayingMovies={this.setNowPlayingMovies}
                   setNowAiringTVShows={this.setNowAiringTVShows}
                 />)}
-            />
-            <Route
-              path="/movie/:id"
-              render={() => (
-                <div>
-                  <DetailsBanner backdropPath="/b6ZJZHUdMEFECvGiDpJjlfUWela.jpg" />
-                  {
-                    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(() => (
-                      <section>
-                        fuck
-                      </section>
-                    ))
-                  }
-                </div>
-              )}
             />
             <Route
               path="/search"
