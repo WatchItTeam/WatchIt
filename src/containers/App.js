@@ -6,6 +6,7 @@ import HomepageContainer from "./HomepageContainer";
 import SearchpageContainer from "./SearchpageContainer";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import DetailspageContainer from "./DetailspageContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import "../css/App.scss";
 
@@ -36,12 +37,17 @@ class App extends Component {
     searchWords: "",
     nowPlayingMovies: [],
     nowAiringTVShows: [],
+    currentMovie: {},
     searchResults: {
       results: [],
       currentPage: null,
       totalResults: null,
       totalPages: null,
     },
+  }
+
+  setCurrentMovie = (currentMovie) => {
+    this.setState({ currentMovie });
   }
 
   setNowPlayingMovies = (nowPlayingMovies) => {
@@ -85,7 +91,7 @@ class App extends Component {
   }
 
   render() {
-    const { lists, sidebarIsOpen, nowPlayingMovies, nowAiringTVShows, searchResults } = this.state;
+    const { lists, sidebarIsOpen, nowPlayingMovies, nowAiringTVShows, searchResults, currentMovie } = this.state;
     const sidebarOverlay = (
       <div
         id="overlay"
@@ -118,6 +124,16 @@ class App extends Component {
                   series={nowAiringTVShows}
                   setNowPlayingMovies={this.setNowPlayingMovies}
                   setNowAiringTVShows={this.setNowAiringTVShows}
+                />)}
+            />
+            <Route
+              exact
+              path="/movie/:id"
+              render={props => (
+                <DetailspageContainer
+                  {...props}
+                  currentMovie={currentMovie}
+                  setCurrentMovie={this.setCurrentMovie}
                 />)}
             />
             <Route

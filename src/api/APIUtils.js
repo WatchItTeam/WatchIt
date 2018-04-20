@@ -44,6 +44,16 @@ export function getNowAiringTVShows() {
     .then(json => json.results);
 }
 
+export function getMovieInfo(id) {
+  const currentMovieUrl = `${baseUrl}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits,recommendations`;
+  return fetch(currentMovieUrl)
+    .then(res => res.json())
+    .then((json) => {
+      if (json.status_code === API_ERROR_CODE) throw new Error();
+      return json;
+    });
+}
+
 export async function multiSearch(query, page = 1) {
   const multiSearchUrl = `${baseUrl}/search/multi?api_key=${API_KEY}&query=${query}&page=${page}`;
   const res = await fetch(multiSearchUrl);

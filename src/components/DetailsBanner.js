@@ -4,6 +4,12 @@ import { getFullImgPath } from "../api/APIUtils";
 import "../css/DetailsBanner.scss";
 
 function DetailsBanner({ backdropPath }) {
+  if (backdropPath === null) {
+    return (
+      <div className="no-poster2">
+        <i className="fa fa-image" />
+      </div>);
+  }
   return (
     <div id="banner">
       <img src={getFullImgPath(backdropPath)} alt="banner of movie" />
