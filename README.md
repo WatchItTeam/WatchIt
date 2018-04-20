@@ -3,6 +3,8 @@ A web app for browsing movies and TV shows. WatchIt allows you to browse movies 
 
 This app uses TheMovieDB to fetch info about movies and TV shows and is built using React.
 
+[Check it out here](https://watchitteam.github.io/WatchIt/).
+
 ## Project details
 Please see the [project details file](project-details.md).
 
