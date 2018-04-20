@@ -4,6 +4,9 @@ import InfiniteScroll from "react-infinite-scroller";
 import PosterGrid from "./PosterGrid";
 import "../css/Searchpage.scss";
 
+/**
+ * Markup for the search page
+ */
 function Searchpage({ results, currentPage, totalPages, totalResults, query, loadMoreFunc }) {
   let content;
   if (results.length === 0) {

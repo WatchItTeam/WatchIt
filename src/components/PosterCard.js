@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { getFullImgPath, getYearFromDate } from "../api/APIUtils";
 import "../css/PosterCard.scss";
 
+/**
+ * Reusable component for showing a movie poster and title
+ */
 function PosterCard({ title, posterPath, linkTo, releaseDate }) {
   const releaseYear = releaseDate ? ` (${getYearFromDate(releaseDate)})` : "";
 

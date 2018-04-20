@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "../css/Searchbar.scss";
 
+/**
+ * Reusable generic searchbar component with event handlers for
+ * value change and submit, and a clear input button
+ */
 class Searchbar extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,

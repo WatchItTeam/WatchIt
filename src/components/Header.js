@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 import Searchbar from "./Searchbar";
 import "../css/Header.scss";
 
+/**
+ * The header, which includes search bar and user info
+ */
 class Header extends Component {
   componentDidMount() {
     const url = new URLSearchParams(this.props.location.search);
