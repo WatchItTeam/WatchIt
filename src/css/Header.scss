@@ -14,6 +14,7 @@
   background: rgba($bg-color, 0.9);
   -webkit-backdrop-filter: blur(10px);
   z-index: $header-z;
+  transition: 300ms all;
 
   #toggle-btn {
     // don't show menu btn by default, only on small screens (see responsive.scss)
@@ -33,6 +34,29 @@
       width: 40px;
       background: gray;
       border-radius: 50%;
+    }
+  }
+}
+
+.header-wrapper {
+  // hack to make the dark banner appear on top of the backdrop image
+  height: 0;
+  overflow: visible;
+
+  position: sticky;
+  top: 0;
+  position: -webkit-sticky;
+  z-index: $header-z;
+
+  &.default {
+    height: initial;
+  }
+
+  &.dark {
+    #app-header {
+      color: white;
+      background: none;
+      -webkit-backdrop-filter: none;
     }
   }
 }
