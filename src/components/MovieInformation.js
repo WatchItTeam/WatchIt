@@ -11,34 +11,59 @@ function MovieInformation({ currentMovie }) {
 
   const settingsCast = {
     dots: true,
+    variableWidth: true,
     slidesToShow: currentMovie.credits.cast.length < 7 ? currentMovie.credits.cast.length : 7,
     slidesToScroll: currentMovie.credits.cast.length < 7 ? 1 : 10,
   };
-  const trailers =
+  const settingsRecommendations = {
+    dots: true,
+    slidesToShow: currentMovie.recommendations.results.length < 1 ? 1 : 7,
+    slidesToScroll: currentMovie.recommendations.results.length < 1 ? 1 : 10,
+  };
+  let trailers;
+  if (currentMovie.videos.results.length === 0) {
+    trailers = <div>No trailers to show</div>;
+  } else {
+    trailers =
     currentMovie.videos.results.map(trailer => (
       <object height="500px" data={`https://www.youtube.com/embed/${trailer.key}`} >hnunu</object>
-      // <iframe title="test" src={`https://www.youtube.com/embed/${trailer.key}`} />
     ));
+  }
   const cast = currentMovie.credits.cast.map((person) => {
-    if (true) {
+    if (person.profile_path === null) {
       return (
         <div>
-          <img className="cast" src={`https://image.tmdb.org/t/p/original/${person.profile_path}`} alt="cast" />
+          <div className="no-poster">
+            <i className="fa fa-image" />
+          </div>
           <p>
             <b className="nameBorder" >{person.name}</b><br /> {person.character}
           </p>
-        </div>);
+        </div>
+      );
+    }
+    return (
+      <div>
+        <img className="cast" src={`https://image.tmdb.org/t/p/w200/${person.profile_path}`} alt="cast" />
+        <p>
+          <b className="nameBorder" >{person.name}</b><br /> {person.character}
+        </p>
+      </div>);
     // <iframe title="test" src={`https://www.youtube.com/embed/${trailer.key}`} />
-    } return null;
   });
-  const recommendations = currentMovie.recommendations.results.map(movie => (
-    <div>
-      <img className="cast" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="recommendations" />
-      <p>
-        <b className="nameBorder" >{movie.title}</b>
-      </p>
-    </div>
-  ));
+  let recommendations;
+  if (currentMovie.recommendations.results.length === 0) {
+    recommendations = <div className="botPadd">No recommendations to show</div>;
+  } else {
+    recommendations = currentMovie.recommendations.results.map(movie => (
+      <div>
+        <img className="cast" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="recommendations" />
+        <p>
+          <b className="nameBorder" >{movie.title}</b>
+        </p>
+      </div>
+    ));
+  }
   return (
     <div className="movieInfo">
       <h2>Story</h2>
@@ -60,7 +85,7 @@ function MovieInformation({ currentMovie }) {
       <h2>
         You may also like
       </h2>
-      <Slider {...settingsCast}>
+      <Slider {...settingsRecommendations}>
         {recommendations}
       </Slider>
       {/* <div className="cast-grid">
