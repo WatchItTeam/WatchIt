@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import SidebarNavLink from "./SidebarNavLink";
 import "../css/Sidebar.scss";
 
+/**
+ * Markup for the sidebar
+ */
 function Sidebar({ isOpen, lists }) {
   return (
     <div id="sidebar" className={isOpen ? "open" : "closed"}>

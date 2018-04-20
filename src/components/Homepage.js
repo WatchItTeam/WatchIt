@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import PosterGrid from "./PosterGrid";
 
+/**
+ * Markup for the homepage
+ */
 function Homepage({ movies, series }) {
   return (
     <div id="homepage" className="container">

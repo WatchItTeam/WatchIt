@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { getFullImgPath } from "../api/APIUtils";
 import "../css/DetailsBanner.scss";
 
+/**
+ * The backdrop banner for the movie details page
+ */
 function DetailsBanner({ backdropPath }) {
   if (backdropPath === null) {
     return (

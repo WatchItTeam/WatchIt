@@ -19,6 +19,7 @@
  */
 
 const path = require("path");
+const url = require("url");
 const merge = require("webpack-merge");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -57,7 +58,6 @@ const config = {
   output: {
     path: path.resolve(__dirname, outputDirName),
     filename: jsBundleName,
-    publicPath: `${publicUrl}/`,
   },
   module: {
     rules: [
@@ -73,6 +73,9 @@ const config = {
 let merged;
 if (production) {
   merged = merge(config, {
+    output: {
+      publicPath: url.parse(publicUrl).pathname,
+    },
     // minify JS, set process.env.NODE_ENV = "production" and other optimizations
     mode: "production",
     // source map type
@@ -135,6 +138,9 @@ if (production) {
   });
 } else {
   merged = merge(config, {
+    output: {
+      publicPath: "",
+    },
     // sets process.env.NODE_ENV = "development" and shows module path names
     mode: "development",
     // source map type

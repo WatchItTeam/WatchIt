@@ -15,6 +15,9 @@ function getReleaseDate(movie, type) {
   return mediaType === "movie" ? movie.release_date : movie.first_air_date;
 }
 
+/**
+ * A responsive grid of PosterCards
+ */
 function PosterGrid({ movies, type }) {
   return (
     <div className="poster-grid">

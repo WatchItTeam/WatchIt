@@ -4,7 +4,9 @@ import DetailsBanner from "./DetailsBanner";
 import DetailsTitle from "./DetailsTitle";
 import MovieInformation from "./MovieInformation";
 
-
+/**
+ * Markup for the details page
+ */
 function DetailsPage({ currentMovie }) {
   return (
     <div id="detailspage">

@@ -6,6 +6,9 @@ import minutesToHours from "../utils/minutesToHours";
 import PrimaryButton from "./PrimaryButton";
 import "../css/DetailsTitle.scss";
 
+/**
+ * The title (poster, name, rating etc) for the movie details page
+ */
 function DetailsTitle({ movie, onBtnClick }) {
   const {
     title,
