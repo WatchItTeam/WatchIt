@@ -5,7 +5,7 @@ import ScrollToTop from "../components/ScrollToTop";
 import HomepageContainer from "./HomepageContainer";
 import SearchpageContainer from "./SearchpageContainer";
 import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
+import DynamicHeader from "../containers/DynamicHeader";
 import DetailspageContainer from "./DetailspageContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import "../css/App.scss";
@@ -106,7 +106,7 @@ class App extends Component {
         {sidebarOverlay}
         <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} lists={lists} />
         <div id="main-container">
-          <Header
+          <DynamicHeader
             username="Robert Kindwall"
             toggleSidebar={this.toggleSidebar}
             searchHandler={this.searchHandler}
