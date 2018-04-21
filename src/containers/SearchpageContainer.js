@@ -18,6 +18,20 @@ class SearchpageContainer extends Component {
     setSearchResults: PropTypes.func.isRequired,
   }
 
+  static getDerivedStateFromProps(props) {
+    // is true if the user arrives at the search page by backing from
+    // the details page of a search result
+    if (props.history.action === "POP" && props.searchResults.results.length !== 0) {
+      const url = new URLSearchParams(props.location.search);
+      const query = url.get("query");
+
+      // set the query state so componentDidUpdate isn't triggered when
+      // loadMoreAndAppend is called for the first time
+      return { query };
+    }
+    return null;
+  }
+
   state = {
     query: "",
     isLoading: false,
