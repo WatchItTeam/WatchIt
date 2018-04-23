@@ -12,12 +12,21 @@ import "../../css/Header.scss";
 class MobileHeader extends Component {
   state = { searchIsVisible: false };
 
+  searchbarRef = React.createRef();
+
   showSearch = () => {
     this.setState({ searchIsVisible: true });
   }
 
   hideSearch = () => {
     this.setState({ searchIsVisible: false });
+  }
+
+  componentDidUpdate() {
+    if (this.state.searchIsVisible) {
+      // if the searchbar becomes visible, focus on the input
+      this.searchbarRef.current.inputRef.current.focus();
+    }
   }
 
   render() {
@@ -32,6 +41,7 @@ class MobileHeader extends Component {
             <FontAwesomeIcon icon="arrow-left" />
           </button>
           <Searchbar
+            ref={this.searchbarRef}
             value={searchbarValue}
             search={searchHandler}
             setSearchbarValue={setSearchbarValue}
