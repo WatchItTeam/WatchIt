@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Searchbar from "../Searchbar";
 import "../../css/Header.scss";
@@ -10,6 +11,25 @@ import "../../css/Header.scss";
  * as a container component
  */
 class MobileHeader extends Component {
+  static propTypes = {
+    username: PropTypes.string.isRequired,
+    toggleSidebar: PropTypes.func.isRequired,
+    onSignOutClick: PropTypes.func.isRequired,
+    searchbarValue: PropTypes.string.isRequired,
+    searchHandler: PropTypes.func.isRequired,
+    setSearchbarValue: PropTypes.func.isRequired,
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (state.location !== props.location && !props.location.pathname.includes("search")) {
+      return {
+        searchIsVisible: false,
+        location: props.location,
+      };
+    }
+    return { location: props.location };
+  }
+
   state = { searchIsVisible: false };
 
   searchbarRef = React.createRef();
@@ -66,13 +86,4 @@ class MobileHeader extends Component {
   }
 }
 
-MobileHeader.propTypes = {
-  username: PropTypes.string.isRequired,
-  toggleSidebar: PropTypes.func.isRequired,
-  onSignOutClick: PropTypes.func.isRequired,
-  searchbarValue: PropTypes.string.isRequired,
-  searchHandler: PropTypes.func.isRequired,
-  setSearchbarValue: PropTypes.func.isRequired,
-};
-
-export default MobileHeader;
+export default withRouter(MobileHeader);
