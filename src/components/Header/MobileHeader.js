@@ -51,22 +51,6 @@ class MobileHeader extends Component {
         <button id="header-search-btn" onClick={this.showSearch}>
           <FontAwesomeIcon icon="search" />
         </button>
-        {
-          /*
-            <Searchbar
-              value={searchbarValue}
-              search={searchHandler}
-              setSearchbarValue={setSearchbarValue}
-            />
-            <div id="user-info">
-              <div className="user-img" />
-              {username}
-              <button onClick={onSignOutClick}>
-                <i className="fa fa-sign-out-alt" /> Sign out
-              </button>
-            </div>
-          */
-        }
       </header>
     );
   }

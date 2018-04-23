@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Searchbar from "../Searchbar";
 import "../../css/Header.scss";
 
@@ -20,7 +21,7 @@ function DesktopHeader({
         <div className="user-img" />
         {username}
         <button onClick={onSignOutClick}>
-          <i className="fa fa-sign-out-alt" /> Sign out
+          <FontAwesomeIcon icon="sign-out-alt" /> Sign out
         </button>
       </div>
     </header>

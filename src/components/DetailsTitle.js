@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment-mini";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { getFullImgPath, getYearFromDate } from "../api/APIUtils";
 import minutesToHours from "../utils/minutesToHours";
 import PrimaryButton from "./PrimaryButton";
@@ -37,7 +38,7 @@ function DetailsTitle({ movie, onBtnClick }) {
           <PrimaryButton onClick={onBtnClick}>+ Add to</PrimaryButton>
           &nbsp;&nbsp;
           <span className="rating">
-            <i className="fa fa-star star-icon" /> {rating}
+            <span className="star-icon"><FontAwesomeIcon icon="star" /></span> {rating}
           </span>
         </div>
       </div>
