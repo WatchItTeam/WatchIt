@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { getFullImgPath } from "../api/APIUtils";
 import "../css/DetailsBanner.scss";
 
@@ -10,7 +11,7 @@ function DetailsBanner({ backdropPath }) {
   if (backdropPath === null) {
     return (
       <div className="no-poster2">
-        <i className="fa fa-image" />
+        <FontAwesomeIcon icon="image" />
       </div>);
   }
   return (

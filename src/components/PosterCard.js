@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { getFullImgPath, getYearFromDate } from "../api/APIUtils";
 import "../css/PosterCard.scss";
@@ -14,7 +15,7 @@ function PosterCard({ title, posterPath, linkTo, releaseDate }) {
   if (posterPath) {
     img = <img className="poster" src={getFullImgPath(posterPath, "w342")} alt={title} />;
   } else {
-    img = <div className="no-poster"><i className="fa fa-image" /></div>;
+    img = <div className="no-poster"><FontAwesomeIcon icon="image" /></div>;
   }
 
   return (
