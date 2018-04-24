@@ -11,13 +11,16 @@ import "../css/DetailsTitle.scss";
  */
 function DetailsTitle({ movie, onBtnClick }) {
   const {
+    // movie info
     title,
     genres,
     runtime,
     vote_average: rating,
     poster_path: posterPath,
     release_date: releaseDate,
+    // tv info
     name,
+    status,
     first_air_date: firstAirDate,
     last_air_date: lastAirDate,
     episode_run_time: episodeRunTime,
@@ -41,6 +44,8 @@ function DetailsTitle({ movie, onBtnClick }) {
       </div>
     );
   } else {
+    const endingYear = (status === "Ended" || status === "Canceled") ?
+      moment(lastAirDate).format("YYYY") : "";
     infoLine = (
       <div className="info">
         {
@@ -51,7 +56,9 @@ function DetailsTitle({ movie, onBtnClick }) {
         <span> • </span>
         {numberOfEpisodes} episodes, {numberOfSeasons} seasons
         <span> • </span>
-        {moment(firstAirDate).format("YYYY")}-{moment(lastAirDate).format("YYYY")}
+        {status}
+        <span> • </span>
+        {moment(firstAirDate).format("YYYY")}-{endingYear}
       </div>
     );
   }
