@@ -1,6 +1,10 @@
 @import "global";
 
 @media (max-width: 575px) {
+  :root {
+    --container-padding: 25px;
+  }
+
   #main-container {
     margin-left: 0;
   }
@@ -45,10 +49,6 @@
 
     &.closed { transform: translateX(-1 * $sidebar-size); }
     &.open { transform: translateX(0); }
-  }
-
-  .container {
-    padding: 0 25px;
   }
 
   .poster-grid {

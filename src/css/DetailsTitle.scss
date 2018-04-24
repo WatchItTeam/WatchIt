@@ -1,10 +1,12 @@
 @import "global";
 
 .details-title {
+  padding: 0 var(--container-padding);
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: flex-end;
   grid-gap: 30px;
+  margin-bottom: 50px;
 
   .poster {
     width: 190px;

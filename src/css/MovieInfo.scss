@@ -1,8 +1,7 @@
 @import "global";
 
 .movieInfo {
-    padding-left: 50px;
-    padding-right: 50px;
+  padding: 0 var(--container-padding);
 }
 
 .trailer-grid {
@@ -17,7 +16,7 @@
     }
   }
 
-.cast-grid { 
+.cast-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     grid-gap: 20px 60px;
