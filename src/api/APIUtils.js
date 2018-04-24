@@ -53,6 +53,12 @@ export function getMovieInfo(id) {
     .then(checkResponse);
 }
 
+export async function getTVInfo(id) {
+  const url = `${baseUrl}/tv/${id}?api_key=${API_KEY}&append_to_response=videos,credits,recommendations`;
+  const res = await fetch(url);
+  return checkResponse(res);
+}
+
 export async function multiSearch(query, page = 1) {
   const multiSearchUrl = `${baseUrl}/search/multi?api_key=${API_KEY}&query=${query}&page=${page}`;
   const res = await fetch(multiSearchUrl);
