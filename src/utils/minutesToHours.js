@@ -3,7 +3,8 @@
  * @param {Number} minutes
  */
 export default function minutesToHours(minutes) {
-  if (minutes < 60) return minutes;
+  if (!minutes) return null;
+  if (minutes <= 60) return `${minutes}min`;
 
   const hours = Math.floor(minutes / 60);
   const minsLeft = minutes % 60;
