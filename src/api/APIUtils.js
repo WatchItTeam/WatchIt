@@ -22,42 +22,39 @@ export const getFullImgPath = (imgPath, size = "original") => `${baseImgUrl}${si
  */
 export const getYearFromDate = fullDate => fullDate.substring(0, 4);
 
+/**
+ * Takes a response from a fetch, verifies it, and returns the JSON
+ * @param {Promise} res
+ */
+async function checkResponse(res) {
+  const json = await res.json();
+  if (json.status_code === API_ERROR_CODE) throw new Error();
+
+  return json;
+}
+
 export function getNowPlayingMovies() {
   const nowPlayingMovieUrl = `${baseUrl}/movie/now_playing?api_key=${API_KEY}&language=SE&page=1`;
   return fetch(nowPlayingMovieUrl)
-    .then(res => res.json())
-    .then((json) => {
-      if (json.status_code === API_ERROR_CODE) throw new Error();
-      return json;
-    })
+    .then(checkResponse)
     .then(json => json.results);
 }
 
 export function getNowAiringTVShows() {
   const nowAiringTVShowsUrl = `${baseUrl}/tv/on_the_air?api_key=${API_KEY}&language=SE&page=1`;
   return fetch(nowAiringTVShowsUrl)
-    .then(res => res.json())
-    .then((json) => {
-      if (json.status_code === API_ERROR_CODE) throw new Error();
-      return json;
-    })
+    .then(checkResponse)
     .then(json => json.results);
 }
 
 export function getMovieInfo(id) {
   const currentMovieUrl = `${baseUrl}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits,recommendations`;
   return fetch(currentMovieUrl)
-    .then(res => res.json())
-    .then((json) => {
-      if (json.status_code === API_ERROR_CODE) throw new Error();
-      return json;
-    });
+    .then(checkResponse);
 }
 
 export async function multiSearch(query, page = 1) {
   const multiSearchUrl = `${baseUrl}/search/multi?api_key=${API_KEY}&query=${query}&page=${page}`;
   const res = await fetch(multiSearchUrl);
-  const json = await res.json();
-  if (json.status_code === API_ERROR_CODE) throw new Error("Invalid API key");
-  return json;
+  return checkResponse(res);
 }
