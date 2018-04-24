@@ -128,7 +128,7 @@ class App extends Component {
             />
             <Route
               exact
-              path="/movie/:id"
+              path="/:mediaType(movie|tv)/:id"
               render={props => (
                 <DetailspageContainer
                   {...props}
