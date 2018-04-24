@@ -139,7 +139,7 @@ if (production) {
 } else {
   merged = merge(config, {
     output: {
-      publicPath: "",
+      publicPath: "/",
     },
     // sets process.env.NODE_ENV = "development" and shows module path names
     mode: "development",
