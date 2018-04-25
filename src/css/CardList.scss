@@ -15,7 +15,7 @@
     border: 1px solid rgba($border-color, 0.7);
     border-radius: 5px;
     padding: 5px 15px 10px 15px;
-    margin-top: 30px;
+    margin: 30px -12px;
     grid-template-areas:
       "poster title"
       "poster info";
@@ -26,9 +26,14 @@
 
     .poster {
       grid-area: poster;
-      margin-top: -30px;
+      margin-top: -20px;
       width: 80px;
-      border-radius: 5px;
+      line-height: 1;
+
+      img {
+        width: 100%;
+        border-radius: 5px;
+      }
     }
 
     .title {

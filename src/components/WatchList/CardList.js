@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 import { normalizeMovie, getFullImgPath } from "../../api/APIUtils";
 import "../../css/CardList.scss";
 
@@ -12,14 +13,20 @@ function CardList({ movies }) {
           movies.map((mov) => {
             const movie = normalizeMovie(mov);
             const icon = (movie.media_type === "movie") ? "film" : "tv";
+            const url = `/${movie.media_type}/${movie.id}`;
             return (
               <li key={movie.id} className="card-list-item">
-                <img
-                  className="poster"
-                  src={getFullImgPath(movie.poster_path, "w185")}
-                  alt={`Poster of ${movie.title}`}
-                />
-                <h1 className="title">{movie.title} ({movie.release_year})</h1>
+                <Link className="poster" to={url}>
+                  <img
+                    src={getFullImgPath(movie.poster_path, "w185")}
+                    alt={`Poster of ${movie.title}`}
+                  />
+                </Link>
+                <h1 className="title">
+                  <Link to={url}>
+                    {movie.title} ({movie.release_year})
+                  </Link>
+                </h1>
                 <div className="info">
                   <div className="progress">{movie.progress}</div>
                   <div className="rating">
