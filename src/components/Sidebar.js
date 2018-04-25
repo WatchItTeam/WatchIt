@@ -27,6 +27,7 @@ function Sidebar({ isOpen, lists }) {
       <div className="divisor" />
 
       <h2>My lists</h2>
+      <SidebarNavLink to="/user/shit/completed">Completed</SidebarNavLink>
       {
         lists.map(list => <SidebarNavLink to={`/list/${list.id}`}>{list.name}</SidebarNavLink>)
       }

@@ -7,6 +7,7 @@ import SearchpageContainer from "./SearchpageContainer";
 import Sidebar from "../components/Sidebar";
 import DynamicHeader from "../containers/DynamicHeader";
 import DetailspageContainer from "./DetailspageContainer";
+import UserList from "../containers/UserList";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import "../css/App.scss";
 
@@ -152,6 +153,13 @@ class App extends Component {
                   setSearchResults={this.setSearchResults}
                 />
               )}
+            />
+            <Route
+              path="/user/:userId/:list/:mediaType?"
+              render={props => (
+                <UserList
+                  {...props}
+                />)}
             />
             <Route render={() => <div>404</div>} />
           </Switch>

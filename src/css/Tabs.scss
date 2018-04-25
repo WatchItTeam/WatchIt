@@ -1,0 +1,31 @@
+@import "global";
+
+.tabs {
+  margin-bottom: 30px;
+
+  ul {
+    padding: 0;
+    display: flex;
+    list-style-type: none;
+
+    li {
+      display: block;
+      margin-right: 15px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .tab-link {
+    font-size: 20px;
+    color: inherit;
+    padding: 5px 10px;
+
+    &.active {
+      font-weight: 700;
+      border-bottom: 5px solid $primary-color;
+    }
+  }
+}

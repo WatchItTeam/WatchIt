@@ -1,0 +1,11 @@
+.watch-list {
+  .title-bar {
+    display: flex;
+    justify-content: space-between;
+
+    .edit-btn {
+      font-size: 1.2em;
+      padding: 5px;
+    }
+  }
+}
