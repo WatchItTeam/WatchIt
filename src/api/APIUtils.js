@@ -22,6 +22,32 @@ export const getFullImgPath = (imgPath, size = "original") => `${baseImgUrl}${si
  */
 export const getYearFromDate = fullDate => fullDate.substring(0, 4);
 
+/**
+ * Properties are not the same on movies and TV shows, for
+ * example, movies have "title" while TV has "name".
+ * This function returns a copy of the movie with consistent properties.
+ * Basically, this function ensures that the movie object always
+ * has these fields: title, media_type, release_date, release_year
+ *
+ * @param {Object} movie
+ */
+export function normalizeMovie(movie) {
+  /* eslint-disable camelcase */
+  if (movie.isNormalized) return movie;
+
+  const { title, name, release_date, first_air_date } = movie;
+  const mediaType = title ? "movie" : "tv";
+  const releaseDate = release_date || first_air_date;
+  return {
+    ...movie,
+    title: title || name,
+    media_type: mediaType,
+    release_date: releaseDate,
+    release_year: releaseDate ? getYearFromDate(releaseDate) : "",
+    isNormalized: true,
+  };
+}
+
 export function getNowPlayingMovies() {
   const nowPlayingMovieUrl = `${baseUrl}/movie/now_playing?api_key=${API_KEY}&language=SE&page=1`;
   return fetch(nowPlayingMovieUrl)
