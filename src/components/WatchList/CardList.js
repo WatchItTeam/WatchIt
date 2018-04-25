@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { normalizeMovie, getFullImgPath } from "../../api/APIUtils";
 import "../../css/CardList.scss";
 
@@ -10,7 +11,7 @@ function CardList({ movies }) {
         {
           movies.map((mov) => {
             const movie = normalizeMovie(mov);
-            const icon = (movie.media_type === "movie") ? "fa-film" : "fa-tv";
+            const icon = (movie.media_type === "movie") ? "film" : "tv";
             return (
               <li key={movie.id} className="card-list-item">
                 <img
@@ -22,12 +23,12 @@ function CardList({ movies }) {
                 <div className="info">
                   <div className="progress">{movie.progress}</div>
                   <div className="rating">
-                    <i className="fa fa-star" />
+                    <FontAwesomeIcon icon="star" />
                     {movie.my_rating}
                   </div>
                   <div className="added">added {movie.added}</div>
                   <div className="media-type">
-                    <i className={`fa ${icon}`} />
+                    <FontAwesomeIcon icon={icon} />
                   </div>
                 </div>
               </li>
