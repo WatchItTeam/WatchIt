@@ -41,7 +41,7 @@ class DynamicHeader extends Component {
 
     return (
       <Switch>
-        <Route path="/movie" render={() => darkHeader} />
+        <Route path="/:path(movie|tv)" render={() => darkHeader} />
         <Route render={() => defaultHeader} />
       </Switch>
     );
