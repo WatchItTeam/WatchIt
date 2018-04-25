@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import "../css/Searchbar.scss";
 
 /**
@@ -38,7 +39,7 @@ class Searchbar extends Component {
 
     return (
       <form className="searchbar" onSubmit={onSubmit}>
-        <i className="fa fa-search" />
+        <FontAwesomeIcon icon="search" />
         <input
           type="text"
           ref={this.inputRef}
@@ -48,7 +49,7 @@ class Searchbar extends Component {
         />
         {value && (
           <button type="button" onClick={this.clearText} className="clear-btn">
-            <i className="fa fa-times" />
+            <FontAwesomeIcon icon="times" />
           </button>
         )}
       </form>

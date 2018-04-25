@@ -1,6 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import PropTypes from "prop-types";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import "../css/MovieInfo.scss";
 
 /**
@@ -39,7 +40,7 @@ function MovieInformation({ currentMovie }) {
       return (
         <div>
           <div className="no-poster">
-            <i className="fa fa-image" />
+            <FontAwesomeIcon icon="image" />
           </div>
           <p>
             <b className="nameBorder" >{person.name}</b><br /> {person.character}

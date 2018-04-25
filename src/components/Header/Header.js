@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Fragment as F } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import Searchbar from "./Searchbar";
-import "../css/Header.scss";
+import { Desktop, Mobile } from "../Responsive";
+import DesktopHeader from "./DesktopHeader";
+import MobileHeader from "./MobileHeader";
+import "../../css/Header.scss";
 
 /**
  * The header, which includes search bar and user info
@@ -15,27 +17,15 @@ class Header extends Component {
   }
 
   render() {
-    const {
-      username, onSignOutClick, toggleSidebar, setSearchbarValue, searchbarValue, searchHandler,
-    } = this.props;
     return (
-      <header id="app-header">
-        <button id="toggle-btn" onClick={toggleSidebar}>
-          <i className="fa fa-bars" />
-        </button>
-        <Searchbar
-          value={searchbarValue}
-          search={searchHandler}
-          setSearchbarValue={setSearchbarValue}
-        />
-        <div id="user-info">
-          <div className="user-img" />
-          {username}
-          <button onClick={onSignOutClick}>
-            <i className="fa fa-sign-out-alt" /> Sign out
-          </button>
-        </div>
-      </header>
+      <F>
+        <Desktop>
+          <DesktopHeader {...this.props} />
+        </Desktop>
+        <Mobile>
+          <MobileHeader {...this.props} />
+        </Mobile>
+      </F>
     );
   }
 }
