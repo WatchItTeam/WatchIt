@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 
 /**
  * Dynamic header that changes depending on which route you are on
