@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { getFullImgPath, normalizeMovie } from "../../api/APIUtils";
+import ListDeleteBtn from "./ListDeleteBtn";
 import "../../css/TableList.scss";
 
-function TableList({ movies }) {
+function TableList({ movies, isEditMode, deleteEntry }) {
   return (
     <table className="watch-list-table">
       <thead>
@@ -14,6 +15,7 @@ function TableList({ movies }) {
           <th>My Rating</th>
           <th>Progress</th>
           <th>Added</th>
+          {isEditMode && <th className="delete-text">Delete</th>}
         </tr>
       </thead>
       <tbody>
@@ -36,6 +38,7 @@ function TableList({ movies }) {
                 <td>{movie.my_rating}</td>
                 <td>{movie.progress}</td>
                 <td>{movie.added}</td>
+                {isEditMode && <td><ListDeleteBtn onClick={() => deleteEntry(movie.id)} /></td>}
               </tr>
             );
           })
@@ -47,6 +50,8 @@ function TableList({ movies }) {
 
 TableList.propTypes = {
   movies: PropTypes.array.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
+  deleteEntry: PropTypes.func.isRequired,
 };
 
 export default TableList;

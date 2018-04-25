@@ -6,6 +6,16 @@
     padding: 0;
   }
 
+  .card-list-item-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin: 30px -12px;
+
+    &:first-child {
+      margin-top: 50px;
+    }
+  }
+
   .card-list-item {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -15,14 +25,9 @@
     border: 1px solid rgba($border-color, 0.7);
     border-radius: 5px;
     padding: 5px 15px 10px 15px;
-    margin: 30px -12px;
     grid-template-areas:
       "poster title"
       "poster info";
-
-    &:first-child {
-      margin-top: 50px;
-    }
 
     .poster {
       grid-area: poster;

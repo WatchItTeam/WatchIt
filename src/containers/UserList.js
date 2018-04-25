@@ -9,10 +9,22 @@ class UserList extends Component {
 
   state = {
     listName: "Completed",
+    isEditMode: false,
+  }
+
+  toggleEditMode = () => {
+    this.setState({
+      isEditMode: !this.state.isEditMode,
+    });
+  }
+
+  // TODO
+  deleteEntry = (id) => {
+    alert(`Delete item ${id}`);
   }
 
   render() {
-    const { listName } = this.state;
+    const { listName, isEditMode } = this.state;
     const tabLinks = {
       All: "/user/shit/all",
       Movies: "/user/shit/movies",
@@ -42,7 +54,14 @@ class UserList extends Component {
     ];
 
     return (
-      <ResponsiveList listName={listName} tabLinks={tabLinks} movies={movies} />
+      <ResponsiveList
+        listName={listName}
+        tabLinks={tabLinks}
+        movies={movies}
+        toggleEditMode={this.toggleEditMode}
+        deleteEntry={this.deleteEntry}
+        isEditMode={isEditMode}
+      />
     );
   }
 }
