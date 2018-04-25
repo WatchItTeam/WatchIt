@@ -155,7 +155,7 @@ class App extends Component {
               )}
             />
             <Route
-              path="/user/:userId/:list"
+              path="/user/:userId/:list/:mediaType?"
               render={props => (
                 <UserList
                   {...props}

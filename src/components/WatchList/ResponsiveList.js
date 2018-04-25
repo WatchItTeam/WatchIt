@@ -7,7 +7,7 @@ import TableList from "./TableList";
 import CardList from "./CardList";
 import "../../css/ResponsiveList.scss";
 
-function ResponsiveList({ listName, tabLinks, movies, toggleEditMode, deleteEntry, isEditMode }) {
+function ResponsiveList({ listName, tabLinks, entries, toggleEditMode, deleteEntry, isEditMode }) {
   const btnContent = isEditMode ? "Done" : <FontAwesomeIcon icon="edit" />;
   return (
     <section className="watch-list container">
@@ -19,10 +19,10 @@ function ResponsiveList({ listName, tabLinks, movies, toggleEditMode, deleteEntr
       </div>
       <Tabs links={tabLinks} />
       <Desktop>
-        <TableList movies={movies} isEditMode={isEditMode} deleteEntry={deleteEntry} />
+        <TableList entries={entries} isEditMode={isEditMode} deleteEntry={deleteEntry} />
       </Desktop>
       <Mobile>
-        <CardList movies={movies} isEditMode={isEditMode} deleteEntry={deleteEntry} />
+        <CardList entries={entries} isEditMode={isEditMode} deleteEntry={deleteEntry} />
       </Mobile>
     </section>
 
@@ -35,7 +35,7 @@ ResponsiveList.propTypes = {
   tabLinks: PropTypes.shape({
     name: PropTypes.string,
   }).isRequired,
-  movies: PropTypes.array.isRequired,
+  entries: PropTypes.array.isRequired,
   toggleEditMode: PropTypes.func.isRequired,
   deleteEntry: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,

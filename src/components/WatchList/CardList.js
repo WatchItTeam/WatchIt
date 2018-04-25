@@ -6,12 +6,12 @@ import { normalizeMovie, getFullImgPath } from "../../api/APIUtils";
 import ListDeleteBtn from "./ListDeleteBtn";
 import "../../css/CardList.scss";
 
-function CardList({ movies, isEditMode, deleteEntry }) {
+function CardList({ entries, isEditMode, deleteEntry }) {
   return (
     <div className="card-list">
       <ul>
         {
-          movies.map((mov) => {
+          entries.map((mov) => {
             const movie = normalizeMovie(mov);
             const icon = (movie.media_type === "movie") ? "film" : "tv";
             const url = `/${movie.media_type}/${movie.id}`;
@@ -52,7 +52,7 @@ function CardList({ movies, isEditMode, deleteEntry }) {
 }
 
 CardList.propTypes = {
-  movies: PropTypes.array.isRequired,
+  entries: PropTypes.array.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   deleteEntry: PropTypes.func.isRequired,
 };

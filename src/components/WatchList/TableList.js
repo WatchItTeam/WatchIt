@@ -5,7 +5,7 @@ import { getFullImgPath, normalizeMovie } from "../../api/APIUtils";
 import ListDeleteBtn from "./ListDeleteBtn";
 import "../../css/TableList.scss";
 
-function TableList({ movies, isEditMode, deleteEntry }) {
+function TableList({ entries, isEditMode, deleteEntry }) {
   return (
     <table className="watch-list-table">
       <thead>
@@ -20,7 +20,7 @@ function TableList({ movies, isEditMode, deleteEntry }) {
       </thead>
       <tbody>
         {
-          movies.map((mov) => {
+          entries.map((mov) => {
             const movie = normalizeMovie(mov);
             return (
               <tr key={movie.id}>
@@ -49,7 +49,7 @@ function TableList({ movies, isEditMode, deleteEntry }) {
 }
 
 TableList.propTypes = {
-  movies: PropTypes.array.isRequired,
+  entries: PropTypes.array.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   deleteEntry: PropTypes.func.isRequired,
 };
