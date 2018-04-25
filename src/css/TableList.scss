@@ -18,12 +18,14 @@
     td {
       margin-top: 20px;
       text-align: center;
+      padding: 0 5px;
     }
 
     .poster-name {
       display: flex;
       align-items: center;
       font-weight: 700;
+      text-align: left;
 
       .poster {
         width: 50px;
