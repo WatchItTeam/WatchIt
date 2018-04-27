@@ -10,6 +10,8 @@ import DetailspageContainer from "./DetailspageContainer";
 import UserList from "../containers/UserList";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import "../css/App.scss";
+import LoginPageContainer from "./LoginPageContainer";
+import firebase from "../Firebase/firebase";
 
 const SEARCH_DEBOUNCE_TIME = 500;
 
@@ -144,6 +146,11 @@ class App extends Component {
                   currentMovie={currentMovie}
                   setCurrentMovie={this.setCurrentMovie}
                 />)}
+            />
+            <Route
+              path="/login"
+              render={() => (
+                <LoginPageContainer />)}
             />
             <Route
               path="/search"

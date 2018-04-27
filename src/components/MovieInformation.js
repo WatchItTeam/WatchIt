@@ -98,3 +98,4 @@ MovieInformation.propTypes = {
 };
 
 export default MovieInformation;
+
