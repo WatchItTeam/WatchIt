@@ -6,6 +6,7 @@ import DetailsPage from "../components/DetailsPage";
 
 class DetailspageContainer extends Component {
   static propTypes = {
+    location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired, // from react-router
     currentMovie: PropTypes.object.isRequired,
     setCurrentMovie: PropTypes.func.isRequired,
@@ -16,6 +17,16 @@ class DetailspageContainer extends Component {
   }
 
   componentDidMount() {
+    this.getDetails();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.getDetails();
+    }
+  }
+
+  getDetails() {
     const { mediaType, id } = this.props.match.params;
 
     if (mediaType === "movie") {

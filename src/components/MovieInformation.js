@@ -1,37 +1,24 @@
 import React from "react";
-import Slider from "react-slick";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import PosterCard from "./PosterCard";
+import { normalizeMovie } from "../api/APIUtils";
 import "../css/MovieInfo.scss";
+import Scroll from "./Scroll";
 
 /**
  * Markup for the main content of the movie details page
  */
 function MovieInformation({ currentMovie }) {
-  const settings = {
-    dots: true,
-  };
-
-  const settingsCast = {
-    dots: true,
-    variableWidth: true,
-    slidesToShow: currentMovie.credits.cast.length < 7 ? currentMovie.credits.cast.length : 7,
-    slidesToScroll: currentMovie.credits.cast.length < 7 ? 1 : 10,
-  };
-
-  const settingsRecommendations = {
-    dots: true,
-    slidesToShow: currentMovie.recommendations.results.length < 1 ? 1 : 7,
-    slidesToScroll: currentMovie.recommendations.results.length < 1 ? 1 : 10,
-  };
-
   let trailers;
   if (currentMovie.videos.results.length === 0) {
     trailers = <div>No trailers to show</div>;
   } else {
     trailers =
     currentMovie.videos.results.map(trailer => (
-      <object height="500px" data={`https://www.youtube.com/embed/${trailer.key}`} >hnunu</object>
+      <div className="trailer">
+        <object className="trailer" data={`https://www.youtube.com/embed/${trailer.key}`} >hnunu</object>
+      </div>
     ));
   }
 
@@ -49,7 +36,7 @@ function MovieInformation({ currentMovie }) {
       );
     }
     return (
-      <div>
+      <div className="card">
         <img className="cast" src={`https://image.tmdb.org/t/p/w200/${person.profile_path}`} alt="cast" />
         <p>
           <b className="nameBorder" >{person.name}</b><br /> {person.character}
@@ -57,18 +44,30 @@ function MovieInformation({ currentMovie }) {
       </div>);
   });
 
-  let recommendations;
+  let recommendationsDosHermanos;
   if (currentMovie.recommendations.results.length === 0) {
-    recommendations = <div className="botPadd">No recommendations to show</div>;
+    recommendationsDosHermanos = <div className="botPadd">No recommendations to show</div>;
   } else {
-    recommendations = currentMovie.recommendations.results.map(movie => (
-      <div>
-        <img className="cast" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="recommendations" />
-        <p>
-          <b className="nameBorder" >{movie.title}</b>
-        </p>
-      </div>
-    ));
+    recommendationsDosHermanos = currentMovie.recommendations.results.map((mov) => {
+      const movie = normalizeMovie(mov);
+      return (
+        <div className="card">
+          {/*
+          <img className="cast" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt="recommendations" />
+          <p>
+            <b className="nameBorder" >{movie.title}</b>
+          </p>
+          */}
+          <PosterCard
+            key={movie.id}
+            linkTo={`/${(movie.media_type)}/${movie.id}`}
+            title={movie.title}
+            posterPath={movie.poster_path}
+            releaseDate={movie.release_year}
+          />
+        </div>
+      );
+    });
   }
 
   return (
@@ -76,19 +75,19 @@ function MovieInformation({ currentMovie }) {
       <h2>Story</h2>
       {currentMovie.overview}
       <h2>Trailers</h2>
-      <Slider {...settings}>
+      <Scroll>
         {trailers}
-      </Slider>
+      </Scroll>
       <h2>Cast</h2>
-      <Slider {...settingsCast}>
+      <Scroll>
         {cast}
-      </Slider>
+      </Scroll>
       <h2>
         You may also like
       </h2>
-      <Slider {...settingsRecommendations}>
-        {recommendations}
-      </Slider>
+      <Scroll>
+        {recommendationsDosHermanos}
+      </Scroll>
     </div>
   );
 }

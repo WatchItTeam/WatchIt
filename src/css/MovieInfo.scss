@@ -26,8 +26,6 @@
         min-height: 195px;
         object-fit: cover;
         border-radius: 4px;
-        padding-right:10px;
-        padding-left:10px;
       }
 .nameBorder {
     font-weight: 800;
@@ -47,18 +45,35 @@ h2 {
 .no-poster {
     text-align: center;
     border-radius: 4px;
-    width: 85%;
-    min-height: 195px;
-    height: 100%;
+    width: 150px;
+    height: 225px;
     background: #eeeeee;
     font-size: 2em;
     color: #d3d3d3;
     display: flex !important;
     align-items: center;
     justify-content: center;
-    margin-right:10px !important;
-    margin-left:10px !important;
+    margin-right:20px;
   }
   .botPadd {
       padding-bottom: 100px;
+  }
+  .scrolling-wrapper-flexbox {
+    &::-webkit-scrollbar {
+        display: none;
+      }
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    .card {
+      width:150px;
+      flex: 0 0 auto;
+      margin-right: 20px;
+    }
+    .trailer {
+      width: 100%;
+      flex: 0 0 auto;
+      height: 500px;
+    }
   }
