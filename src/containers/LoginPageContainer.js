@@ -15,7 +15,6 @@ class LoginPageContainer extends Component {
   }
 
   render() {
-    console.log("loginlogingn")
     if (this.state.error) {
       return (
         <ErrorMessage>Oops! Could not load login page :(</ErrorMessage>
