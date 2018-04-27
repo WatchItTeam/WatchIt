@@ -1,17 +1,27 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withRouter, Switch, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
 import HomepageContainer from "./HomepageContainer";
+import SearchpageContainer from "./SearchpageContainer";
 import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
+import DynamicHeader from "../containers/DynamicHeader";
 import DetailspageContainer from "./DetailspageContainer";
+import UserList from "../containers/UserList";
+import createDebouncedFunc from "../utils/createDebouncedFunc";
 import "../css/App.scss";
 
+const SEARCH_DEBOUNCE_TIME = 500;
+
 class App extends Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired, // from react-router
+  }
+
   /**
- * This function makes the sidebar close whenever
- * the user clicks a link in the sidebar
- */
+   * This function makes the sidebar close whenever
+   * the user clicks a link in the sidebar
+   */
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.location !== nextProps.location) {
       return {
@@ -29,6 +39,12 @@ class App extends Component {
     nowPlayingMovies: [],
     nowAiringTVShows: [],
     currentMovie: {},
+    searchResults: {
+      results: [],
+      currentPage: null,
+      totalResults: null,
+      totalPages: null,
+    },
   }
 
   setCurrentMovie = (currentMovie) => {
@@ -43,6 +59,10 @@ class App extends Component {
     this.setState({ nowAiringTVShows });
   }
 
+  setSearchResults = (searchResults) => {
+    this.setState({ searchResults });
+  }
+
   toggleSidebar = () => {
     this.setState({ sidebarIsOpen: !this.state.sidebarIsOpen });
   }
@@ -51,9 +71,19 @@ class App extends Component {
     this.setState({ sidebarIsOpen: false });
   }
 
-  searchHandler = (e) => {
-    this.setState({ searchWords: e.target.value });
-    // TODO what happens when the search input changes
+  searchHandler = (query) => {
+    this.setSearchbarValue(query);
+    this.search(query);
+  }
+
+  search = createDebouncedFunc((query) => {
+    // don't need to search if the user just clears the search bar
+    if (query === "") return;
+    this.props.history.push(`/search?query=${query}`);
+  }, SEARCH_DEBOUNCE_TIME)
+
+  setSearchbarValue = (searchWords) => {
+    this.setState({ searchWords });
   }
 
   signOut = () => {
@@ -62,7 +92,15 @@ class App extends Component {
   }
 
   render() {
-    const { lists, sidebarIsOpen, nowPlayingMovies, nowAiringTVShows, currentMovie } = this.state;
+    const {
+      lists,
+      sidebarIsOpen,
+      nowPlayingMovies,
+      nowAiringTVShows,
+      searchResults,
+      currentMovie,
+    } = this.state;
+
     const sidebarOverlay = (
       <div
         id="overlay"
@@ -77,10 +115,11 @@ class App extends Component {
         {sidebarOverlay}
         <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} lists={lists} />
         <div id="main-container">
-          <Header
+          <DynamicHeader
             username="Robert Kindwall"
             toggleSidebar={this.toggleSidebar}
-            onSearchChange={this.searchHandler}
+            searchHandler={this.searchHandler}
+            setSearchbarValue={this.setSearchbarValue}
             searchbarValue={this.state.searchWords}
             onSignOutClick={this.signOut}
           />
@@ -98,12 +137,28 @@ class App extends Component {
             />
             <Route
               exact
-              path="/movie/:id"
+              path="/:mediaType(movie|tv)/:id"
               render={props => (
                 <DetailspageContainer
                   {...props}
                   currentMovie={currentMovie}
                   setCurrentMovie={this.setCurrentMovie}
+                />)}
+            />
+            <Route
+              path="/search"
+              render={() => (
+                <SearchpageContainer
+                  searchResults={searchResults}
+                  setSearchResults={this.setSearchResults}
+                />
+              )}
+            />
+            <Route
+              path="/user/:userId/:list/:mediaType?"
+              render={props => (
+                <UserList
+                  {...props}
                 />)}
             />
             <Route render={() => <div>404</div>} />
