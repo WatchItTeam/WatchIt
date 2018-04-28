@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withRouter, Switch, Route } from "react-router-dom";
+import { withRouter, Switch, Route, Redirect } from "react-router-dom";
+import { UserProvider } from "../Firebase/UserContext";
 import ScrollToTop from "../components/ScrollToTop";
 import HomepageContainer from "./HomepageContainer";
 import SearchpageContainer from "./SearchpageContainer";
@@ -9,9 +10,8 @@ import DynamicHeader from "../containers/DynamicHeader";
 import DetailspageContainer from "./DetailspageContainer";
 import UserList from "../containers/UserList";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
-import "../css/App.scss";
 import LoginPageContainer from "./LoginPageContainer";
-import firebase from "../Firebase/firebase";
+import "../css/App.scss";
 
 const SEARCH_DEBOUNCE_TIME = 500;
 
@@ -35,7 +35,6 @@ class App extends Component {
   }
 
   state = {
-    lists: [],
     sidebarIsOpen: false, // only affects mobile
     searchWords: "",
     nowPlayingMovies: [],
@@ -95,7 +94,6 @@ class App extends Component {
 
   render() {
     const {
-      lists,
       sidebarIsOpen,
       nowPlayingMovies,
       nowAiringTVShows,
@@ -113,65 +111,65 @@ class App extends Component {
     );
 
     return (
-      <ScrollToTop>
-        {sidebarOverlay}
-        <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} lists={lists} />
-        <div id="main-container">
-          <DynamicHeader
-            username="Robert Kindwall"
-            toggleSidebar={this.toggleSidebar}
-            searchHandler={this.searchHandler}
-            setSearchbarValue={this.setSearchbarValue}
-            searchbarValue={this.state.searchWords}
-            onSignOutClick={this.signOut}
-          />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <HomepageContainer
-                  movies={nowPlayingMovies}
-                  series={nowAiringTVShows}
-                  setNowPlayingMovies={this.setNowPlayingMovies}
-                  setNowAiringTVShows={this.setNowAiringTVShows}
-                />)}
+      <UserProvider>
+        <ScrollToTop>
+          {sidebarOverlay}
+          <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} />
+          <div id="main-container">
+            <DynamicHeader
+              username="Robert Kindwall"
+              toggleSidebar={this.toggleSidebar}
+              searchHandler={this.searchHandler}
+              setSearchbarValue={this.setSearchbarValue}
+              searchbarValue={this.state.searchWords}
+              onSignOutClick={this.signOut}
             />
-            <Route
-              exact
-              path="/:mediaType(movie|tv)/:id"
-              render={props => (
-                <DetailspageContainer
-                  {...props}
-                  currentMovie={currentMovie}
-                  setCurrentMovie={this.setCurrentMovie}
-                />)}
-            />
-            <Route
-              path="/login"
-              render={() => (
-                <LoginPageContainer />)}
-            />
-            <Route
-              path="/search"
-              render={() => (
-                <SearchpageContainer
-                  searchResults={searchResults}
-                  setSearchResults={this.setSearchResults}
-                />
-              )}
-            />
-            <Route
-              path="/user/:userId/:list/:mediaType?"
-              render={props => (
-                <UserList
-                  {...props}
-                />)}
-            />
-            <Route render={() => <div>404</div>} />
-          </Switch>
-        </div>
-      </ScrollToTop>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <HomepageContainer
+                    movies={nowPlayingMovies}
+                    series={nowAiringTVShows}
+                    setNowPlayingMovies={this.setNowPlayingMovies}
+                    setNowAiringTVShows={this.setNowAiringTVShows}
+                  />)}
+              />
+              <Route
+                exact
+                path="/:mediaType(movie|tv)/:id"
+                render={props => (
+                  <DetailspageContainer
+                    {...props}
+                    currentMovie={currentMovie}
+                    setCurrentMovie={this.setCurrentMovie}
+                  />)}
+              />
+              <Route
+                path="/login"
+                render={() => (
+                  <LoginPageContainer />)}
+              />
+              <Route
+                path="/search"
+                render={() => (
+                  <SearchpageContainer
+                    searchResults={searchResults}
+                    setSearchResults={this.setSearchResults}
+                  />
+                )}
+              />
+              <Route exact path="/user/:userId/:listName/" render={() => <Redirect to="all" />} />
+              <Route
+                path="/user/:userId/:listName(watching|plan_to_watch|completed|dropped)/:mediaType(all|movies|tv)"
+                component={UserList}
+              />
+              <Route render={() => <div>404</div>} />
+            </Switch>
+          </div>
+        </ScrollToTop>
+      </UserProvider>
     );
   }
 }

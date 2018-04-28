@@ -2,12 +2,26 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import SidebarNavLink from "./SidebarNavLink";
+import { withUser } from "../Firebase/UserContext";
 import "../css/Sidebar.scss";
 
 /**
  * Markup for the sidebar
  */
-function Sidebar({ isOpen, lists }) {
+function Sidebar({ isOpen, user }) {
+  let listContent;
+  if (user) {
+    const { uid } = user;
+    listContent = (
+      <nav>
+        <SidebarNavLink to={`/user/${uid}/watching/`}>Watching</SidebarNavLink>
+        <SidebarNavLink to={`/user/${uid}/plan_to_watch/`}>Plan to watch</SidebarNavLink>
+        <SidebarNavLink to={`/user/${uid}/completed/`}>Completed</SidebarNavLink>
+        <SidebarNavLink to={`/user/${uid}/dropped/`}>Dropped</SidebarNavLink>
+      </nav>
+    );
+  }
+
   return (
     <div id="sidebar" className={isOpen ? "open" : "closed"}>
       <h1 id="logo">WatchIt</h1>
@@ -27,20 +41,18 @@ function Sidebar({ isOpen, lists }) {
       <div className="divisor" />
 
       <h2>My lists</h2>
-      <SidebarNavLink to="/user/shit/completed">Completed</SidebarNavLink>
-      {
-        lists.map(list => <SidebarNavLink to={`/list/${list.id}`}>{list.name}</SidebarNavLink>)
-      }
+      {listContent}
     </div>
   );
 }
 
-Sidebar.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  lists: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-  })).isRequired,
+Sidebar.defaultProps = {
+  user: null,
 };
 
-export default Sidebar;
+Sidebar.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  user: PropTypes.object,
+};
+
+export default withUser(Sidebar);
