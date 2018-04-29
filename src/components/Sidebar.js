@@ -2,26 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import SidebarNavLink from "./SidebarNavLink";
-import { withUser } from "../Firebase/UserContext";
+import { SignedIn, SignedOut } from "./UserState/UserState";
 import "../css/Sidebar.scss";
 
 /**
  * Markup for the sidebar
  */
-function Sidebar({ isOpen, user }) {
-  let listContent;
-  if (user) {
-    const { uid } = user;
-    listContent = (
-      <nav>
-        <SidebarNavLink to={`/user/${uid}/watching/`}>Watching</SidebarNavLink>
-        <SidebarNavLink to={`/user/${uid}/plan_to_watch/`}>Plan to watch</SidebarNavLink>
-        <SidebarNavLink to={`/user/${uid}/completed/`}>Completed</SidebarNavLink>
-        <SidebarNavLink to={`/user/${uid}/dropped/`}>Dropped</SidebarNavLink>
-      </nav>
-    );
-  }
-
+function Sidebar({ isOpen }) {
   return (
     <div id="sidebar" className={isOpen ? "open" : "closed"}>
       <h1 id="logo">WatchIt</h1>
@@ -41,18 +28,25 @@ function Sidebar({ isOpen, user }) {
       <div className="divisor" />
 
       <h2>My lists</h2>
-      {listContent}
+      <SignedIn>
+        {user => (
+          <nav>
+            <SidebarNavLink to={`/user/${user.uid}/watching/`}>Watching</SidebarNavLink>
+            <SidebarNavLink to={`/user/${user.uid}/plan_to_watch/`}>Plan to watch</SidebarNavLink>
+            <SidebarNavLink to={`/user/${user.uid}/completed/`}>Completed</SidebarNavLink>
+            <SidebarNavLink to={`/user/${user.uid}/dropped/`}>Dropped</SidebarNavLink>
+          </nav>
+        )}
+      </SignedIn>
+      <SignedOut>
+        <p>Log in to view your lists</p>
+      </SignedOut>
     </div>
   );
 }
 
-Sidebar.defaultProps = {
-  user: null,
-};
-
 Sidebar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  user: PropTypes.object,
 };
 
-export default withUser(Sidebar);
+export default Sidebar;

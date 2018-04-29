@@ -9,19 +9,26 @@ const { Provider, Consumer: UserConsumer } = createContext();
  * without having to pass down any props.
  * The Provider component sends the user value down, and the consumer allows
  * you to actually use it.
+ *
+ * The user object will have status "loading", "signedIn" or "signedOut"
+ * depending on its state.
  */
-class UserProvider extends Component {
+export class UserProvider extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
   }
 
   state = {
-    user: null,
+    user: {
+      status: "loading",
+    },
   }
 
   componentDidMount() {
     firebaseApp.auth().onAuthStateChanged((user) => {
-      this.setState({ user });
+      const status = user ? "signedIn" : "signedOut";
+      const userObj = { ...user, status };
+      this.setState({ user: userObj });
     });
   }
 
@@ -41,7 +48,7 @@ class UserProvider extends Component {
  * Usage:
  * export default withUser(YourComponent);
  */
-function withUser(Comp) {
+export function withUser(Comp) {
   return function ComponentWithUser(props) {
     return (
       <UserConsumer>
@@ -50,5 +57,3 @@ function withUser(Comp) {
     );
   };
 }
-
-export { UserProvider, withUser };
