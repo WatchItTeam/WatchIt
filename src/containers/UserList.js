@@ -19,7 +19,7 @@ class UserList extends Component {
 
   state = {
     errorMsg: "",
-    listDisplayName: "Completed",
+    listDisplayName: "",
     isEditMode: false,
     listEntries: [
       // placeholder data
