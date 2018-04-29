@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/LoginButton.scss";
+import "../../css/LoginButton.scss";
 
 /**
  * Reusable button with the primary button style

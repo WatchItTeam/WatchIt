@@ -33,6 +33,7 @@ class Header extends Component {
 Header.propTypes = {
   location: PropTypes.object.isRequired, // from react-router
   username: PropTypes.string.isRequired,
+  setUsername: PropTypes.func.isRequired,
   toggleSidebar: PropTypes.func.isRequired,
   onSignOutClick: PropTypes.func.isRequired,
   searchbarValue: PropTypes.string.isRequired,

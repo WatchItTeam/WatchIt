@@ -10,7 +10,6 @@ import DetailspageContainer from "./DetailspageContainer";
 import UserList from "../containers/UserList";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import "../css/App.scss";
-import LoginPageContainer from "./LoginPageContainer";
 import firebase from "../Firebase/firebase";
 
 const SEARCH_DEBOUNCE_TIME = 500;
@@ -35,6 +34,7 @@ class App extends Component {
   }
 
   state = {
+    username: "",
     lists: [],
     sidebarIsOpen: false, // only affects mobile
     searchWords: "",
@@ -89,9 +89,16 @@ class App extends Component {
   }
 
   signOut = () => {
-    // TODO what happens when the sign out button is clicked
+    firebase.auth().signOut();
     console.log("sign out clicked");
+    console.log("Update forced");
+    this.forceUpdate();
   }
+
+  setUsername = (username) => {
+    this.setState({ username });
+  }
+
 
   render() {
     const {
@@ -118,7 +125,8 @@ class App extends Component {
         <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} lists={lists} />
         <div id="main-container">
           <DynamicHeader
-            username="Robert Kindwall"
+            setUsername={this.setUsername}
+            username={this.state.username}
             toggleSidebar={this.toggleSidebar}
             searchHandler={this.searchHandler}
             setSearchbarValue={this.setSearchbarValue}
@@ -146,11 +154,6 @@ class App extends Component {
                   currentMovie={currentMovie}
                   setCurrentMovie={this.setCurrentMovie}
                 />)}
-            />
-            <Route
-              path="/login"
-              render={() => (
-                <LoginPageContainer />)}
             />
             <Route
               path="/search"
