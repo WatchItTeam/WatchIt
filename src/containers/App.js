@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withRouter, Switch, Route } from "react-router-dom";
+import { withRouter, Switch, Route, Redirect } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
 import HomepageContainer from "./HomepageContainer";
 import SearchpageContainer from "./SearchpageContainer";
@@ -8,6 +8,7 @@ import Sidebar from "../components/Sidebar";
 import DynamicHeader from "../containers/DynamicHeader";
 import DetailspageContainer from "./DetailspageContainer";
 import UserList from "../containers/UserList";
+import BrowseMoviesContainer from "./BrowseMoviesContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import "../css/App.scss";
 
@@ -134,6 +135,19 @@ class App extends Component {
                   setNowPlayingMovies={this.setNowPlayingMovies}
                   setNowAiringTVShows={this.setNowAiringTVShows}
                 />)}
+            />
+            <Route
+              exact
+              path="/movies"
+              render={() => (
+                <Redirect to="/movies/top" />
+              )}
+            />
+            <Route
+              path="/movies/:filter/:id?"
+              render={props => (
+                <BrowseMoviesContainer {...props} />
+              )}
             />
             <Route
               exact
