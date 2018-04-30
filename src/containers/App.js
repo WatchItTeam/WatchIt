@@ -140,7 +140,7 @@ class App extends Component {
               exact
               path="/movies"
               render={() => (
-                <Redirect to="/movies/top" />
+                <Redirect to="/movies/popular" />
               )}
             />
             <Route
