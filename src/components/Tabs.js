@@ -10,7 +10,7 @@ function Tabs({ links }) {
         {
           Object.entries(links).map(([name, url]) => (
             <li key={name}>
-              <NavLink className="tab-link" exact to={url}>{name}</NavLink>
+              <NavLink className="tab-link" to={url}>{name}</NavLink>
             </li>
           ))
         }

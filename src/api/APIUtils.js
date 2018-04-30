@@ -79,6 +79,27 @@ export function getMovieInfo(id) {
     .then(checkResponse);
 }
 
+export function getGenres() {
+  const genreUrl = `${baseUrl}/genre/movie/list?api_key=${API_KEY}&language=en-US`;
+  return fetch(genreUrl)
+    .then(checkResponse)
+    .then(json => json.genres);
+}
+
+export function getGenreMovies(genre) {
+  const genreMovieUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
+  return fetch(genreMovieUrl)
+    .then(checkResponse)
+    .then(json => json.results);
+}
+
+export function getMoviesFromType(type) {
+  const moviesUrl = `${baseUrl}/movie/${type}?api_key=${API_KEY}&language=en-US&language=en-US&page=1`;
+  return fetch(moviesUrl)
+    .then(checkResponse)
+    .then(json => json.results);
+}
+
 export async function getTVInfo(id) {
   const url = `${baseUrl}/tv/${id}?api_key=${API_KEY}&append_to_response=videos,credits,recommendations`;
   const res = await fetch(url);
