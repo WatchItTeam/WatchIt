@@ -58,6 +58,7 @@ BrowseMoviesPage.propTypes = {
   genreTitle: PropTypes.string.isRequired,
   genres: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
+  error: PropTypes.bool.isRequired,
 };
 
 export default BrowseMoviesPage;
