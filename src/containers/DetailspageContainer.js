@@ -28,6 +28,7 @@ class DetailspageContainer extends Component {
 
   getDetails() {
     const { mediaType, id } = this.props.match.params;
+    this.setState({ hasLoaded: false });
 
     if (mediaType === "movie") {
       getMovieInfo(id)
@@ -59,7 +60,7 @@ class DetailspageContainer extends Component {
       );
     }
     if (!this.state.hasLoaded) {
-      return null;
+      return <div style={{ marginTop: "100px" }} className="container">Loading...</div>;
     }
     return (
       <DetailsPage currentMovie={this.props.currentMovie} />

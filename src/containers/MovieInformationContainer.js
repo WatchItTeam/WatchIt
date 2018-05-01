@@ -23,6 +23,7 @@ class MovieInformation extends Component {
     }
     updateTrailer = () => {
       if (this.props.currentMovie.videos.results.length === 0) {
+        this.setState({ source: null });
         return;
       }
       this.setState({ source: `https://www.youtube.com/embed/${this.props.currentMovie.videos.results[this.index].key}` });
