@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import BrowsePage from "../components/BrowsePage";
-import { getMoviesFromType, getGenreMovies, getMovieGenres } from "../api/APIUtils";
+import { getShowsFromType, getGenreShows, getShowGenres } from "../api/APIUtils";
 
-class BrowseMoviesContainer extends Component {
+class BrowseTvContainer extends Component {
   state = { movies: [], genreTitle: "", genres: [], isLoading: false, error: false };
 
   componentDidMount() {
-    getMovieGenres()
+    getShowGenres()
       .then((genres) => {
         this.setState({ genres });
         this.getMoviesFromTab();
@@ -33,19 +33,19 @@ class BrowseMoviesContainer extends Component {
     this.setState({ movies: [], genreTitle: "", isLoading: true });
 
     if (filter === "top") {
-      getMoviesFromType("top_rated")
+      getShowsFromType("top_rated")
         .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: true });
         });
-    } else if (filter === "upcoming") {
-      getMoviesFromType("upcoming")
+    } else if (filter === "airing") {
+      getShowsFromType("airing_today")
         .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: true });
         });
     } else if (filter === "popular") {
-      getMoviesFromType("popular")
+      getShowsFromType("popular")
         .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: true });
@@ -53,7 +53,7 @@ class BrowseMoviesContainer extends Component {
     } else if (filter === "genre") {
       if (id) {
         this.setGenreTitle(id);
-        getGenreMovies(id)
+        getGenreShows(id)
           .then(movies => this.setState({ movies, isLoading: false }))
           .catch(() => {
             this.setState({ error: true });
@@ -66,10 +66,10 @@ class BrowseMoviesContainer extends Component {
 
   render() {
     const tabLinks = {
-      Popular: "/movies/popular",
-      Top: "/movies/top",
-      Upcoming: "/movies/upcoming",
-      Genre: "/movies/genre",
+      Popular: "/shows/popular",
+      Top: "/shows/top",
+      Airing: "/shows/airing",
+      Genre: "/shows/genre",
     };
     return (
       <BrowsePage
@@ -80,15 +80,15 @@ class BrowseMoviesContainer extends Component {
         genreTitle={this.state.genreTitle}
         isLoading={this.state.isLoading}
         error={this.state.error}
-        type="movies"
+        type="shows"
       />
     );
   }
 }
 
-BrowseMoviesContainer.propTypes = {
+BrowseTvContainer.propTypes = {
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
 };
 
-export default BrowseMoviesContainer;
+export default BrowseTvContainer;

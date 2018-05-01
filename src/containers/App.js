@@ -10,6 +10,7 @@ import DynamicHeader from "../containers/DynamicHeader";
 import DetailspageContainer from "./DetailspageContainer";
 import UserList from "../containers/UserList";
 import BrowseMoviesContainer from "./BrowseMoviesContainer";
+import BrowseTvContainer from "./BrowseTvContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import LoginPageContainer from "./LoginPageContainer";
 import "../css/App.scss";
@@ -136,6 +137,19 @@ class App extends Component {
                     setNowPlayingMovies={this.setNowPlayingMovies}
                     setNowAiringTVShows={this.setNowAiringTVShows}
                   />)}
+              />
+              <Route
+                exact
+                path="/shows"
+                render={() => (
+                  <Redirect to="/shows/popular" />
+                )}
+              />
+              <Route
+                path="/shows/:filter/:id?"
+                render={props => (
+                  <BrowseTvContainer {...props} />
+                )}
               />
               <Route
                 exact

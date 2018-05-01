@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import BrowseGenrePage from "../components/BrowseGenrePage";
+import BrowseGenre from "../components/BrowseGenre";
 
 class BrowseGenresContainer extends Component {
   static getDerivedStateFromProps(props) {
@@ -11,9 +11,10 @@ class BrowseGenresContainer extends Component {
 
   render() {
     return (
-      <BrowseGenrePage
+      <BrowseGenre
         genres={this.props.genres}
         genreId={this.state.genreId}
+        type={this.props.type}
       />
     );
   }
@@ -21,6 +22,7 @@ class BrowseGenresContainer extends Component {
 
 BrowseGenresContainer.propTypes = {
   genres: PropTypes.array.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default BrowseGenresContainer;
