@@ -73,7 +73,6 @@ class BrowseTvContainer extends Component {
     };
     return (
       <BrowsePage
-        {...this.props}
         genres={this.state.genres}
         movies={this.state.movies}
         tabLinks={tabLinks}

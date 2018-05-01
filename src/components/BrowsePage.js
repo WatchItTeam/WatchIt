@@ -13,8 +13,7 @@ function BrowsePage({
   genreTitle,
   type,
   isLoading,
-  error,
-  ...props }) {
+  error }) {
   let titleTabs;
 
   if (type === "movies") {
@@ -57,7 +56,7 @@ function BrowsePage({
           <Route
             exact
             path="/movies/genre/"
-            render={() =>
+            render={props =>
               <BrowseGenresContainer {...props} genres={genres} type={type} />
             }
           />
@@ -80,7 +79,7 @@ function BrowsePage({
           <Route
             exact
             path="/shows/genre/"
-            render={() =>
+            render={props =>
               <BrowseGenresContainer {...props} genres={genres} type={type} />
             }
           />
