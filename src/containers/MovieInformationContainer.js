@@ -40,46 +40,63 @@ class MovieInformation extends Component {
       this.updateTrailer();
     }
     render() {
-      const cast = this.props.currentMovie.credits.cast.map((person) => {
-        if (person.profile_path === null) {
-          return (
-            <div key={person.id}>
-              <div className="no-poster">
-                <FontAwesomeIcon icon="image" />
-              </div>
-              <p>
-                <b className="nameBorder" >{person.name}</b><br /> {person.character}
-              </p>
-            </div>
-          );
-        }
-        return (
-          <div className="card" key={person.id}>
-            <img className="cast" src={`https://image.tmdb.org/t/p/w200/${person.profile_path}`} alt="cast" />
-            <p>
-              <b className="nameBorder" >{person.name}</b><br /> {person.character}
-            </p>
-          </div>);
-      });
+      let cast;
+      if (this.props.currentMovie.recommendations.results.length === 0) {
+        cast = <div>No cast to show</div>;
+      } else {
+        cast = (
+          <Scroll>
+            {
+              this.props.currentMovie.credits.cast.map((person) => {
+                if (person.profile_path === null) {
+                  return (
+                    <div key={person.id}>
+                      <div className="no-poster">
+                        <FontAwesomeIcon icon="image" />
+                      </div>
+                      <p>
+                        <b className="nameBorder" >{person.name}</b><br /> {person.character}
+                      </p>
+                    </div>
+                  );
+                }
+                return (
+                  <div className="card" key={person.id}>
+                    <img className="cast" src={`https://image.tmdb.org/t/p/w200/${person.profile_path}`} alt="cast" />
+                    <p>
+                      <b className="nameBorder" >{person.name}</b><br /> {person.character}
+                    </p>
+                  </div>);
+              })
+            }
+          </Scroll>
+        );
+      }
 
       let recommendations;
       if (this.props.currentMovie.recommendations.results.length === 0) {
         recommendations = <div className="botPadding">No recommendations to show</div>;
       } else {
-        recommendations = this.props.currentMovie.recommendations.results.map((mov) => {
-          const movie = normalizeMovie(mov);
-          return (
-            <div className="card" key={movie.id}>
-              <PosterCard
-                key={movie.id}
-                linkTo={`/${(movie.media_type)}/${movie.id}`}
-                title={movie.title}
-                posterPath={movie.poster_path}
-                releaseDate={movie.release_year}
-              />
-            </div>
-          );
-        });
+        recommendations = (
+          <Scroll>
+            {
+              this.props.currentMovie.recommendations.results.map((mov) => {
+                const movie = normalizeMovie(mov);
+                return (
+                  <div className="card" key={movie.id}>
+                    <PosterCard
+                      key={movie.id}
+                      linkTo={`/${(movie.media_type)}/${movie.id}`}
+                      title={movie.title}
+                      posterPath={movie.poster_path}
+                      releaseDate={movie.release_year}
+                    />
+                  </div>
+                );
+              })
+            }
+          </Scroll>
+        );
       }
       let trailers;
       if (this.props.currentMovie.videos.results.length === 0) {
@@ -103,15 +120,11 @@ class MovieInformation extends Component {
           <h2>Trailers</h2>
           {trailers}
           <h2>Cast</h2>
-          <Scroll>
-            {cast}
-          </Scroll>
+          {cast}
           <h2>
             You may also like
           </h2>
-          <Scroll>
-            {recommendations}
-          </Scroll>
+          {recommendations}
         </div>
       );
     }
