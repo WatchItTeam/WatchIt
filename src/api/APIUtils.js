@@ -54,7 +54,7 @@ export function normalizeMovie(movie) {
  */
 async function checkResponse(res) {
   const json = await res.json();
-  if (json.status_code === API_ERROR_CODE) throw new Error();
+  if (json.status_code === API_ERROR_CODE || json.status_code === 34) throw new Error();
 
   return json;
 }

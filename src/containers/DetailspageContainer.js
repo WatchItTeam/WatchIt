@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { getMovieInfo, getTVInfo } from "../api/APIUtils";
 import ErrorMessage from "../components/ErrorMessage";
 import DetailsPage from "../components/DetailsPage";
+import "../css/Detailspage.scss";
 
 class DetailspageContainer extends Component {
   static propTypes = {
@@ -44,7 +46,14 @@ class DetailspageContainer extends Component {
   render() {
     if (this.state.error) {
       return (
-        <ErrorMessage>Oops! Could not load detailspage :(</ErrorMessage>
+        <div>
+          <div className="no-poster3">
+            <FontAwesomeIcon icon="image" />
+          </div>
+          <ErrorMessage>
+            <div>Oops! Could not load detailspage :(</div>
+          </ErrorMessage>
+        </div>
       );
     }
     if (!this.state.hasLoaded) {
