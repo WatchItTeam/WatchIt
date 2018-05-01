@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/WatchItTeam/WatchIt/issues"
   },
-  "homepage": "https://watchitteam.github.io/WatchIt",
+  "homepage": "https://watchit.fun",
   "devDependencies": {
     "babel-core": "^6.26.2",
     "babel-eslint": "^8.2.3",
@@ -63,7 +63,6 @@
     "react-infinite-scroller": "^1.1.4",
     "react-responsive": "^4.1.0",
     "react-router-dom": "^4.2.2",
-    "react-slick": "^0.23.1",
     "url-search-params-polyfill": "^3.0.0",
     "whatwg-fetch": "^2.0.4"
   }

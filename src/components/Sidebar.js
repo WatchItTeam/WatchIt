@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import SidebarNavLink from "./SidebarNavLink";
+import { SignedIn, SignedOut } from "./UserState/UserState";
 import "../css/Sidebar.scss";
 
 /**
  * Markup for the sidebar
  */
-function Sidebar({ isOpen, lists }) {
+function Sidebar({ isOpen }) {
   return (
     <div id="sidebar" className={isOpen ? "open" : "closed"}>
       <h1 id="logo">WatchIt</h1>
@@ -27,20 +28,25 @@ function Sidebar({ isOpen, lists }) {
       <div className="divisor" />
 
       <h2>My lists</h2>
-      <SidebarNavLink to="/user/shit/completed">Completed</SidebarNavLink>
-      {
-        lists.map(list => <SidebarNavLink to={`/list/${list.id}`}>{list.name}</SidebarNavLink>)
-      }
+      <SignedIn>
+        {user => (
+          <nav>
+            <SidebarNavLink to={`/user/${user.uid}/watching/`}>Watching</SidebarNavLink>
+            <SidebarNavLink to={`/user/${user.uid}/plan_to_watch/`}>Plan to watch</SidebarNavLink>
+            <SidebarNavLink to={`/user/${user.uid}/completed/`}>Completed</SidebarNavLink>
+            <SidebarNavLink to={`/user/${user.uid}/dropped/`}>Dropped</SidebarNavLink>
+          </nav>
+        )}
+      </SignedIn>
+      <SignedOut>
+        <p>Log in to view your lists</p>
+      </SignedOut>
     </div>
   );
 }
 
 Sidebar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  lists: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-  })).isRequired,
 };
 
 export default Sidebar;

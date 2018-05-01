@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import DetailsBanner from "./DetailsBanner";
 import DetailsTitle from "./DetailsTitle";
-import MovieInformation from "./MovieInformation";
+import MovieInformation from "../containers/MovieInformationContainer";
+
 
 /**
  * Markup for the details page

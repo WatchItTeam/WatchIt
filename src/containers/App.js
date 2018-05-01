@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withRouter, Switch, Route } from "react-router-dom";
+import { withRouter, Switch, Route, Redirect } from "react-router-dom";
+import { UserProvider } from "../Firebase/UserContext";
 import ScrollToTop from "../components/ScrollToTop";
 import HomepageContainer from "./HomepageContainer";
 import SearchpageContainer from "./SearchpageContainer";
@@ -8,9 +9,10 @@ import Sidebar from "../components/Sidebar";
 import DynamicHeader from "../containers/DynamicHeader";
 import DetailspageContainer from "./DetailspageContainer";
 import UserList from "../containers/UserList";
+import BrowseMoviesContainer from "./BrowseMoviesContainer";
+import BrowseTvContainer from "./BrowseTvContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import "../css/App.scss";
-import firebase from "../Firebase/firebase";
 
 const SEARCH_DEBOUNCE_TIME = 500;
 
@@ -34,7 +36,6 @@ class App extends Component {
   }
 
   state = {
-    lists: [],
     sidebarIsOpen: false, // only affects mobile
     searchWords: "",
     nowPlayingMovies: [],
@@ -89,7 +90,6 @@ class App extends Component {
 
   render() {
     const {
-      lists,
       sidebarIsOpen,
       nowPlayingMovies,
       nowAiringTVShows,
@@ -107,58 +107,93 @@ class App extends Component {
     );
 
     return (
-      <ScrollToTop>
-        {sidebarOverlay}
-        <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} lists={lists} />
-        <div id="main-container">
-          <DynamicHeader
-            toggleSidebar={this.toggleSidebar}
-            searchHandler={this.searchHandler}
-            setSearchbarValue={this.setSearchbarValue}
-            searchbarValue={this.state.searchWords}
-          />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <HomepageContainer
-                  movies={nowPlayingMovies}
-                  series={nowAiringTVShows}
-                  setNowPlayingMovies={this.setNowPlayingMovies}
-                  setNowAiringTVShows={this.setNowAiringTVShows}
-                />)}
+      <UserProvider>
+        <ScrollToTop>
+          {sidebarOverlay}
+          <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} />
+          <div id="main-container">
+            <DynamicHeader
+              toggleSidebar={this.toggleSidebar}
+              searchHandler={this.searchHandler}
+              setSearchbarValue={this.setSearchbarValue}
+              searchbarValue={this.state.searchWords}
             />
-            <Route
-              exact
-              path="/:mediaType(movie|tv)/:id"
-              render={props => (
-                <DetailspageContainer
-                  {...props}
-                  currentMovie={currentMovie}
-                  setCurrentMovie={this.setCurrentMovie}
-                />)}
-            />
-            <Route
-              path="/search"
-              render={() => (
-                <SearchpageContainer
-                  searchResults={searchResults}
-                  setSearchResults={this.setSearchResults}
-                />
-              )}
-            />
-            <Route
-              path="/user/:userId/:list/:mediaType?"
-              render={props => (
-                <UserList
-                  {...props}
-                />)}
-            />
-            <Route render={() => <div>404</div>} />
-          </Switch>
-        </div>
-      </ScrollToTop>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <HomepageContainer
+                    movies={nowPlayingMovies}
+                    series={nowAiringTVShows}
+                    setNowPlayingMovies={this.setNowPlayingMovies}
+                    setNowAiringTVShows={this.setNowAiringTVShows}
+                  />)}
+              />
+              <Route
+                exact
+                path="/shows"
+                render={() => (
+                  <Redirect to="/shows/popular" />
+                )}
+              />
+              <Route
+                path="/shows/:filter/:id?"
+                render={props => (
+                  <BrowseTvContainer {...props} />
+                )}
+              />
+              <Route
+                exact
+                path="/movies"
+                render={() => (
+                  <Redirect to="/movies/popular" />
+                )}
+              />
+              <Route
+                path="/movies/:filter/:id?"
+                render={props => (
+                  <BrowseMoviesContainer {...props} />
+                )}
+              />
+              <Route
+                exact
+                path="/:mediaType(movie|tv)/:id"
+                render={props => (
+                  <DetailspageContainer
+                    {...props}
+                    currentMovie={currentMovie}
+                    setCurrentMovie={this.setCurrentMovie}
+                  />)}
+              />
+              <Route
+                path="/search"
+                render={() => (
+                  <SearchpageContainer
+                    searchResults={searchResults}
+                    setSearchResults={this.setSearchResults}
+                  />
+                )}
+              />
+              <Route
+                path="/search"
+                render={() => (
+                  <SearchpageContainer
+                    searchResults={searchResults}
+                    setSearchResults={this.setSearchResults}
+                  />
+                )}
+              />
+              <Route exact path="/user/:userId/:listName/" render={() => <Redirect to="all" />} />
+              <Route
+                path="/user/:userId/:listName(watching|plan_to_watch|completed|dropped)/:mediaType(all|movies|tv)"
+                component={UserList}
+              />
+              <Route render={() => <div>404</div>} />
+            </Switch>
+          </div>
+        </ScrollToTop>
+      </UserProvider>
     );
   }
 }

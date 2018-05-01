@@ -48,8 +48,8 @@ class HomepageContainer extends Component {
 
     if (movies.length === 0 || series.length === 0) {
       return (
-        <div>
-          loading...
+        <div className="container">
+          Loading...
         </div>
       );
     }

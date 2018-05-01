@@ -8,6 +8,7 @@ const baseImgUrl = "https://image.tmdb.org/t/p/";
 const baseUrl = "https://api.themoviedb.org/3";
 
 const API_ERROR_CODE = 7;
+const RESOURCE_NOT_FOUND = 34;
 
 /**
  * Takes the poster_path or backdrop_path value from the API and an optional
@@ -54,7 +55,8 @@ export function normalizeMovie(movie) {
  */
 async function checkResponse(res) {
   const json = await res.json();
-  if (json.status_code === API_ERROR_CODE) throw new Error();
+  if (json.status_code === API_ERROR_CODE) throw new Error("Invalid API key");
+  if (json.status_code === RESOURCE_NOT_FOUND) throw new Error("Movie doesn't exist =(");
 
   return json;
 }
@@ -77,6 +79,48 @@ export function getMovieInfo(id) {
   const currentMovieUrl = `${baseUrl}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits,recommendations`;
   return fetch(currentMovieUrl)
     .then(checkResponse);
+}
+
+export function getMovieGenres() {
+  const genreUrl = `${baseUrl}/genre/movie/list?api_key=${API_KEY}&language=en-US`;
+  return fetch(genreUrl)
+    .then(checkResponse)
+    .then(json => json.genres);
+}
+
+export function getShowGenres() {
+  const genreUrl = `${baseUrl}/genre/tv/list?api_key=${API_KEY}&language=en-US`;
+  return fetch(genreUrl)
+    .then(checkResponse)
+    .then(json => json.genres);
+}
+
+export function getGenreMovies(genre) {
+  const genreMovieUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
+  return fetch(genreMovieUrl)
+    .then(checkResponse)
+    .then(json => json.results);
+}
+
+export function getGenreShows(genre) {
+  const genreMovieUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=${genre}`;
+  return fetch(genreMovieUrl)
+    .then(checkResponse)
+    .then(json => json.results);
+}
+
+export function getMoviesFromType(type) {
+  const moviesUrl = `${baseUrl}/movie/${type}?api_key=${API_KEY}&language=en-US&page=1`;
+  return fetch(moviesUrl)
+    .then(checkResponse)
+    .then(json => json.results);
+}
+
+export function getShowsFromType(type) {
+  const moviesUrl = `${baseUrl}/tv/${type}?api_key=${API_KEY}&language=en-US&page=1`;
+  return fetch(moviesUrl)
+    .then(checkResponse)
+    .then(json => json.results);
 }
 
 export async function getTVInfo(id) {
