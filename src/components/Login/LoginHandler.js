@@ -15,6 +15,7 @@ class LoginHandler extends Component {
   state = {
     email: "",
     password: "",
+    user: null,
   };
   signUpClick = () => {
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error) => {
@@ -22,8 +23,6 @@ class LoginHandler extends Component {
       const errorMessage = error.message;
       alert(errorMessage);
     });
-    this.props.setUsername(this.state.email);
-    this.forceUpdate();
   }
 
   signInClick = () => {
@@ -32,13 +31,17 @@ class LoginHandler extends Component {
       const errorMessage = error.message;
       alert(errorMessage);
     });
-    this.props.setUsername(this.state.email);
-    this.forceUpdate();
   }
 
-  componentWillMount() {
+  signOut = () => {
+    firebase.auth().signOut();
   }
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.setState({ user });
+    });
+  }
 
   handleChange = (event) => {
     if (event.target.type === "email") {
@@ -53,13 +56,11 @@ class LoginHandler extends Component {
       <F>
         <Test
           {...this.props}
+          onSignOutClick={this.signOut}
           handleChange={this.handleChange}
           signInClick={this.signInClick}
           signUpClick={this.signUpClick}
-          email={this.state.email}
-          password={this.state.password}
-          // username={this.username}
-          // onSignOutClick={this.onSignOutClick}
+          user={this.state.user}
         />
       </F>
     );
@@ -67,8 +68,5 @@ class LoginHandler extends Component {
 }
 
 LoginHandler.propTypes = {
-  setUsername: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired,
-  onSignOutClick: PropTypes.func.isRequired,
 };
 export default withRouter(LoginHandler);

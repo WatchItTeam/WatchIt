@@ -9,7 +9,7 @@ import "../../css/Header.scss";
  * The header for desktop, which includes search bar and user info
  */
 function DesktopHeader({
-  username, onSignOutClick, setSearchbarValue, searchbarValue, searchHandler, setUsername,
+  setSearchbarValue, searchbarValue, searchHandler,
 }) {
   return (
     <header id="app-header-desktop" className="app-header">
@@ -18,19 +18,12 @@ function DesktopHeader({
         search={searchHandler}
         setSearchbarValue={setSearchbarValue}
       />
-      <LoginHandler
-        setUsername={setUsername}
-        username={username}
-        onSignOutClick={onSignOutClick}
-      />
+      <LoginHandler />
     </header>
   );
 }
 
 DesktopHeader.propTypes = {
-  setUsername: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired,
-  onSignOutClick: PropTypes.func.isRequired,
   searchbarValue: PropTypes.string.isRequired,
   searchHandler: PropTypes.func.isRequired,
   setSearchbarValue: PropTypes.func.isRequired,

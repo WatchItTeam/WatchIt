@@ -17,13 +17,15 @@
 #app-header-desktop {
   grid-template-columns: minmax(100px, 500px) auto;
   grid-gap: 40px;
-  padding: 15px 30px;
+  padding: 0 30px;
+  
 
   #user-info {
     display: grid;
     grid-template-columns: repeat(3, auto);
+    grid-template-rows: 30px;
     align-items: center;
-    grid-gap: 20px;
+    grid-gap: 30px;
 
     .user-img {
       height: 40px;

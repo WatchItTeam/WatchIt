@@ -34,7 +34,6 @@ class App extends Component {
   }
 
   state = {
-    username: "",
     lists: [],
     sidebarIsOpen: false, // only affects mobile
     searchWords: "",
@@ -88,18 +87,6 @@ class App extends Component {
     this.setState({ searchWords });
   }
 
-  signOut = () => {
-    firebase.auth().signOut();
-    console.log("sign out clicked");
-    console.log("Update forced");
-    this.forceUpdate();
-  }
-
-  setUsername = (username) => {
-    this.setState({ username });
-  }
-
-
   render() {
     const {
       lists,
@@ -125,13 +112,10 @@ class App extends Component {
         <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} lists={lists} />
         <div id="main-container">
           <DynamicHeader
-            setUsername={this.setUsername}
-            username={this.state.username}
             toggleSidebar={this.toggleSidebar}
             searchHandler={this.searchHandler}
             setSearchbarValue={this.setSearchbarValue}
             searchbarValue={this.state.searchWords}
-            onSignOutClick={this.signOut}
           />
           <Switch>
             <Route

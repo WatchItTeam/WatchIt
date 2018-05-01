@@ -1,18 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import firebase from "../../Firebase/firebase";
 import LoginButton from "./LoginButton";
 
 function Test({
-  username, onSignOutClick, handleChange, signInClick, signUpClick, email, password,
+  user, onSignOutClick, handleChange, signInClick, signUpClick, email, password,
 }) {
-  const user = firebase.auth().currentUser;
   if (user) {
     return (
       <div id="user-info">
         <div className="user-img" />
-        {username}
+        {user.email}
         <button onClick={onSignOutClick}>
           <FontAwesomeIcon icon="sign-out-alt" /> Sign out
         </button>
@@ -20,23 +18,19 @@ function Test({
     );
   }
   return (
-    <div className="Loginwindow">
-      <div className="emailbar">
-        <input type="email" value={email} onChange={handleChange} placeholder="Email" />
-      </div>
-      <div className="passbar">
-        <input type="password" value={password} onChange={handleChange} placeholder="Password" />         
-      </div>
-      <div className="signupandin">
-        <LoginButton onClick={signInClick}>Sign in</LoginButton>
-        <LoginButton onClick={signUpClick}>Sign up</LoginButton>
+    <div className="Loginwindow user-info">
+      <div className="loginBars">
+        <input id="emailBar" type="email" value={email} onChange={handleChange} placeholder="Email" />
+        <input id="passBar" type="password" value={password} onChange={handleChange} placeholder="Password" />         
+        <LoginButton onClick={signInClick}>Log in</LoginButton>
+        <button id="signupButton" onClick={signUpClick}>Sign up</button>
       </div>
     </div>
   );
 }
 
 Test.propTypes = {
-  username: PropTypes.string.isRequired,
+  user: PropTypes.any.isRequired,
   onSignOutClick: PropTypes.func.isRequired,
   signInClick: PropTypes.func.isRequired,
   signUpClick: PropTypes.func.isRequired,
