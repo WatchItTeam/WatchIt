@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import ResponsiveList from "../components/WatchList/ResponsiveList";
+import parseName from "../utils/parseName";
+import ErrorMessage from "../components/ErrorMessage";
 
 class UserList extends Component {
   static propTypes = {
@@ -8,10 +10,19 @@ class UserList extends Component {
     location: PropTypes.object.isRequired,
   }
 
+  static getDerivedStateFromProps(props) {
+    // set the display name of the list
+    const { listName } = props.match.params;
+    const listDisplayName = parseName(listName);
+    return { listDisplayName };
+  }
+
   state = {
-    listName: "Completed",
+    errorMsg: "",
+    listDisplayName: "",
     isEditMode: false,
     listEntries: [
+      // placeholder data
       {
         id: "284054",
         title: "Black Panther",
@@ -47,10 +58,28 @@ class UserList extends Component {
 
   // TODO: fetch list items from firebase
   async fetchList() {
-    const { mediaType } = this.props.match.params;
-    console.log(`Fetching ${mediaType}`);
-    // const listEntries = await getListFromFirebase(userId, listId, mediaType)
-    // this.setState({ listEntries });
+    const { userId, listName, mediaType } = this.props.match.params;
+    console.log(`Fetching ${mediaType} from ${listName} by ${userId}`);
+    /*
+    something like this:
+
+    try {
+      const listEntries = await getListFromFirebase(userId, listName, mediaType);
+      this.setState({ listEntries, errorMsg: null });
+    } catch(error) {
+      this.setState({ errorMsg: error });
+    }
+
+    or
+
+    await getListFromFirebase(userId, listName, mediaType)
+      then((listEntries) => {
+        this.setState({ listEntries, errorMsg: null });
+      })
+      .catch((error) => {
+        this.setState({ errorMsg: error });
+      })
+    */
   }
 
   toggleEditMode = () => {
@@ -65,16 +94,22 @@ class UserList extends Component {
   }
 
   render() {
-    const { listName, listEntries, isEditMode } = this.state;
+    const { errorMsg, listDisplayName, listEntries, isEditMode } = this.state;
+    if (errorMsg) {
+      return <ErrorMessage>{errorMsg}</ErrorMessage>;
+    }
+
+    const { userId, listName } = this.props.match.params;
+    const baseUrl = `/user/${userId}/${listName}`;
     const tabLinks = {
-      All: "/user/shit/completed",
-      Movies: "/user/shit/completed/movies",
-      "TV Shows": "/user/shit/completed/tv",
+      All: `${baseUrl}/all`,
+      Movies: `${baseUrl}/movies`,
+      "TV Shows": `${baseUrl}/tv`,
     };
 
     return (
       <ResponsiveList
-        listName={listName}
+        listDisplayName={listDisplayName}
         tabLinks={tabLinks}
         entries={listEntries}
         toggleEditMode={this.toggleEditMode}

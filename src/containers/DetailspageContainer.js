@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { getMovieInfo, getTVInfo } from "../api/APIUtils";
 import ErrorMessage from "../components/ErrorMessage";
 import DetailsPage from "../components/DetailsPage";
+import "../css/Detailspage.scss";
 
 class DetailspageContainer extends Component {
   static propTypes = {
@@ -12,7 +14,7 @@ class DetailspageContainer extends Component {
     setCurrentMovie: PropTypes.func.isRequired,
   }
   state = {
-    error: false,
+    error: "",
     hasLoaded: false,
   }
 
@@ -33,14 +35,14 @@ class DetailspageContainer extends Component {
     if (mediaType === "movie") {
       getMovieInfo(id)
         .then(this.processResponse)
-        .catch(() => {
-          this.setState({ error: true });
+        .catch((error) => {
+          this.setState({ error: error.toString() });
         });
     } else if (mediaType === "tv") {
       getTVInfo(id)
         .then(this.processResponse)
-        .catch(() => {
-          this.setState({ error: true });
+        .catch((error) => {
+          this.setState({ error: error.toString() });
         });
     } else {
       console.log("Invalid mediaType");
@@ -56,7 +58,14 @@ class DetailspageContainer extends Component {
   render() {
     if (this.state.error) {
       return (
-        <ErrorMessage>Oops! Could not load detailspage :(</ErrorMessage>
+        <div>
+          <div className="no-poster3">
+            <FontAwesomeIcon icon="image" />
+          </div>
+          <ErrorMessage>
+            <div>{this.state.error}</div>
+          </ErrorMessage>
+        </div>
       );
     }
     if (!this.state.hasLoaded) {
