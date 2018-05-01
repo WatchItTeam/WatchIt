@@ -9,9 +9,6 @@ import Test from "./Test";
 // import PropTypes from "prop-types";
 
 class LoginHandler extends Component {
-  static propTypes = {
-
-  }
   state = {
     email: "",
     password: "",
