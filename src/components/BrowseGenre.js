@@ -9,18 +9,16 @@ function BrowseGenre({ genres, type }) {
   if (type === "movies") {
     return (
       <section>
-        <Switch>
-          <Route
-            exact
-            path="/movies/genre/:id?"
-            render={() => {
-              genres.forEach((genre) => {
-                genreLinks[genre.name] = `/movies/genre/${genre.id}`;
-              });
-              return <TitleGrid links={genreLinks} />;
-            }}
-          />
-        </Switch>
+        <Route
+          exact
+          path="/movies/genre/:id?"
+          render={() => {
+            genres.forEach((genre) => {
+              genreLinks[genre.name] = `/movies/genre/${genre.id}`;
+            });
+            return <TitleGrid links={genreLinks} />;
+          }}
+        />
       </section>
     );
   }
