@@ -9,6 +9,7 @@ import Sidebar from "../components/Sidebar";
 import DynamicHeader from "../containers/DynamicHeader";
 import DetailspageContainer from "./DetailspageContainer";
 import UserList from "../containers/UserList";
+import BrowseMoviesContainer from "./BrowseMoviesContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import LoginPageContainer from "./LoginPageContainer";
 import "../css/App.scss";
@@ -138,6 +139,19 @@ class App extends Component {
               />
               <Route
                 exact
+                path="/movies"
+                render={() => (
+                  <Redirect to="/movies/popular" />
+                )}
+              />
+              <Route
+                path="/movies/:filter/:id?"
+                render={props => (
+                  <BrowseMoviesContainer {...props} />
+                )}
+              />
+              <Route
+                exact
                 path="/:mediaType(movie|tv)/:id"
                 render={props => (
                   <DetailspageContainer
@@ -150,6 +164,15 @@ class App extends Component {
                 path="/login"
                 render={() => (
                   <LoginPageContainer />)}
+              />
+              <Route
+                path="/search"
+                render={() => (
+                  <SearchpageContainer
+                    searchResults={searchResults}
+                    setSearchResults={this.setSearchResults}
+                  />
+                )}
               />
               <Route
                 path="/search"
