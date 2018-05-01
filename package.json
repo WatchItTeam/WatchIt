@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/WatchItTeam/WatchIt/issues"
   },
-  "homepage": "https://watchitteam.github.io/WatchIt",
+  "homepage": "https://watchit.fun",
   "devDependencies": {
     "babel-core": "^6.26.2",
     "babel-eslint": "^8.2.3",
