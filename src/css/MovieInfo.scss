@@ -2,60 +2,61 @@
 
 .movieInfo {
   padding: 0 var(--container-padding);
-}
-.cast {
-        width: 100%;
-        min-height: 195px;
-        object-fit: cover;
-        border-radius: 4px;
-      }
+  .cast {
+    width: 100%;
+    min-height: 195px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
 .nameBorder {
-    font-weight: 800;
-    padding-right: 20px;
+font-weight: 800;
+padding-right: 20px;
 }
 h2 {
-    padding-top: 10px;
+padding-top: 10px;
 }
 .no-poster {
-    text-align: center;
-    border-radius: 4px;
-    width: 150px;
-    height: 225px;
-    background: #eeeeee;
-    font-size: 2em;
-    color: #d3d3d3;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    margin-right:20px;
+text-align: center;
+border-radius: 4px;
+width: 150px;
+height: 225px;
+background: #eeeeee;
+font-size: 2em;
+color: #d3d3d3;
+display: flex !important;
+align-items: center;
+justify-content: center;
+margin-right:20px;
+}
+.botPadding {
+  padding-bottom: 100px;
+}
+.scrolling-wrapper-flexbox {
+&::-webkit-scrollbar {
+    display: none;
   }
-  .botPadding {
-      padding-bottom: 100px;
-  }
-  .scrolling-wrapper-flexbox {
-    &::-webkit-scrollbar {
-        display: none;
-      }
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    .card {
-      width:150px;
-      flex: 0 0 auto;
-      margin-right: 20px;
-    }
-  }
-  .embed-container {
-      position: relative; 
-      padding-bottom: 56.25%; 
-      height: 0; 
-      overflow: hidden; 
-      max-width: 100%; } 
+display: flex;
+flex-wrap: nowrap;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+.card {
+  width:150px;
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+}
+.embed-container {
+  position: relative; 
+  padding-bottom: 56.25%; 
+  height: 0; 
+  overflow: hidden; 
+  max-width: 100%; } 
 
-  .embed-container iframe, .embed-container object, .embed-container embed {
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; }
+.embed-container iframe, .embed-container object, .embed-container embed {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; }
+}
+
