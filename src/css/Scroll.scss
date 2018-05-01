@@ -1,0 +1,20 @@
+@import "global";
+.leftbutton {
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:-30px;
+}
+.rightbutton {
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:-30px;
+}
+.OuterDiv {
+  position:relative;
+}
+.scroll-button {
+    outline: none;
+    font-size: 40px;
+}

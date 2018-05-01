@@ -8,6 +8,7 @@ import "../css/Detailspage.scss";
 
 class DetailspageContainer extends Component {
   static propTypes = {
+    location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired, // from react-router
     currentMovie: PropTypes.object.isRequired,
     setCurrentMovie: PropTypes.func.isRequired,
@@ -18,7 +19,18 @@ class DetailspageContainer extends Component {
   }
 
   componentDidMount() {
+    this.getDetails();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.getDetails();
+    }
+  }
+
+  getDetails() {
     const { mediaType, id } = this.props.match.params;
+    this.setState({ hasLoaded: false });
 
     if (mediaType === "movie") {
       getMovieInfo(id)
@@ -57,7 +69,7 @@ class DetailspageContainer extends Component {
       );
     }
     if (!this.state.hasLoaded) {
-      return null;
+      return <div style={{ marginTop: "100px" }} className="container">Loading...</div>;
     }
     return (
       <DetailsPage currentMovie={this.props.currentMovie} />
