@@ -9,12 +9,12 @@ import "../css/Scroll.scss";
  */
 class Scroll extends Component {
   scrollRight = () => {
-    const wi = this.inputRef.current.offsetWidth;
-    this.inputRef.current.scrollLeft += wi;
+    const containerWidth = this.inputRef.current.offsetWidth;
+    this.inputRef.current.scrollLeft += containerWidth;
   }
   scrollLeft = () => {
-    const wi = this.inputRef.current.offsetWidth;
-    this.inputRef.current.scrollLeft -= wi;
+    const containerWidth = this.inputRef.current.offsetWidth;
+    this.inputRef.current.scrollLeft -= containerWidth;
   }
 
   inputRef = React.createRef();
@@ -27,7 +27,7 @@ class Scroll extends Component {
     return (
       <div className="OuterDiv">
         <button className="leftbutton scroll-button" onClick={this.scrollLeft}><FontAwesomeIcon icon="angle-left" /></button>
-        <div className="scrolling-wrapper-flexbox scroller" ref={this.inputRef}>
+        <div className="scrolling-wrapper-flexbox" ref={this.inputRef}>
           {this.props.children}
         </div>
         <button className="rightbutton scroll-button" onClick={this.scrollRight}><FontAwesomeIcon icon="angle-right" /></button>

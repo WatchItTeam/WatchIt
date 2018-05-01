@@ -10,14 +10,48 @@ import Scroll from "./Scroll";
  * Markup for the main content of the movie details page
  */
 function MovieInformation({ currentMovie }) {
+  let currentTrailer = 0;
+  const trailerlist = [];
+  currentMovie.videos.results.map(trailer => (
+    trailerlist.push(trailer)
+  ));
+  let trailersDos;
+  const scrolltrailer = () => {
+    console.log("hej");
+    currentTrailer = (currentTrailer + 1) % trailerlist.length;
+    console.log(currentTrailer);
+    trailersDos = (
+      <div ClassName="">
+        <button className="hej"><FontAwesomeIcon icon="angle-left" onClick={scrolltrailer} /></button>
+        <div className="embed-container">
+          <iframe src={`https://www.youtube.com/embed/${trailerlist[currentTrailer].key}`} frameBorder="0" title={currentTrailer} allowFullScreen />
+        </div>
+        <button className="hej"><FontAwesomeIcon icon="angle-right" /></button>
+      </div>
+    );
+  };
+  trailersDos = (
+    <div ClassName="">
+      <button className="hej"><FontAwesomeIcon icon="angle-left" onClick={scrolltrailer} /></button>
+      <div className="embed-container">
+        <iframe src={`https://www.youtube.com/embed/${trailerlist[currentTrailer].key}`} frameBorder="0" title={currentTrailer} allowFullScreen />
+      </div>
+      <button className="hej"><FontAwesomeIcon icon="angle-right" /></button>
+    </div>
+  );
   let trailers;
   if (currentMovie.videos.results.length === 0) {
     trailers = <div>No trailers to show</div>;
   } else {
     trailers =
     currentMovie.videos.results.map(trailer => (
-      <div className="trailer">
+      /* <div className="trailer">
         <object className="trailer" data={`https://www.youtube.com/embed/${trailer.key}`} >hnunu</object>
+      </div> */
+      <div className="trailer2">
+        <div className="embed-container">
+          <iframe src={`https://www.youtube.com/embed/${trailer.key}`} frameBorder="0" title={currentTrailer} allowFullScreen />
+        </div>
       </div>
     ));
   }
@@ -75,6 +109,7 @@ function MovieInformation({ currentMovie }) {
       <h2>Story</h2>
       {currentMovie.overview}
       <h2>Trailers</h2>
+      {trailersDos}
       <Scroll>
         {trailers}
       </Scroll>
