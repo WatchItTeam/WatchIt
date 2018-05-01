@@ -13,7 +13,7 @@ class DetailspageContainer extends Component {
     setCurrentMovie: PropTypes.func.isRequired,
   }
   state = {
-    error: false,
+    error: "",
     hasLoaded: false,
   }
 
@@ -23,14 +23,14 @@ class DetailspageContainer extends Component {
     if (mediaType === "movie") {
       getMovieInfo(id)
         .then(this.processResponse)
-        .catch(() => {
-          this.setState({ error: true });
+        .catch((error) => {
+          this.setState({ error: error.toString() });
         });
     } else if (mediaType === "tv") {
       getTVInfo(id)
         .then(this.processResponse)
-        .catch(() => {
-          this.setState({ error: true });
+        .catch((error) => {
+          this.setState({ error: error.toString() });
         });
     } else {
       console.log("Invalid mediaType");
@@ -51,7 +51,7 @@ class DetailspageContainer extends Component {
             <FontAwesomeIcon icon="image" />
           </div>
           <ErrorMessage>
-            <div>Oops! Could not load detailspage :(</div>
+            <div>{this.state.error}</div>
           </ErrorMessage>
         </div>
       );
