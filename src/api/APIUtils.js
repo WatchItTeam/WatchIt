@@ -8,6 +8,7 @@ const baseImgUrl = "https://image.tmdb.org/t/p/";
 const baseUrl = "https://api.themoviedb.org/3";
 
 const API_ERROR_CODE = 7;
+const RESOURCE_NOT_FOUND = 34;
 
 /**
  * Takes the poster_path or backdrop_path value from the API and an optional
@@ -54,7 +55,8 @@ export function normalizeMovie(movie) {
  */
 async function checkResponse(res) {
   const json = await res.json();
-  if (json.status_code === API_ERROR_CODE) throw new Error();
+  if (json.status_code === API_ERROR_CODE) throw new Error("Invalid API key");
+  if (json.status_code === RESOURCE_NOT_FOUND) throw new Error("Movie doesn't exist =(");
 
   return json;
 }
