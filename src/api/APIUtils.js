@@ -95,19 +95,16 @@ export function getShowGenres() {
     .then(json => json.genres);
 }
 
-export function getGenreMovies(genre) {
-  console.log("genre här ", genre);
-  const genreMovieUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
+export function getGenreMovies(genre, page = 1) {
+  const genreMovieUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genre}`;
   return fetch(genreMovieUrl)
-    .then(checkResponse)
-    .then(json => json.results);
+    .then(checkResponse);
 }
 
-export function getGenreShows(genre) {
-  const genreMovieUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=${genre}`;
+export function getGenreShows(genre, page = 1) {
+  const genreMovieUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=${page}&with_genres=${genre}`;
   return fetch(genreMovieUrl)
-    .then(checkResponse)
-    .then(json => json.results);
+    .then(checkResponse);
 }
 
 export function getMoviesFromType(type, page = 1) {

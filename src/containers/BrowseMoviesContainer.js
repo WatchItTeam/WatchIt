@@ -29,9 +29,6 @@ class BrowseMoviesContainer extends Component {
 
   getMoviesFromTab() {
     const { filter, id } = this.props.match.params;
-    console.log(id);
-    console.log(filter);
-    console.log(this.state.genres);
     this.setState({ movies: [], genreTitle: "", isLoading: true, currentPage: 1 });
     if (filter === "top_rated") {
       getMoviesFromType("top_rated")
@@ -58,11 +55,12 @@ class BrowseMoviesContainer extends Component {
           this.setState({ error: true });
         });
     } else if (filter === "genre") {
-      console.log(filter);
       if (id) {
         this.setGenreTitle(id);
         getGenreMovies(id)
-          .then(movies => this.setState({ movies, isLoading: false }))
+          .then(movies => this.setState({ movies: movies.results,
+            totalPages: movies.total_pages,
+            isLoading: false }))
           .catch(() => {
             this.setState({ error: true });
           });
@@ -73,9 +71,14 @@ class BrowseMoviesContainer extends Component {
   }
 
   loadMoreAndAppend = async () => {
-    const { filter } = this.props.match.params;
+    const { filter, id } = this.props.match.params;
     try {
-      const resp = await getMoviesFromType(filter, this.state.currentPage + 1);
+      let resp;
+      if (filter !== "genre") {
+        resp = await getMoviesFromType(filter, this.state.currentPage + 1);
+      } else {
+        resp = await getGenreMovies(id, this.state.currentPage + 1);
+      }
       const index = this.state.movies.concat(resp.results);
       const resArr = [];
       index.filter((item) => {
@@ -90,7 +93,6 @@ class BrowseMoviesContainer extends Component {
         currentPage: resp.page,
         totalPages: resp.total_pages });
     } catch (error) {
-      console.error(error);
       this.setState({ error });
     }
   }
@@ -102,6 +104,10 @@ class BrowseMoviesContainer extends Component {
       Upcoming: "/movies/upcoming",
       Genre: "/movies/genre",
     };
+    /* let sendfunc = null;
+    if (this.props.match.params.filter !== "genre") {
+      sendfunc = this.loadMoreAndAppend;
+    } */
     return (
       <BrowsePage
         {...this.props}
