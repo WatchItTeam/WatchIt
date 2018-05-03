@@ -2,9 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment-mini";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { getFullImgPath, getYearFromDate } from "../api/APIUtils";
+import { getFullImgPath } from "../api/APIUtils";
 import minutesToHours from "../utils/minutesToHours";
 import PrimaryButton from "./PrimaryButton";
+import ImageWithFallback from "./ImageWithFallback";
 import "../css/DetailsTitle.scss";
 
 /**
@@ -30,9 +31,11 @@ function DetailsTitle({ movie, onBtnClick }) {
   } = movie;
 
   let infoLine;
+  let isMovie = false;
 
   // if title is defined, it's a movie
   if (title) {
+    isMovie = true;
     infoLine = (
       <div className="info">
         {
@@ -69,7 +72,13 @@ function DetailsTitle({ movie, onBtnClick }) {
 
   return (
     <div className="details-title">
-      <img className="poster" src={getFullImgPath(posterPath, "w500")} alt={title} />
+      <ImageWithFallback
+        className="poster"
+        src={posterPath}
+        imgSize="w500"
+        alt={`Poster for ${title}`}
+        mediaType={isMovie ? "movie" : "tv"}
+      />
       <div className="text">
         <h1 className="title">{`${displayName} (${moment(displayDate).format("YYYY")})`}</h1>
         <div className="info">
