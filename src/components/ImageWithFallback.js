@@ -37,13 +37,14 @@ ImageWithFallback.defaultProps = {
   imgSize: "original",
   alt: "",
   className: "",
+  mediaType: "",
 };
 
 ImageWithFallback.propTypes = {
   src: PropTypes.string,
   /* imgSize examples: "w342", "w500" etc */
   imgSize: PropTypes.string,
-  mediaType: PropTypes.oneOf(["movie", "tv", "person", ""]).isRequired,
+  mediaType: PropTypes.oneOf(["movie", "tv", "person", ""]),
   alt: PropTypes.string,
   className: PropTypes.string,
 };
