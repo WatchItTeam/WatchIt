@@ -19,6 +19,7 @@ function PosterGrid({ movies }) {
             title={movie.title}
             posterPath={movie.poster_path}
             releaseDate={movie.release_year}
+            mediaType={movie.media_type}
           />
         );
       })}

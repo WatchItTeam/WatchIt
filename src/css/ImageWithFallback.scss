@@ -1,0 +1,25 @@
+// the normal image
+.img-with-fb {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+// the fallback, with icon and "No image" text
+.fallback-img {
+  background: #eeeeee;
+  font-size: 2em;
+  color: #d3d3d3;
+
+  // center icon and text
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .no-img-text {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+}
