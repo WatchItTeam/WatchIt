@@ -42,7 +42,9 @@ class HomepageContainer extends Component {
 
     if (this.state.error) {
       return (
-        <ErrorMessage>Oops! Could not load homepage :(</ErrorMessage>
+        <div className="container">
+          <ErrorMessage>Oops! Could not load homepage :(</ErrorMessage>
+        </div>
       );
     }
 
