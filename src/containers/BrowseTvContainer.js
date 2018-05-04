@@ -90,7 +90,6 @@ class BrowseTvContainer extends Component {
         if (i <= -1) {
           resArr.push(item);
         }
-        return null;
       });
       this.setState({
         movies: resArr,
