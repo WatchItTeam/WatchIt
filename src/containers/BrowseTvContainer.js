@@ -4,7 +4,7 @@ import BrowsePage from "../components/BrowsePage";
 import { getShowsFromType, getGenreShows, getShowGenres } from "../api/APIUtils";
 
 class BrowseTvContainer extends Component {
-  state = { movies: [], genreTitle: "", genres: [], isLoading: false, error: false, currentPage: 1, totalPages: 1 };
+  state = { movies: [], genreTitle: "", genres: [], isLoading: false, error: false };
 
   componentDidMount() {
     getShowGenres()
@@ -32,27 +32,21 @@ class BrowseTvContainer extends Component {
     const { filter, id } = this.props.match.params;
     this.setState({ movies: [], genreTitle: "", isLoading: true });
 
-    if (filter === "top_rated") {
+    if (filter === "top") {
       getShowsFromType("top_rated")
-        .then(movies => this.setState({ movies: movies.results,
-          totalPages: movies.total_pages,
-          isLoading: false }))
+        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: true });
         });
-    } else if (filter === "airing_today") {
+    } else if (filter === "airing") {
       getShowsFromType("airing_today")
-        .then(movies => this.setState({ movies: movies.results,
-          totalPages: movies.total_pages,
-          isLoading: false }))
+        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: true });
         });
     } else if (filter === "popular") {
       getShowsFromType("popular")
-        .then(movies => this.setState({ movies: movies.results,
-          totalPages: movies.total_pages,
-          isLoading: false }))
+        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: true });
         });
@@ -69,33 +63,12 @@ class BrowseTvContainer extends Component {
       }
     }
   }
-  loadMoreAndAppend = async () => {
-    const { filter } = this.props.match.params;
-    try {
-      const resp = await getShowsFromType(filter, this.state.currentPage + 1);
-      const index = this.state.movies.concat(resp.results);
-      const resArr = [];
-      index.filter((item) => {
-        const i = resArr.findIndex(x => x.id === item.id);
-        if (i <= -1) {
-          resArr.push(item);
-        }
-        return null;
-      });
-      this.setState({
-        movies: resArr,
-        currentPage: resp.page,
-        totalPages: resp.total_pages });
-    } catch (error) {
-      console.error(error);
-      this.setState({ error });
-    }
-  }
+
   render() {
     const tabLinks = {
       Popular: "/shows/popular",
-      Top: "/shows/top_rated",
-      Airing: "/shows/airing_today",
+      Top: "/shows/top",
+      Airing: "/shows/airing",
       Genre: "/shows/genre",
     };
     return (
@@ -107,9 +80,6 @@ class BrowseTvContainer extends Component {
         isLoading={this.state.isLoading}
         error={this.state.error}
         type="shows"
-        currentPage={this.state.currentPage}
-        totalPages={this.state.totalPages}
-        loadMoreFunc={this.loadMoreAndAppend}
       />
     );
   }

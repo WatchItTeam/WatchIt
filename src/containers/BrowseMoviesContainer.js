@@ -4,7 +4,8 @@ import BrowsePage from "../components/BrowsePage";
 import { getMoviesFromType, getGenreMovies, getMovieGenres } from "../api/APIUtils";
 
 class BrowseMoviesContainer extends Component {
-  state = { movies: [], genreTitle: "", genres: [], isLoading: false, error: false, currentPage: 1, totalPages: 1 };
+  state = { movies: [], genreTitle: "", genres: [], isLoading: false, error: false };
+
   componentDidMount() {
     getMovieGenres()
       .then((genres) => {
@@ -29,36 +30,27 @@ class BrowseMoviesContainer extends Component {
 
   getMoviesFromTab() {
     const { filter, id } = this.props.match.params;
-    console.log(id);
-    console.log(filter);
-    console.log(this.state.genres);
-    this.setState({ movies: [], genreTitle: "", isLoading: true, currentPage: 1 });
-    if (filter === "top_rated") {
+    this.setState({ movies: [], genreTitle: "", isLoading: true });
+
+    if (filter === "top") {
       getMoviesFromType("top_rated")
-        .then(movies => this.setState({ movies: movies.results,
-          totalPages: movies.total_pages,
-          isLoading: false }))
+        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: true });
         });
     } else if (filter === "upcoming") {
       getMoviesFromType("upcoming")
-        .then(movies => this.setState({ movies: movies.results,
-          totalPages: movies.total_pages,
-          isLoading: false }))
+        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: true });
         });
     } else if (filter === "popular") {
       getMoviesFromType("popular")
-        .then(movies => this.setState({ movies: movies.results,
-          totalPages: movies.total_pages,
-          isLoading: false }))
+        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: true });
         });
     } else if (filter === "genre") {
-      console.log(filter);
       if (id) {
         this.setGenreTitle(id);
         getGenreMovies(id)
@@ -72,33 +64,10 @@ class BrowseMoviesContainer extends Component {
     }
   }
 
-  loadMoreAndAppend = async () => {
-    const { filter } = this.props.match.params;
-    try {
-      const resp = await getMoviesFromType(filter, this.state.currentPage + 1);
-      const index = this.state.movies.concat(resp.results);
-      const resArr = [];
-      index.filter((item) => {
-        const i = resArr.findIndex(x => x.id === item.id);
-        if (i <= -1) {
-          resArr.push(item);
-        }
-        return null;
-      });
-      this.setState({
-        movies: resArr,
-        currentPage: resp.page,
-        totalPages: resp.total_pages });
-    } catch (error) {
-      console.error(error);
-      this.setState({ error });
-    }
-  }
-
   render() {
     const tabLinks = {
       Popular: "/movies/popular",
-      Top: "/movies/top_rated",
+      Top: "/movies/top",
       Upcoming: "/movies/upcoming",
       Genre: "/movies/genre",
     };
@@ -112,9 +81,6 @@ class BrowseMoviesContainer extends Component {
         isLoading={this.state.isLoading}
         error={this.state.error}
         type="movies"
-        currentPage={this.state.currentPage}
-        totalPages={this.state.totalPages}
-        loadMoreFunc={this.loadMoreAndAppend}
       />
     );
   }
