@@ -5,7 +5,14 @@ import { getShowsFromType, getGenreShows, getShowGenres, getShowsFromYear } from
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 
 class BrowseTvContainer extends Component {
-  state = { movies: [], genreTitle: "", genres: [], isLoading: false, error: false, searchWords: "" };
+  state = {
+    movies: [],
+    genreTitle: "",
+    genres: [],
+    isLoading: false,
+    error: false,
+    searchWords: "",
+  };
 
   componentDidMount() {
     getShowGenres()
@@ -46,7 +53,12 @@ class BrowseTvContainer extends Component {
 
   getMoviesFromTab() {
     const { filter, id } = this.props.match.params;
-    this.setState({ movies: [], genreTitle: "", isLoading: true, error: "" });
+    this.setState({
+      movies: [],
+      genreTitle: "",
+      isLoading: true,
+      error: "",
+    });
 
     if (filter === "top") {
       getShowsFromType("top_rated")

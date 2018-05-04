@@ -5,7 +5,14 @@ import { getMoviesFromType, getGenreMovies, getMovieGenres, getMoviesFromYear } 
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 
 class BrowseMoviesContainer extends Component {
-  state = { movies: [], genreTitle: "", genres: [], isLoading: false, error: "", searchWords: "" };
+  state = {
+    movies: [],
+    genreTitle: "",
+    genres: [],
+    isLoading: false,
+    error: "",
+    searchWords: "",
+  };
 
   componentDidMount() {
     getMovieGenres()
@@ -46,7 +53,12 @@ class BrowseMoviesContainer extends Component {
 
   getMoviesFromTab() {
     const { filter, id } = this.props.match.params;
-    this.setState({ movies: [], genreTitle: "", isLoading: true, error: "" });
+    this.setState({
+      movies: [],
+      genreTitle: "",
+      isLoading: true,
+      error: "",
+    });
 
     if (filter === "top") {
       getMoviesFromType("top_rated")
