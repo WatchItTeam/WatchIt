@@ -19,7 +19,7 @@
  * @param {Number} time  How long to debounce
  * @returns {Function}
  */
-export default function createDebouncedFunc(fn, time) {
+export default function createDebouncedFunc(fn, time = 500) {
   let timeout;
 
   return function () {

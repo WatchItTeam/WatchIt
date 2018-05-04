@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import BrowsePage from "../components/BrowsePage";
-import { getMoviesFromType, getGenreMovies, getMovieGenres } from "../api/APIUtils";
+import { getMoviesFromType, getGenreMovies, getMovieGenres, getMoviesFromYear } from "../api/APIUtils";
+import createDebouncedFunc from "../utils/createDebouncedFunc";
 
 class BrowseMoviesContainer extends Component {
-  state = { movies: [], genreTitle: "", genres: [], isLoading: false, error: false };
+  state = {
+    movies: [],
+    genreTitle: "",
+    genres: [],
+    isLoading: false,
+    error: "",
+    searchWords: "",
+  };
 
   componentDidMount() {
     getMovieGenres()
@@ -20,6 +28,21 @@ class BrowseMoviesContainer extends Component {
     }
   }
 
+  searchHandler = (query) => {
+    this.setSearchbarValue(query);
+    this.search(query);
+  }
+
+  search = createDebouncedFunc((query) => {
+    // don't need to search if the user just clears the search bar
+    if (query === "") return;
+    this.props.history.push(`/movies/year/${query}`);
+  })
+
+  setSearchbarValue = (searchWords) => {
+    this.setState({ searchWords });
+  }
+
   setGenreTitle(id) {
     this.state.genres.forEach((genre) => {
       if (genre.id.toString() === id) {
@@ -30,25 +53,30 @@ class BrowseMoviesContainer extends Component {
 
   getMoviesFromTab() {
     const { filter, id } = this.props.match.params;
-    this.setState({ movies: [], genreTitle: "", isLoading: true });
+    this.setState({
+      movies: [],
+      genreTitle: "",
+      isLoading: true,
+      error: "",
+    });
 
     if (filter === "top") {
       getMoviesFromType("top_rated")
         .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
-          this.setState({ error: true });
+          this.setState({ error: "Oops! Could not fetch movies :(" });
         });
     } else if (filter === "upcoming") {
       getMoviesFromType("upcoming")
         .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
-          this.setState({ error: true });
+          this.setState({ error: "Oops! Could not fetch movies :(" });
         });
     } else if (filter === "popular") {
       getMoviesFromType("popular")
         .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
-          this.setState({ error: true });
+          this.setState({ error: "Oops! Could not fetch movies :(" });
         });
     } else if (filter === "genre") {
       if (id) {
@@ -56,11 +84,26 @@ class BrowseMoviesContainer extends Component {
         getGenreMovies(id)
           .then(movies => this.setState({ movies, isLoading: false }))
           .catch(() => {
-            this.setState({ error: true });
+            this.setState({ error: "Oops! Could not fetch movies :(" });
           });
       } else {
         this.setState({ isLoading: false });
       }
+    } else if (filter === "year") {
+      if (id) {
+        getMoviesFromYear(id)
+          .then((movies) => {
+            if (movies.length === 0) this.setState({ error: "The database could not find any movies from that year" });
+            this.setState({ movies, isLoading: false });
+          })
+          .catch(() => {
+            this.setState({ error: "Oops! Could not fetch movies :(" });
+          });
+      } else {
+        this.setState({ isLoading: false });
+      }
+    } else {
+      this.setState({ isLoading: false });
     }
   }
 
@@ -70,6 +113,7 @@ class BrowseMoviesContainer extends Component {
       Top: "/movies/top",
       Upcoming: "/movies/upcoming",
       Genre: "/movies/genre",
+      Year: "/movies/year",
     };
     return (
       <BrowsePage
@@ -80,6 +124,9 @@ class BrowseMoviesContainer extends Component {
         isLoading={this.state.isLoading}
         error={this.state.error}
         type="movies"
+        searchValue={this.state.searchWords}
+        search={this.searchHandler}
+        setSearchbarValue={this.setSearchbarValue}
       />
     );
   }
@@ -88,6 +135,7 @@ class BrowseMoviesContainer extends Component {
 BrowseMoviesContainer.propTypes = {
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default BrowseMoviesContainer;

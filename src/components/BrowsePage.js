@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import Tabs from "./Tabs";
 import BrowseGenresContainer from "../containers/BrowseGenresContainer";
 import PosterGrid from "./PosterGrid";
+import BrowseYear from "./BrowseYear";
 import ErrorMessage from "./ErrorMessage";
 
 function BrowsePage({
@@ -13,8 +14,13 @@ function BrowsePage({
   genreTitle,
   type,
   isLoading,
-  error }) {
+  error,
+  searchValue,
+  search,
+  setSearchbarValue,
+}) {
   let titleTabs;
+  let statusMsg;
 
   if (type === "movies") {
     titleTabs = (
@@ -30,69 +36,62 @@ function BrowsePage({
       </div>);
   }
 
-  if (isLoading) {
-    return (
-      <section className="container">
-        {titleTabs}
-        loading...
-      </section>
-    );
-  }
-
   if (error) {
-    return (
-      <section className="container">
-        {titleTabs}
-        <ErrorMessage>Oops! Could not load homepage :(</ErrorMessage>
-      </section>
+    statusMsg = (
+      <ErrorMessage>{error}</ErrorMessage>
+    );
+  } else if (isLoading) {
+    statusMsg = (
+      <div>
+        Loading...
+      </div>
+    );
+  } else {
+    statusMsg = (
+      <div />
     );
   }
 
-  if (type === "movies") {
-    return (
-      <section className="container">
-        {titleTabs}
-        <Switch>
-          <Route
-            exact
-            path="/movies/genre/"
-            render={props =>
+  return (
+    <section className="container">
+      {titleTabs}
+      <Switch>
+        <Route
+          exact
+          path="/(movies|shows)/genre/"
+          render={props => (
+            <div>
+              {statusMsg}
               <BrowseGenresContainer {...props} genres={genres} type={type} />
-            }
-          />
-          <Route
-            path="/movies/:filter"
-            render={() => (
+            </div>
+          )}
+        />
+        <Route
+          path="/(movies|shows)/year/"
+          render={() => (
+            <div>
+              <BrowseYear
+                movies={movies}
+                searchValue={searchValue}
+                search={search}
+                setSearchbarValue={setSearchbarValue}
+                statusMsg={statusMsg}
+              />
+            </div>
+          )}
+        />
+        <Route
+          path="/(movies|shows)/:filter"
+          render={() => (
+            <div>
+              {statusMsg}
               <PosterGrid movies={movies} />
-            )}
-          />
-        </Switch>
-      </section>
-    );
-  }
-
-  if (type === "shows") {
-    return (
-      <section className="container">
-        {titleTabs}
-        <Switch>
-          <Route
-            exact
-            path="/shows/genre/"
-            render={props =>
-              <BrowseGenresContainer {...props} genres={genres} type={type} />
-            }
-          />
-          <Route
-            path="/shows/:filter"
-            render={() => (
-              <PosterGrid movies={movies} />
-            )}
-          />
-        </Switch>
-      </section>
-    );
-  }
+            </div>
+          )}
+        />
+      </Switch>
+    </section>
+  );
 }
 
 BrowsePage.propTypes = {
@@ -103,8 +102,11 @@ BrowsePage.propTypes = {
   genreTitle: PropTypes.string.isRequired,
   genres: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  searchValue: PropTypes.string.isRequired,
+  search: PropTypes.func.isRequired,
+  setSearchbarValue: PropTypes.func.isRequired,
 };
 
 export default BrowsePage;

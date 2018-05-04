@@ -123,6 +123,20 @@ export function getShowsFromType(type) {
     .then(json => json.results);
 }
 
+export function getMoviesFromYear(year) {
+  const moviesUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=1&primary_release_year=${year}`;
+  return fetch(moviesUrl)
+    .then(checkResponse)
+    .then(json => json.results);
+}
+
+export function getShowsFromYear(year) {
+  const moviesUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&sort_by=popularity.desc&page=1&first_air_date_year=${year}`;
+  return fetch(moviesUrl)
+    .then(checkResponse)
+    .then(json => json.results);
+}
+
 export async function getTVInfo(id) {
   const url = `${baseUrl}/tv/${id}?api_key=${API_KEY}&append_to_response=videos,credits,recommendations`;
   const res = await fetch(url);
