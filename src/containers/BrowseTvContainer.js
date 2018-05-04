@@ -81,9 +81,11 @@ class BrowseTvContainer extends Component {
       } else {
         resp = await getGenreShows(id, this.state.currentPage + 1);
       }
+      /* The following piece of code removes duplicate movies as the api sometimes returns
+       movies that already was fetched before. */
       const index = this.state.movies.concat(resp.results);
       const resArr = [];
-      index.filter((item) => {
+      index.forEach((item) => {
         const i = resArr.findIndex(x => x.id === item.id);
         if (i <= -1) {
           resArr.push(item);
