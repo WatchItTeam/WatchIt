@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroller";
 import Tabs from "./Tabs";
 import BrowseGenresContainer from "../containers/BrowseGenresContainer";
 import PosterGrid from "./PosterGrid";
@@ -13,7 +14,10 @@ function BrowsePage({
   genreTitle,
   type,
   isLoading,
-  error }) {
+  error,
+  currentPage,
+  totalPages,
+  loadMoreFunc }) {
   let titleTabs;
 
   if (type === "movies") {
@@ -63,7 +67,12 @@ function BrowsePage({
           <Route
             path="/movies/:filter"
             render={() => (
-              <PosterGrid movies={movies} />
+              <InfiniteScroll
+                loadMore={loadMoreFunc}
+                hasMore={currentPage !== totalPages}
+              >
+                <PosterGrid movies={movies} />
+              </InfiniteScroll>
             )}
           />
         </Switch>
@@ -86,7 +95,12 @@ function BrowsePage({
           <Route
             path="/shows/:filter"
             render={() => (
-              <PosterGrid movies={movies} />
+              <InfiniteScroll
+                loadMore={loadMoreFunc}
+                hasMore={currentPage !== totalPages}
+              >
+                <PosterGrid movies={movies} />
+              </InfiniteScroll>
             )}
           />
         </Switch>
