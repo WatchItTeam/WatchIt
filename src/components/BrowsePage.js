@@ -43,7 +43,7 @@ function BrowsePage({
   } else if (isLoading) {
     statusMsg = (
       <div>
-        loading...
+        Loading...
       </div>
     );
   } else {
