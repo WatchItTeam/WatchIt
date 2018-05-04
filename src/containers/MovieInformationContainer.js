@@ -42,7 +42,7 @@ class MovieInformation extends Component {
     }
     render() {
       let cast;
-      if (this.props.currentMovie.recommendations.results.length === 0) {
+      if (this.props.currentMovie.credits.cast.length === 0) {
         cast = <div>No cast to show</div>;
       } else {
         cast = (
