@@ -1,12 +1,8 @@
-import React, { Component, Fragment as F } from "react";
+import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
 import "../../css/LoginHandler.scss";
 import firebase from "../../Firebase/firebase";
-import Test from "./Test";
-// import LoginButton from "./LoginButton";
-
-// import PropTypes from "prop-types";
+import UserLayout from "./UserLayout";
 
 class LoginHandler extends Component {
   state = {
@@ -14,24 +10,28 @@ class LoginHandler extends Component {
     password: "",
     user: null,
   };
-  signUpClick = () => {
+  signUpClick = (event) => {
+    console.log("Trying do sign in");
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       alert(errorMessage);
     });
+    event.preventDefault();
   }
 
-  signInClick = () => {
+  signInClick = (event) => {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       alert(errorMessage);
     });
+    event.preventDefault();
   }
 
   signOut = () => {
     firebase.auth().signOut();
+    this.setState({ email: "", password: "" });
   }
 
   componentDidMount() {
@@ -48,18 +48,18 @@ class LoginHandler extends Component {
       this.setState({ password: event.target.value });
     }
   }
+
+
   render() {
     return (
-      <F>
-        <Test
-          {...this.props}
-          onSignOutClick={this.signOut}
-          handleChange={this.handleChange}
-          signInClick={this.signInClick}
-          signUpClick={this.signUpClick}
-          user={this.state.user}
-        />
-      </F>
+      <UserLayout
+        {...this.props}
+        onSignOutClick={this.signOut}
+        handleChange={this.handleChange}
+        signInClick={this.signInClick}
+        signUpClick={this.signUpClick}
+        user={this.state.user}
+      />
     );
   }
 }

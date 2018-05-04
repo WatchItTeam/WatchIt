@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import LoginButton from "./LoginButton";
+import "../../css/LoginButton.scss";
 
-function Test({
+
+function UserLayout({
   user, onSignOutClick, handleChange, signInClick, signUpClick, email, password,
 }) {
   if (user) {
@@ -19,17 +20,19 @@ function Test({
   }
   return (
     <div className="Loginwindow user-info">
-      <div className="loginBars">
-        <input id="emailBar" type="email" value={email} onChange={handleChange} placeholder="Email" />
-        <input id="passBar" type="password" value={password} onChange={handleChange} placeholder="Password" />         
-        <LoginButton onClick={signInClick}>Log in</LoginButton>
-        <button id="signupButton" onClick={signUpClick}>Sign up</button>
-      </div>
+      <form onSubmit={signInClick}>
+        <div className="loginBars">
+          <input id="emailBar" type="email" value={email} onChange={handleChange} placeholder="Email" />
+          <input id="passBar" type="password" value={password} onChange={handleChange} placeholder="Password" />
+          <button className="login-btn">Log in</button>
+          <button id="signupButton" onClick={signUpClick}>Sign up</button>
+        </div>
+      </form>
     </div>
   );
 }
 
-Test.propTypes = {
+UserLayout.propTypes = {
   user: PropTypes.any.isRequired,
   onSignOutClick: PropTypes.func.isRequired,
   signInClick: PropTypes.func.isRequired,
@@ -39,4 +42,4 @@ Test.propTypes = {
   password: PropTypes.string.isRequired,
 };
 
-export default Test;
+export default UserLayout;
