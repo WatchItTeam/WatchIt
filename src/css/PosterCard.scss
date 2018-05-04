@@ -1,29 +1,18 @@
-@mixin poster {
-  border-radius: 4px;
-  width: 100%;
-  min-height: 195px;
-}
-
 .poster-card {
   display: block;
   text-align: center;
   color: inherit;
 
   .poster {
-    @include poster;
-    object-fit: cover;
+    border-radius: 4px;
+    width: 100%;
+    min-height: 195px;
     transition: all 0.2s ease;
+    overflow: hidden;
   }
 
-  .no-poster {
-    @include poster;
+  .poster.fallback-img {
     height: 80%;
-    background: #eeeeee;
-    font-size: 2em;
-    color: #d3d3d3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .poster:hover {

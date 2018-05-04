@@ -1,26 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { getFullImgPath, getYearFromDate } from "../api/APIUtils";
+import { getYearFromDate } from "../api/APIUtils";
+import ImageWithFallback from "./ImageWithFallback";
 import "../css/PosterCard.scss";
 
 /**
  * Reusable component for showing a movie poster and title
  */
-function PosterCard({ title, posterPath, linkTo, releaseDate }) {
-  const releaseYear = releaseDate ? ` (${getYearFromDate(releaseDate)})` : "";
-
-  let img;
-  if (posterPath) {
-    img = <img className="poster" src={getFullImgPath(posterPath, "w342")} alt={title} />;
-  } else {
-    img = <div className="no-poster"><FontAwesomeIcon icon="image" /></div>;
-  }
+function PosterCard({ title, posterPath, linkTo, releaseDate, mediaType }) {
+  const releaseYear = releaseDate ? ` (${getYearFromDate(releaseDate, "w342")})` : "";
 
   return (
     <Link className="poster-card" to={linkTo}>
-      {img}
+      <ImageWithFallback
+        src={posterPath}
+        imgSize="w342"
+        mediaType={mediaType}
+        alt={`Poster for ${title}`}
+        className="poster"
+      />
       <p className="title">
         {title}{releaseYear}
       </p>
@@ -38,6 +37,7 @@ PosterCard.propTypes = {
   posterPath: PropTypes.string,
   linkTo: PropTypes.string.isRequired,
   releaseDate: PropTypes.string,
+  mediaType: PropTypes.string.isRequired,
 };
 
 export default PosterCard;
