@@ -30,7 +30,7 @@ class BrowseTvContainer extends Component {
 
   getMoviesFromTab() {
     const { filter, id } = this.props.match.params;
-    this.setState({ movies: [], genreTitle: "", isLoading: true, currentPage: 1 });
+    this.setState({ movies: [], genreTitle: "", isLoading: true });
 
     if (filter === "top_rated") {
       getShowsFromType("top_rated")
@@ -60,9 +60,7 @@ class BrowseTvContainer extends Component {
       if (id) {
         this.setGenreTitle(id);
         getGenreShows(id)
-          .then(movies => this.setState({ movies: movies.results,
-            totalPages: movies.total_pages,
-            isLoading: false }))
+          .then(movies => this.setState({ movies, isLoading: false }))
           .catch(() => {
             this.setState({ error: true });
           });
@@ -71,16 +69,10 @@ class BrowseTvContainer extends Component {
       }
     }
   }
-
   loadMoreAndAppend = async () => {
-    const { filter, id } = this.props.match.params;
+    const { filter } = this.props.match.params;
     try {
-      let resp;
-      if (filter !== "genre") {
-        resp = await getShowsFromType(filter, this.state.currentPage + 1);
-      } else {
-        resp = await getGenreShows(id, this.state.currentPage + 1);
-      }
+      const resp = await getShowsFromType(filter, this.state.currentPage + 1);
       const index = this.state.movies.concat(resp.results);
       const resArr = [];
       index.filter((item) => {
@@ -95,10 +87,10 @@ class BrowseTvContainer extends Component {
         currentPage: resp.page,
         totalPages: resp.total_pages });
     } catch (error) {
+      console.error(error);
       this.setState({ error });
     }
   }
-
   render() {
     const tabLinks = {
       Popular: "/shows/popular",
