@@ -7,7 +7,7 @@ const config = {
   databaseURL: "https://watchit-cbe87.firebaseio.com",
   projectId: "watchit-cbe87",
   storageBucket: "",
-  messagingSenderId: "618753430688"
+  messagingSenderId: "618753430688",
 };
 const firebaseApp = firebase.initializeApp(config);
 

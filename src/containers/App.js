@@ -12,7 +12,6 @@ import UserList from "../containers/UserList";
 import BrowseMoviesContainer from "./BrowseMoviesContainer";
 import BrowseTvContainer from "./BrowseTvContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
-import LoginPageContainer from "./LoginPageContainer";
 import "../css/App.scss";
 
 const SEARCH_DEBOUNCE_TIME = 500;
@@ -89,11 +88,6 @@ class App extends Component {
     this.setState({ searchWords });
   }
 
-  signOut = () => {
-    // TODO what happens when the sign out button is clicked
-    console.log("sign out clicked");
-  }
-
   render() {
     const {
       sidebarIsOpen,
@@ -119,12 +113,10 @@ class App extends Component {
           <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} />
           <div id="main-container">
             <DynamicHeader
-              username="Robert Kindwall"
               toggleSidebar={this.toggleSidebar}
               searchHandler={this.searchHandler}
               setSearchbarValue={this.setSearchbarValue}
               searchbarValue={this.state.searchWords}
-              onSignOutClick={this.signOut}
             />
             <Switch>
               <Route
@@ -173,11 +165,6 @@ class App extends Component {
                     currentMovie={currentMovie}
                     setCurrentMovie={this.setCurrentMovie}
                   />)}
-              />
-              <Route
-                path="/login"
-                render={() => (
-                  <LoginPageContainer />)}
               />
               <Route
                 path="/search"

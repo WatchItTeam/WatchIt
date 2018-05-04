@@ -2,13 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Searchbar from "../Searchbar";
+import LoginHandler from "../Login/LoginHandler";
 import "../../css/Header.scss";
 
 /**
  * The header for desktop, which includes search bar and user info
  */
 function DesktopHeader({
-  username, onSignOutClick, setSearchbarValue, searchbarValue, searchHandler,
+  setSearchbarValue, searchbarValue, searchHandler,
 }) {
   return (
     <header id="app-header-desktop" className="app-header">
@@ -17,20 +18,12 @@ function DesktopHeader({
         search={searchHandler}
         setSearchbarValue={setSearchbarValue}
       />
-      <div id="user-info">
-        <div className="user-img" />
-        {username}
-        <button onClick={onSignOutClick}>
-          <FontAwesomeIcon icon="sign-out-alt" /> Sign out
-        </button>
-      </div>
+      <LoginHandler />
     </header>
   );
 }
 
 DesktopHeader.propTypes = {
-  username: PropTypes.string.isRequired,
-  onSignOutClick: PropTypes.func.isRequired,
   searchbarValue: PropTypes.string.isRequired,
   searchHandler: PropTypes.func.isRequired,
   setSearchbarValue: PropTypes.func.isRequired,
