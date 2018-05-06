@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Switch, Route, Redirect } from "react-router-dom";
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 import { UserProvider } from "../Firebase/UserContext";
 import ScrollToTop from "../components/ScrollToTop";
 import HomepageContainer from "./HomepageContainer";
@@ -198,4 +200,6 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+// DragDropContext enables react-dnd to work in our app
+// withRouter gives App access to history, location, match
+export default DragDropContext(HTML5Backend)(withRouter(App));
