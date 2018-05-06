@@ -202,4 +202,4 @@ class App extends Component {
 
 // DragDropContext enables react-dnd to work in our app
 // withRouter gives App access to history, location, match
-export default DragDropContext(HTML5Backend)(withRouter(App));
+export default withRouter(DragDropContext(HTML5Backend)(App));

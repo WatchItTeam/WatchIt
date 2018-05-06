@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import SidebarNavLink from "./SidebarNavLink";
+import PosterCardDropTarget from "./PosterCardDropTarget";
 import { SignedIn, SignedOut } from "./UserState/UserState";
 import "../css/Sidebar.scss";
 
@@ -31,10 +32,26 @@ function Sidebar({ isOpen }) {
       <SignedIn>
         {user => (
           <nav>
-            <SidebarNavLink to={`/user/${user.uid}/watching/`}>Watching</SidebarNavLink>
-            <SidebarNavLink to={`/user/${user.uid}/plan_to_watch/`}>Plan to watch</SidebarNavLink>
-            <SidebarNavLink to={`/user/${user.uid}/completed/`}>Completed</SidebarNavLink>
-            <SidebarNavLink to={`/user/${user.uid}/dropped/`}>Dropped</SidebarNavLink>
+            <PosterCardDropTarget>
+              <SidebarNavLink to={`/user/${user.uid}/watching/`}>
+                Watching
+              </SidebarNavLink>
+            </PosterCardDropTarget>
+            <PosterCardDropTarget>
+              <SidebarNavLink to={`/user/${user.uid}/plan_to_watch/`}>
+                Plan to watch
+              </SidebarNavLink>
+            </PosterCardDropTarget>
+            <PosterCardDropTarget>
+              <SidebarNavLink to={`/user/${user.uid}/completed/`}>
+                Completed
+              </SidebarNavLink>
+            </PosterCardDropTarget>
+            <PosterCardDropTarget>
+              <SidebarNavLink to={`/user/${user.uid}/dropped/`}>
+                Dropped
+              </SidebarNavLink>
+            </PosterCardDropTarget>
           </nav>
         )}
       </SignedIn>
