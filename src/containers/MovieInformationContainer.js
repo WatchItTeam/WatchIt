@@ -87,6 +87,7 @@ class MovieInformation extends Component {
                   <div className="card" key={movie.id}>
                     <PosterCard
                       key={movie.id}
+                      id={movie.id}
                       linkTo={`/${(movie.media_type)}/${movie.id}`}
                       title={movie.title}
                       posterPath={movie.poster_path}

@@ -11,7 +11,10 @@ import "../css/PosterCard.scss";
  */
 class PosterCard extends Component {
   static propTypes = {
-    connectDragSource: PropTypes.func.isRequired, // from react-dnd
+    /** From react-dnd */
+    connectDragSource: PropTypes.func.isRequired,
+    /** ID is important for drag and drop to work, in order to identify the movie */
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     posterPath: PropTypes.string,
     linkTo: PropTypes.string.isRequired,
@@ -25,12 +28,14 @@ class PosterCard extends Component {
   }
 
   render() {
-    const { title, posterPath, linkTo, releaseDate, mediaType, connectDragSource } = this.props;
+    const { id, title, posterPath, linkTo, releaseDate, mediaType, connectDragSource } = this.props;
     const releaseYear = releaseDate ? ` (${getYearFromDate(releaseDate)})` : "";
+
+    const fallbackUrl = `/${mediaType}/${id}`;
 
     return connectDragSource((
       <div>
-        <Link className="poster-card" to={linkTo} draggable>
+        <Link className="poster-card" to={linkTo || fallbackUrl} draggable>
           <ImageWithFallback
             src={posterPath}
             imgSize="w342"
@@ -51,6 +56,7 @@ const cardSource = {
   // beginDrag should return an object, the "payload" of the drag and drop
   beginDrag(props) {
     return {
+      id: props.id,
       mediaType: props.mediaType,
     };
   },

@@ -52,6 +52,7 @@ function Sidebar({ isOpen }) {
                 Dropped
               </SidebarNavLink>
             </PosterCardDropTarget>
+            <p>You can add to lists with drag and drop</p>
           </nav>
         )}
       </SignedIn>
