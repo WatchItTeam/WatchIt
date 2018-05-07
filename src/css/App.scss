@@ -12,3 +12,12 @@
   // removes the black overlay that iOS puts on top of clickable items
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
+
+.toast-container {
+  z-index: $toast-z;
+}
+
+.toast-success {
+  background: #303030;
+  color: white;
+}

@@ -57,6 +57,7 @@ const cardSource = {
   beginDrag(props) {
     return {
       id: props.id,
+      title: props.title,
       mediaType: props.mediaType,
     };
   },

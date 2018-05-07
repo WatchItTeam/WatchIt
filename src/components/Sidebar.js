@@ -35,22 +35,22 @@ function Sidebar({ isOpen }) {
           <SignedIn>
             {user => (
               <nav>
-                <PosterCardDropTarget>
+                <PosterCardDropTarget targetName="Watching">
                   <SidebarNavLink to={`/user/${user.uid}/watching/`}>
                     Watching
                   </SidebarNavLink>
                 </PosterCardDropTarget>
-                <PosterCardDropTarget>
+                <PosterCardDropTarget targetName="Plan to watch">
                   <SidebarNavLink to={`/user/${user.uid}/plan_to_watch/`}>
                     Plan to watch
                   </SidebarNavLink>
                 </PosterCardDropTarget>
-                <PosterCardDropTarget>
+                <PosterCardDropTarget targetName="Completed">
                   <SidebarNavLink to={`/user/${user.uid}/completed/`}>
                     Completed
                   </SidebarNavLink>
                 </PosterCardDropTarget>
-                <PosterCardDropTarget>
+                <PosterCardDropTarget targetName="Dropped">
                   <SidebarNavLink to={`/user/${user.uid}/dropped/`}>
                     Dropped
                   </SidebarNavLink>

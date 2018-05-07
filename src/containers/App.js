@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { withRouter, Switch, Route, Redirect } from "react-router-dom";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
+import { ToastContainer, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 import { UserProvider } from "../Firebase/UserContext";
 import ScrollToTop from "../components/ScrollToTop";
 import HomepageContainer from "./HomepageContainer";
@@ -112,6 +114,14 @@ class App extends Component {
       <UserProvider>
         <ScrollToTop>
           {sidebarOverlay}
+          <ToastContainer
+            className="toast-container"
+            hideProgressBar
+            closeButton={false}
+            position="bottom-left"
+            transition={Slide}
+            autoClose={3000}
+          />
           <Sidebar isOpen={sidebarIsOpen} closeSidebar={this.closeSidebar} />
           <div id="main-container">
             <DynamicHeader
