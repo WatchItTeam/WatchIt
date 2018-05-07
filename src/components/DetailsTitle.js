@@ -4,7 +4,7 @@ import moment from "moment-mini";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { getFullImgPath } from "../api/APIUtils";
 import minutesToHours from "../utils/minutesToHours";
-import PrimaryButton from "./PrimaryButton";
+import AddToListBtn from "../containers/AddToListBtn";
 import ImageWithFallback from "./ImageWithFallback";
 import "../css/DetailsTitle.scss";
 
@@ -85,7 +85,7 @@ function DetailsTitle({ movie, onBtnClick }) {
           {infoLine}
         </div>
         <div className="bottom">
-          <PrimaryButton onClick={onBtnClick}>+ Add to</PrimaryButton>
+          <AddToListBtn currentMovie={movie} />
           &nbsp;&nbsp;
           <span className="rating">
             <span className="star-icon"><FontAwesomeIcon icon="star" /></span> {rating}

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DetailsBanner from "./DetailsBanner";
 import DetailsTitle from "./DetailsTitle";
 import MovieInformation from "../containers/MovieInformationContainer";
-
+import { addToList } from "../Firebase/lists";
 
 /**
  * Markup for the details page
@@ -12,7 +12,7 @@ function DetailsPage({ currentMovie }) {
   return (
     <div id="detailspage">
       <DetailsBanner backdropPath={currentMovie.backdrop_path} />
-      <DetailsTitle movie={currentMovie} onBtnClick={() => 1} />
+      <DetailsTitle movie={currentMovie} onBtnClick={() => addToList(currentMovie)} />
       <MovieInformation currentMovie={currentMovie} />
     </div>
   );
