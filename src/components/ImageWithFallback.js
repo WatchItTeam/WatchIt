@@ -9,7 +9,16 @@ import "../css/ImageWithFallback.scss";
  */
 function ImageWithFallback({ src, imgSize, mediaType, alt, className }) {
   if (src) {
-    return <img className={`${className} img-with-fb`} src={getFullImgPath(src, imgSize)} alt={alt} />;
+    // draggable is disabled in order to disallow only the image to be dragged
+    // we want the _whole_ PosterCard to be dragged
+    return (
+      <img
+        className={`${className} img-with-fb`}
+        src={getFullImgPath(src, imgSize)}
+        draggable="false"
+        alt={alt}
+      />
+    );
   }
 
   let icon;

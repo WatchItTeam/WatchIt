@@ -15,6 +15,7 @@ function PosterGrid({ movies }) {
         return (
           <PosterCard
             key={movie.id}
+            id={movie.id}
             linkTo={`/${(movie.media_type)}/${movie.id}`}
             title={movie.title}
             posterPath={movie.poster_path}

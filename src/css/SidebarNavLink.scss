@@ -3,6 +3,15 @@
 $side-padding: 40px;
 $border-size: 7px;
 
+// these are applied when a PosterCard is hovered over a SidebarNavLink
+// which is inside a PosterCardDropTarget
+.droptarget-is-over {
+  .sidebar-navlink {
+    background: rgba($primary-color, 0.3);
+    color: #272727;
+  }
+}
+
 .sidebar-navlink {
   display: block;
   padding: 10px $side-padding;

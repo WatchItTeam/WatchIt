@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import SidebarNavLink from "./SidebarNavLink";
+import PosterCardDropTarget from "./PosterCardDropTarget";
 import { SignedIn, SignedOut } from "./UserState/UserState";
+import { Desktop } from "./Responsive";
 import "../css/Sidebar.scss";
 
 /**
@@ -11,36 +13,60 @@ import "../css/Sidebar.scss";
 function Sidebar({ isOpen }) {
   return (
     <div id="sidebar" className={isOpen ? "open" : "closed"}>
-      <h1 id="logo">WatchIt</h1>
+      <div id="sidebar-content">
+        <section>
+          <h1 id="logo">WatchIt</h1>
 
-      <nav>
-        <SidebarNavLink exact to="/">
-          <FontAwesomeIcon icon="home" fixedWidth /> Home
-        </SidebarNavLink>
-        <SidebarNavLink to="/movies">
-          <FontAwesomeIcon icon="film" fixedWidth /> Browse movies
-        </SidebarNavLink>
-        <SidebarNavLink to="/shows">
-          <FontAwesomeIcon icon="tv" fixedWidth /> Browse TV shows
-        </SidebarNavLink>
-      </nav>
-
-      <div className="divisor" />
-
-      <h2>My lists</h2>
-      <SignedIn>
-        {user => (
           <nav>
-            <SidebarNavLink to={`/user/${user.uid}/watching/`}>Watching</SidebarNavLink>
-            <SidebarNavLink to={`/user/${user.uid}/plan_to_watch/`}>Plan to watch</SidebarNavLink>
-            <SidebarNavLink to={`/user/${user.uid}/completed/`}>Completed</SidebarNavLink>
-            <SidebarNavLink to={`/user/${user.uid}/dropped/`}>Dropped</SidebarNavLink>
+            <SidebarNavLink exact to="/">
+              <FontAwesomeIcon icon="home" fixedWidth /> Home
+            </SidebarNavLink>
+            <SidebarNavLink to="/movies">
+              <FontAwesomeIcon icon="film" fixedWidth /> Browse movies
+            </SidebarNavLink>
+            <SidebarNavLink to="/shows">
+              <FontAwesomeIcon icon="tv" fixedWidth /> Browse TV shows
+            </SidebarNavLink>
           </nav>
-        )}
-      </SignedIn>
-      <SignedOut>
-        <p>Log in to view your lists</p>
-      </SignedOut>
+
+          <div className="divisor" />
+
+          <h2>My lists</h2>
+          <SignedIn>
+            {user => (
+              <nav>
+                <PosterCardDropTarget targetName="Watching">
+                  <SidebarNavLink to={`/user/${user.uid}/watching/`}>
+                    Watching
+                  </SidebarNavLink>
+                </PosterCardDropTarget>
+                <PosterCardDropTarget targetName="Plan to watch">
+                  <SidebarNavLink to={`/user/${user.uid}/plan_to_watch/`}>
+                    Plan to watch
+                  </SidebarNavLink>
+                </PosterCardDropTarget>
+                <PosterCardDropTarget targetName="Completed">
+                  <SidebarNavLink to={`/user/${user.uid}/completed/`}>
+                    Completed
+                  </SidebarNavLink>
+                </PosterCardDropTarget>
+                <PosterCardDropTarget targetName="Dropped">
+                  <SidebarNavLink to={`/user/${user.uid}/dropped/`}>
+                    Dropped
+                  </SidebarNavLink>
+                </PosterCardDropTarget>
+              </nav>
+            )}
+          </SignedIn>
+          <SignedOut>
+            <p>Log in to view your lists</p>
+          </SignedOut>
+        </section>
+        <Desktop>
+          {/* Don't display this tip on mobile since drag and drop only works on desktop */}
+          <p className="tip-text">Tip: You can add to lists with drag and drop</p>
+        </Desktop>
+      </div>
     </div>
   );
 }
