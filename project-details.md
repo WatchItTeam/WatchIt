@@ -1,34 +1,35 @@
 # Project details
-Updated April 20th
+Updated May 7th
 
 ## What has been done
 * Custom Webpack setup, Babel, ESLint, Sass
-* Initial layout
-    * Responsive sidebar which turns into a slideout menu on mobile
-    * Responsive grid layouts for movies and tv shows
+* Responsive sidebar which turns into a slideout menu on mobile
+* Responsive grid layouts for movies and tv shows
+* Detail page for movies and tv shows
+* Browse pages for movies and tv shows
+    * Used to browse top, popular, upcoming, genres, year.
+* Drag and drop functionality for movies/tv shows (actual logic for saving to lists isn't implemented, just the drag and drop)
 * Integration with TheMovieDB API
     * The homepage fetches currently playing movies and now airing TV shows.
     * Fully functioning search system with infinte scroll for loading more results.
     * The movie details page fetches movie info including data such as rating, runtime, cast, trailers, etc.
+    * Different API calls for top, upcoming, genres etc.
+* Login / sign up with Firebase
 
 For more details, feel free to check the closed issues in our issue tracker
 
 ## What we plan to do
-* Finish up the movie details page
-    * Layout is not fully done
-    * Not responsive
-* Implement tv details page (will have same layout as the movie details page, just need to adapt to the correct API call)
-* Implement Browse Movies page (currently in progress)
-    * Used to browse top rated films, upcoming, genres, etc
-* Implement Browse TV Shows page
-    * Same functionality as the Browse Movies page
-    * Same layout, so only need to adapt to the right API call
-* Finish account system (currently in progress)
-* Add Firebase (currently in progress)
-    * User lists/collections
-* Drag and drop for adding to lists (already figured out how to do this, can be easily implemented once the list system is done)
-* General improvements
-    * Ensure loading indicators and errors appear where appropriate.
+* Add list functionality
+    * Functionality to add to lists
+    * Delete from lists
+    * Fetch list entries from Firebase
+    * Episode lists for tv shows to be able to mark individual episodes as seen
+* More responsive header (login/sign up fields get cut off at some resolutions)
+
+### If we have time
+* Add a detail page for actors
+* Profile page with watch stats
+* Misc minor issues.
 
 ## Project file structure
 This project's structure is inspired from `create-react-app`.
