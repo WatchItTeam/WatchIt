@@ -31,12 +31,7 @@ const listTarget = {
   // is called when a PosterCard is dropped on this component
   drop(props, monitor) {
     const item = monitor.getItem();
-    const success = Math.random() > 0.3;
-    if (success) {
-      successToast(`Added ${item.title} to ${props.targetName}`);
-    } else {
-      errorToast(`Something went wrong when adding ${item.title} to ${props.targetName}`);
-    }
+    successToast(`Added ${item.title} to ${props.targetName}`);
   },
 };
 
