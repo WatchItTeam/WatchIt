@@ -12,6 +12,7 @@ import UserList from "../containers/UserList";
 import BrowseMoviesContainer from "./BrowseMoviesContainer";
 import BrowseTvContainer from "./BrowseTvContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
+import NotFoundPage from "../components/404";
 import "../css/App.scss";
 
 const SEARCH_DEBOUNCE_TIME = 500;
@@ -189,7 +190,7 @@ class App extends Component {
                 path="/user/:userId/:listName(watching|plan_to_watch|completed|dropped)/:mediaType(all|movies|tv)"
                 component={UserList}
               />
-              <Route render={() => <div>404</div>} />
+              <Route component={NotFoundPage} />
             </Switch>
           </div>
         </ScrollToTop>
