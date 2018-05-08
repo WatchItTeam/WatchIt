@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ResponsiveList from "../components/WatchList/ResponsiveList";
 import parseName from "../utils/parseName";
 import ErrorMessage from "../components/ErrorMessage";
-import { fetchFromList } from "../Firebase/lists";
+import { fetchAllFromList } from "../Firebase/lists";
 
 class UserList extends Component {
   static propTypes = {
@@ -42,7 +42,7 @@ class UserList extends Component {
     this.setState({ isLoading: true });
 
     try {
-      const listEntries = await fetchFromList(userId, listName, mediaType);
+      const listEntries = await fetchAllFromList(userId, listName, mediaType);
       this.setState({ listEntries, error: false });
     } catch (error) {
       console.error(error);

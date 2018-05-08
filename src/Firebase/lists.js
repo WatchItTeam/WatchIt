@@ -32,7 +32,10 @@ export function addToList(mov, watchStatus = watchStates.planToWatch) {
   });
 }
 
-export async function fetchFromList(userId, watchStatus, mediaType) {
+/**
+ * Fetches list entries from the database
+ */
+export async function fetchAllFromList(userId, watchStatus, mediaType) {
   let req;
   if (mediaType === "all") {
     req = await db.collection(`/users/${userId}/list`)
@@ -46,4 +49,13 @@ export async function fetchFromList(userId, watchStatus, mediaType) {
 
   const entries = snapShots.docs.map(doc => doc.data());
   return entries;
+}
+
+/**
+ * Fetches one specific movie/show from a user's list
+ */
+export function fetchOneFromList(userId, movieId) {
+  return db.doc(`/users/${userId}/list/${movieId}`)
+    .get()
+    .then(doc => doc.data());
 }

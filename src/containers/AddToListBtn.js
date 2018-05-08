@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import { addToList } from "../Firebase/lists";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import firebase from "../Firebase/firebase";
+import { addToList, fetchOneFromList } from "../Firebase/lists";
 import { successToast, errorToast } from "../utils/toast";
 import { withUser } from "../Firebase/UserContext";
 import { normalizeMovie } from "../api/APIUtils";
 import parseName from "../utils/parseName";
 import PrimaryButton from "../components/PrimaryButton";
-import ListPickerModal from "../components/ListPickerModal";
+import ListPickerModal from "../components/ListPicker/ListPickerModal";
 
 class AddToListBtn extends Component {
   static propTypes = {
@@ -17,6 +19,27 @@ class AddToListBtn extends Component {
   state = {
     isLoading: false,
     modalIsOpen: false,
+    statusOfCurrentMovie: null,
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.checkStatusOfCurrentMovie();
+      }
+    });
+  }
+
+  async checkStatusOfCurrentMovie() {
+    this.setState({ isLoading: true });
+    const { user, currentMovie } = this.props;
+    const movie = await fetchOneFromList(user.uid, currentMovie.id);
+    console.log(movie);
+    if (movie && movie.watch_status) {
+      console.log(movie.watch_status);
+      this.setState({ statusOfCurrentMovie: movie.watch_status });
+    }
+    this.setState({ isLoading: false });
   }
 
   showModal = () => {
@@ -35,6 +58,7 @@ class AddToListBtn extends Component {
     try {
       await addToList(movie, selectedList);
       successToast(`Added ${movie.title} to ${parseName(selectedList)}`);
+      this.setState({ statusOfCurrentMovie: selectedList });
     } catch (error) {
       errorToast(`Something went wrong when adding ${movie.title}`);
     }
@@ -42,11 +66,24 @@ class AddToListBtn extends Component {
   }
 
   render() {
-    const { isLoading, modalIsOpen } = this.state;
+    const { isLoading, modalIsOpen, statusOfCurrentMovie } = this.state;
     const { user } = this.props;
     const { onModalSubmit, hideModal, showModal } = this;
 
-    const label = isLoading ? "Adding..." : "+ Add to";
+    let label;
+    if (isLoading) {
+      label = "Loading...";
+    } else if (statusOfCurrentMovie && user) {
+      label = (
+        <span>
+          <FontAwesomeIcon icon="check-square" />
+          &nbsp;
+          {parseName(statusOfCurrentMovie)}
+        </span>
+      );
+    } else {
+      label = "+ Add to";
+    }
     const disabled = isLoading || user.status !== "signedIn";
 
     return (
@@ -54,7 +91,12 @@ class AddToListBtn extends Component {
         <PrimaryButton onClick={showModal} disabled={disabled}>
           {label}
         </PrimaryButton>
-        <ListPickerModal isOpen={modalIsOpen} hideFunc={hideModal} onSubmit={onModalSubmit} />
+        <ListPickerModal
+          isOpen={modalIsOpen}
+          hideFunc={hideModal}
+          onSubmit={onModalSubmit}
+          statusOfCurrent={statusOfCurrentMovie}
+        />
       </Fragment>
     );
   }

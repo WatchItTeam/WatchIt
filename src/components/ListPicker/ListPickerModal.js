@@ -1,35 +1,25 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import PrimaryButton from "./PrimaryButton";
-import parseName from "../utils/parseName";
-import "../css/ListPickerModal.scss";
-
-function ListItem({ value, current, onChange }) {
-  return (
-    <label htmlFor={`listform-${value}`}>
-      <input
-        type="radio"
-        name="chosen-list"
-        id={`listform-${value}`}
-        value={value}
-        checked={value === current}
-        onChange={onChange}
-      /> {parseName(value)}
-    </label>
-  );
-}
-
-ListItem.propTypes = {
-  value: PropTypes.string.isRequired,
-  current: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
+import PrimaryButton from "../PrimaryButton";
+import ListItem from "./ListItem";
+import "../../css/ListPickerModal.scss";
 
 class ListPickerModal extends Component {
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
     hideFunc: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    statusOfCurrent: PropTypes.string, // eslint-disable-line
+  }
+
+  static defaultProps = {
+    statusOfCurrent: "",
+  }
+
+  static getDerivedStateFromProps(props) {
+    return {
+      current: props.statusOfCurrent,
+    };
   }
 
   state = { current: "" }
@@ -47,7 +37,12 @@ class ListPickerModal extends Component {
   onSaveClick = () => {
     const { current } = this.state;
     const { onSubmit, hideFunc } = this.props;
-    onSubmit(current);
+
+    // only call onSubmit if the user has actually selected
+    // one of the lists, otherwise skip
+    if (current) {
+      onSubmit(current);
+    }
     hideFunc();
   }
 
