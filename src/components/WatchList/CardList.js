@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import moment from "moment-mini";
 import { Link } from "react-router-dom";
 import { normalizeMovie, getFullImgPath } from "../../api/APIUtils";
 import ListDeleteBtn from "./ListDeleteBtn";
@@ -30,12 +31,12 @@ function CardList({ entries, isEditMode, deleteEntry }) {
                     </Link>
                   </h1>
                   <div className="info">
-                    <div className="progress">{movie.progress}</div>
+                    <div className="progress">{movie.progress || "-"}</div>
                     <div className="rating">
                       <FontAwesomeIcon icon="star" />
-                      {movie.my_rating}
+                      {movie.my_rating || "-"}
                     </div>
-                    <div className="added">added {movie.added}</div>
+                    <div className="added">Added {moment(movie.added).format("MMM YYYY")}</div>
                     <div className="media-type">
                       <FontAwesomeIcon icon={icon} />
                     </div>

@@ -1,6 +1,14 @@
 import firebaseApp, { db } from "./firebase";
 import { normalizeMovie } from "../api/APIUtils";
 
+// watching status variables
+export const watchStates = {
+  watching: "watching",
+  planToWatch: "plan_to_watch",
+  completed: "completed",
+  dropped: "dropped",
+};
+
 const getUserID = () => firebaseApp.auth().currentUser.uid;
 
 /**
@@ -9,7 +17,7 @@ const getUserID = () => firebaseApp.auth().currentUser.uid;
  * @param {String} watchStatus "watching", "plan_to_watch", "completed", "dropped"
  * @returns {Promise}
  */
-export function addToList(mov, watchStatus = "plan_to_watch") {
+export function addToList(mov, watchStatus = watchStates.planToWatch) {
   const user = getUserID();
   if (!user) throw new Error("User is not logged in");
 
@@ -19,9 +27,23 @@ export function addToList(mov, watchStatus = "plan_to_watch") {
   const { credits, recommendations, videos, ...movie } = normalizeMovie(mov);
   return db.doc(`users/${user}/list/${movie.id}`).set({
     watch_status: watchStatus,
+    added: new Date(),
     ...movie,
   });
 }
 
-// this is just here for now so ESLint doesn't complain about prefer-default-export
-export const lol = "lol";
+export async function fetchFromList(userId, watchStatus, mediaType) {
+  let req;
+  if (mediaType === "all") {
+    req = await db.collection(`/users/${userId}/list`)
+      .where("watch_status", "==", watchStatus);
+  } else {
+    req = await db.collection(`/users/${userId}/list`)
+      .where("watch_status", "==", watchStatus)
+      .where("media_type", "==", mediaType);
+  }
+  const snapShots = await req.get();
+
+  const entries = snapShots.docs.map(doc => doc.data());
+  return entries;
+}

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { addToList } from "../Firebase/lists";
 import { successToast, errorToast } from "../utils/toast";
 import { withUser } from "../Firebase/UserContext";
+import { normalizeMovie } from "../api/APIUtils";
 import PrimaryButton from "../components/PrimaryButton";
 
 class AddToListBtn extends Component {
@@ -16,11 +17,12 @@ class AddToListBtn extends Component {
   onClick = async () => {
     this.setState({ isLoading: true });
     const { currentMovie } = this.props;
+    const movie = normalizeMovie(currentMovie);
     try {
-      await addToList(currentMovie);
-      successToast(`Added ${currentMovie.title} to Watching`);
+      await addToList(movie);
+      successToast(`Added ${movie.title} to Plan to watch`);
     } catch (error) {
-      errorToast(`Something went wrong when adding ${currentMovie.title}`);
+      errorToast(`Something went wrong when adding ${movie.title}`);
     }
     this.setState({ isLoading: false });
   }

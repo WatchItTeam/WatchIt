@@ -199,7 +199,7 @@ class App extends Component {
               />
               <Route exact path="/user/:userId/:listName/" render={() => <Redirect to="all" />} />
               <Route
-                path="/user/:userId/:listName(watching|plan_to_watch|completed|dropped)/:mediaType(all|movies|tv)"
+                path="/user/:userId/:listName(watching|plan_to_watch|completed|dropped)/:mediaType(all|movie|tv)"
                 component={UserList}
               />
               <Route component={NotFoundPage} />
