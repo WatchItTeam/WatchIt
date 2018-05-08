@@ -4,6 +4,10 @@ import PrimaryButton from "../PrimaryButton";
 import ListItem from "./ListItem";
 import "../../css/ListPickerModal.scss";
 
+/**
+ * Component for the popup modal that appears when clicking the
+ * Add to button on the movie details page.
+ */
 class ListPickerModal extends Component {
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
@@ -16,6 +20,11 @@ class ListPickerModal extends Component {
     statusOfCurrent: "",
   }
 
+  /**
+   * We read the value of statusOfCurrent so that if the currentMovie
+   * already is in one of the user's lists, the correct radio button will
+   * be checked by default
+   */
   static getDerivedStateFromProps(props) {
     return {
       current: props.statusOfCurrent,

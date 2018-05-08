@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import parseName from "../../utils/parseName";
 
+/**
+ * Radio button with label for the ListPickerModal component
+ */
 function ListItem({ value, current, onChange }) {
   return (
     <label htmlFor={`listform-${value}`}>

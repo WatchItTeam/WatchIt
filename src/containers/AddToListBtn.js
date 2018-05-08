@@ -23,6 +23,8 @@ class AddToListBtn extends Component {
   }
 
   componentDidMount() {
+    // wait until the user has signed in to check their watch status
+    // of the current movie
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.checkStatusOfCurrentMovie();
@@ -30,6 +32,11 @@ class AddToListBtn extends Component {
     });
   }
 
+  /**
+   * Check if the current movie is already in the user's list, and
+   * if so, display the current watch status (e.g. "Watching") on the
+   * button instead of the usual "+ Add to" text
+   */
   async checkStatusOfCurrentMovie() {
     this.setState({ isLoading: true });
     const { user, currentMovie } = this.props;
@@ -50,6 +57,10 @@ class AddToListBtn extends Component {
     this.setState({ modalIsOpen: false });
   }
 
+  /**
+   * Adds the current movie to the list that the user selects
+   * from the ListPickerModal
+   */
   onModalSubmit = async (selectedList) => {
     this.setState({ isLoading: true });
 
