@@ -13,7 +13,7 @@ function TableList({ entries, isEditMode, deleteEntry }) {
         <tr>
           <th>Name</th>
           <th>Type</th>
-          <th>My Rating</th>
+          <th>Rating</th>
           <th>Progress</th>
           <th>Added</th>
           {isEditMode && <th className="delete-text">Delete</th>}
@@ -34,9 +34,9 @@ function TableList({ entries, isEditMode, deleteEntry }) {
                 </Link>
               </td>
               <td>{movie.media_type}</td>
-              <td>{movie.my_rating || "-"}</td>
+              <td>{movie.vote_average || "-"}</td>
               <td>{movie.progress || "-"}</td>
-              <td>{moment(movie.added).format("MMM YYYY")}</td>
+              <td>{moment(movie.added.toDate()).fromNow()}</td>
               {isEditMode && <td><ListDeleteBtn onClick={() => deleteEntry(movie.id)} /></td>}
             </tr>
           ))

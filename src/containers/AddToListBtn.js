@@ -8,7 +8,7 @@ import { withUser } from "../Firebase/UserContext";
 import { normalizeMovie } from "../api/APIUtils";
 import parseName from "../utils/parseName";
 import PrimaryButton from "../components/PrimaryButton";
-import ListPickerModal from "../components/ListPicker/ListPickerModal";
+import ListPickerModal from "./ListPickerModal";
 
 class AddToListBtn extends Component {
   static propTypes = {
@@ -41,9 +41,8 @@ class AddToListBtn extends Component {
     this.setState({ isLoading: true });
     const { user, currentMovie } = this.props;
     const movie = await fetchOneFromList(user.uid, currentMovie.id);
-    console.log(movie);
+
     if (movie && movie.watch_status) {
-      console.log(movie.watch_status);
       this.setState({ statusOfCurrentMovie: movie.watch_status });
     }
     this.setState({ isLoading: false });

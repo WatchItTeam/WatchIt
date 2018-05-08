@@ -12,5 +12,10 @@ const config = {
 };
 const firebaseApp = firebase.initializeApp(config);
 
+const db = firebase.firestore();
+db.settings({
+  timestampsInSnapshots: true, // firebase prints an error in the console without this
+});
+
+export { db };
 export default firebaseApp;
-export const db = firebase.firestore();

@@ -5,6 +5,8 @@ import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
 import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+
+import { watchStates } from "../Firebase/lists";
 import { UserProvider } from "../Firebase/UserContext";
 import ScrollToTop from "../components/ScrollToTop";
 import HomepageContainer from "./HomepageContainer";
@@ -111,6 +113,8 @@ class App extends Component {
       />
     );
 
+    const listNames = Object.values(watchStates).join("|");
+
     return (
       <UserProvider>
         <ScrollToTop>
@@ -199,7 +203,7 @@ class App extends Component {
               />
               <Route exact path="/user/:userId/:listName/" render={() => <Redirect to="all" />} />
               <Route
-                path="/user/:userId/:listName(watching|plan_to_watch|completed|dropped)/:mediaType(all|movie|tv)"
+                path={`/user/:userId/:listName(${listNames})/:mediaType(all|movie|tv)`}
                 component={UserList}
               />
               <Route component={NotFoundPage} />

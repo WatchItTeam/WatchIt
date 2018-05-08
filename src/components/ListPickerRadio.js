@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import parseName from "../../utils/parseName";
+import parseName from "../utils/parseName";
 
 /**
  * Radio button with label for the ListPickerModal component
  */
-function ListItem({ value, current, onChange }) {
+function ListPickerRadio({ value, current, onChange }) {
   return (
     <label htmlFor={`listform-${value}`}>
       <input
@@ -20,14 +20,14 @@ function ListItem({ value, current, onChange }) {
   );
 }
 
-ListItem.defaultProps = {
+ListPickerRadio.defaultProps = {
   current: "",
 };
 
-ListItem.propTypes = {
+ListPickerRadio.propTypes = {
   value: PropTypes.string.isRequired,
   current: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
-export default ListItem;
+export default ListPickerRadio;

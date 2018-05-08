@@ -17,18 +17,26 @@ const getUserID = () => firebaseApp.auth().currentUser.uid;
  * @param {String} watchStatus "watching", "plan_to_watch", "completed", "dropped"
  * @returns {Promise}
  */
-export function addToList(mov, watchStatus = watchStates.planToWatch) {
+export function addToList(movie, watchStatus = watchStates.planToWatch) {
+  /* eslint-disable camelcase */
   const user = getUserID();
   if (!user) throw new Error("User is not logged in");
 
-  // we don't need to store credits, recommendations or videos (to save space in database)
-  // so we destructure them out, and the movie variable contains the
-  // rest of the info that we want to save
-  const { credits, recommendations, videos, ...movie } = normalizeMovie(mov);
-  return db.doc(`users/${user}/list/${movie.id}`).set({
+  // we don't need to save the _entire_ movie object, so we pick out the
+  // properties we want in order to save space and speed up read/writes
+  const {
+    id, media_type, title, poster_path, release_date, release_year, vote_average,
+  } = normalizeMovie(movie);
+  return db.doc(`users/${user}/list/${id}`).set({
     watch_status: watchStatus,
     added: new Date(),
-    ...movie,
+    id,
+    media_type,
+    title,
+    poster_path,
+    release_date,
+    release_year,
+    vote_average,
   });
 }
 
@@ -39,11 +47,13 @@ export async function fetchAllFromList(userId, watchStatus, mediaType) {
   let req;
   if (mediaType === "all") {
     req = await db.collection(`/users/${userId}/list`)
-      .where("watch_status", "==", watchStatus);
+      .where("watch_status", "==", watchStatus)
+      .orderBy("title");
   } else {
     req = await db.collection(`/users/${userId}/list`)
       .where("watch_status", "==", watchStatus)
-      .where("media_type", "==", mediaType);
+      .where("media_type", "==", mediaType)
+      .orderBy("title");
   }
   const snapShots = await req.get();
 
