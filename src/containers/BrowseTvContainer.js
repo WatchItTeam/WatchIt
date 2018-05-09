@@ -10,15 +10,11 @@ class BrowseTvContainer extends Component {
     genreTitle: "",
     genres: [],
     isLoading: false,
-    error: false,
+    error: "",
     searchWords: "",
     currentPage: 1,
     totalPages: 1,
   };
-  constructor(props) {
-    super(props);
-    this.list = [];
-  }
 
   componentDidMount() {
     getShowGenres()
@@ -161,7 +157,6 @@ class BrowseTvContainer extends Component {
       Genre: "/shows/genre",
       Year: "/shows/year",
     };
-    this.list = this.state.movies;
     return (
       <BrowsePage
         genres={this.state.genres}
