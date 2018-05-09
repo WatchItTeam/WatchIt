@@ -23,17 +23,6 @@ class BrowseMoviesContainer extends Component {
       });
   }
 
-  componentDidUnmount() {
-    this.setState({ movies: [],
-      genreTitle: "",
-      genres: [],
-      isLoading: false,
-      error: "",
-      searchWords: "",
-      currentPage: 1,
-      totalPages: 1 });
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       this.getMoviesFromTab();
@@ -72,7 +61,6 @@ class BrowseMoviesContainer extends Component {
       error: "",
       currentPage: 1,
     });
-    console.log(this.state.currentPage);
     if (filter === "top_rated") {
       getMoviesFromType("top_rated")
         .then(movies => this.setState({ movies: movies.results,
@@ -115,7 +103,9 @@ class BrowseMoviesContainer extends Component {
         getMoviesFromYear(id)
           .then((movies) => {
             if (movies.length === 0) this.setState({ error: "The database could not find any movies from that year" });
-            this.setState({ movies, isLoading: false });
+            this.setState({ movies: movies.results,
+              isLoading: false,
+              totalPages: movies.total_pages });
           })
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch movies :(" });
@@ -132,15 +122,16 @@ class BrowseMoviesContainer extends Component {
     const { filter, id } = this.props.match.params;
     try {
       let resp;
-      if (filter !== "genre") {
-        resp = await getMoviesFromType(filter, this.state.currentPage + 1);
-      } else {
+      if (filter === "genre") {
         resp = await getGenreMovies(id, this.state.currentPage + 1);
+      } else if (filter === "year") {
+        resp = await getMoviesFromYear(id, this.state.currentPage + 1);
+      } else {
+        resp = await getMoviesFromType(filter, this.state.currentPage + 1);
       }
       /* The following piece of code removes duplicate movies as the api sometimes returns
            movies that already was fetched before. */
-      const index = [...this.state.movies, ...resp.results];
-      //  const index = this.state.movies.concat(resp.results);
+      const index = this.state.movies.concat(resp.results);
       const resArr = [];
       index.forEach((item) => {
         const i = resArr.findIndex(x => x.id === item.id);

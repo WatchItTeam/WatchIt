@@ -55,7 +55,6 @@ export function normalizeMovie(movie) {
  */
 async function checkResponse(res) {
   const json = await res.json();
-  console.log(json);
   if (json.status_code === API_ERROR_CODE) throw new Error("Invalid API key");
   if (json.status_code === RESOURCE_NOT_FOUND) throw new Error("Movie doesn't exist =(");
 
@@ -120,15 +119,14 @@ export function getShowsFromType(type, page = 1) {
     .then(checkResponse);
 }
 
-export function getMoviesFromYear(year) {
-  const moviesUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=1&primary_release_year=${year}`;
+export function getMoviesFromYear(year, page = 1) {
+  const moviesUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}&primary_release_year=${year}`;
   return fetch(moviesUrl)
-    .then(checkResponse)
-    .then(json => json.results);
+    .then(checkResponse);
 }
 
-export function getShowsFromYear(year) {
-  const moviesUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&sort_by=popularity.desc&page=1&first_air_date_year=${year}`;
+export function getShowsFromYear(year, page = 1) {
+  const moviesUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}&first_air_date_year=${year}`;
   return fetch(moviesUrl)
     .then(checkResponse)
     .then(json => json.results);

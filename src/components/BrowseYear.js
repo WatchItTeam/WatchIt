@@ -1,11 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroller";
 import PosterGrid from "./PosterGrid";
 import Searchbar from "./Searchbar";
 import "../css/BrowseYear.scss";
 
-function BrowseYear({ movies, searchValue, search, setSearchbarValue, statusMsg }) {
+function BrowseYear({
+  movies,
+  searchValue,
+  search,
+  setSearchbarValue,
+  statusMsg,
+  currentPage,
+  totalPages,
+  loadMoreFunc }) {
   return (
     <Route
       path="/(movies|shows)/year/"
@@ -20,7 +29,12 @@ function BrowseYear({ movies, searchValue, search, setSearchbarValue, statusMsg 
             />
           </div>
           {statusMsg}
-          <PosterGrid movies={movies} />
+          <InfiniteScroll
+            loadMore={loadMoreFunc}
+            hasMore={currentPage !== totalPages}
+          >
+            <PosterGrid movies={movies} />
+          </InfiniteScroll>
         </section>
       )}
     />
@@ -33,6 +47,9 @@ BrowseYear.propTypes = {
   search: PropTypes.func.isRequired,
   setSearchbarValue: PropTypes.func.isRequired,
   statusMsg: PropTypes.node.isRequired,
+  loadMoreFunc: PropTypes.func.isRequired,
+  currentPage: PropTypes.any.isRequired,
+  totalPages: PropTypes.any.isRequired,
 };
 
 export default BrowseYear;

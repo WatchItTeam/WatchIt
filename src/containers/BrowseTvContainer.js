@@ -66,7 +66,6 @@ class BrowseTvContainer extends Component {
       error: "",
       currentPage: 1,
     });
-    console.log(this.state.currentPage);
     if (filter === "top_rated") {
       getShowsFromType("top_rated", this.state.currentPage)
         .then(movies => this.setState({ movies: movies.results,
@@ -75,12 +74,11 @@ class BrowseTvContainer extends Component {
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch tv shows :(" });
         });
-    } else if (filter === "airing") {
+    } else if (filter === "airing_today") {
       getShowsFromType("airing_today")
         .then(movies => this.setState({ movies: movies.results,
           isLoading: false,
           totalPages: movies.total_pages }))
-        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch tv shows :(" });
         });
@@ -89,7 +87,6 @@ class BrowseTvContainer extends Component {
         .then(movies => this.setState({ movies: movies.results,
           isLoading: false,
           totalPages: movies.total_pages }))
-        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch tv shows :(" });
         });
@@ -100,7 +97,6 @@ class BrowseTvContainer extends Component {
           .then(movies => this.setState({ movies: movies.results,
             isLoading: false,
             totalPages: movies.total_pages }))
-          .then(movies => this.setState({ movies, isLoading: false }))
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch tv shows :(" });
           });
@@ -112,7 +108,9 @@ class BrowseTvContainer extends Component {
         getShowsFromYear(id)
           .then((movies) => {
             if (movies.length === 0) this.setState({ error: "The database could not find any shows from that year" });
-            this.setState({ movies, isLoading: false });
+            this.setState({ movies: movies.results,
+              isLoading: false,
+              totalPages: movies.total_pages });
           })
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch tv shows :(" });
@@ -129,10 +127,12 @@ class BrowseTvContainer extends Component {
     const { filter, id } = this.props.match.params;
     try {
       let resp;
-      if (filter !== "genre") {
-        resp = await getShowsFromType(filter, this.state.currentPage + 1);
-      } else {
+      if (filter === "genre") {
         resp = await getGenreShows(id, this.state.currentPage + 1);
+      } else if (filter === "year") {
+        resp = await getShowsFromYear(id, this.state.currentPage + 1);
+      } else {
+        resp = await getShowsFromType(filter, this.state.currentPage + 1);
       }
       /* The following piece of code removes duplicate movies as the api sometimes returns
            movies that already was fetched before. */
@@ -161,9 +161,7 @@ class BrowseTvContainer extends Component {
       Genre: "/shows/genre",
       Year: "/shows/year",
     };
-    console.log("state", this.state.movies);
     this.list = this.state.movies;
-    console.log("var", this.list);
     return (
       <BrowsePage
         genres={this.state.genres}

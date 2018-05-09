@@ -79,6 +79,9 @@ function BrowsePage({
                 search={search}
                 setSearchbarValue={setSearchbarValue}
                 statusMsg={statusMsg}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                loadMoreFunc={loadMoreFunc}
               />
             </div>
           )}
