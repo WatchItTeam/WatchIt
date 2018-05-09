@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment-mini";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { getFullImgPath } from "../api/APIUtils";
 import minutesToHours from "../utils/minutesToHours";
 import AddToListBtn from "../containers/AddToListBtn";
 import ImageWithFallback from "./ImageWithFallback";
@@ -11,7 +10,7 @@ import "../css/DetailsTitle.scss";
 /**
  * The title (poster, name, rating etc) for the movie details page
  */
-function DetailsTitle({ movie, onBtnClick }) {
+function DetailsTitle({ movie }) {
   const {
     // movie info
     title,
@@ -98,7 +97,6 @@ function DetailsTitle({ movie, onBtnClick }) {
 
 DetailsTitle.propTypes = {
   movie: PropTypes.object.isRequired,
-  onBtnClick: PropTypes.func.isRequired,
 };
 
 export default DetailsTitle;

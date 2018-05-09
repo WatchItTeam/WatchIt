@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import moment from "moment-mini";
 import { Link } from "react-router-dom";
-import { normalizeMovie, getFullImgPath } from "../../api/APIUtils";
+import { getFullImgPath } from "../../api/APIUtils";
 import ListDeleteBtn from "./ListDeleteBtn";
 import "../../css/CardList.scss";
 
