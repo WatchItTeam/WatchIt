@@ -12,7 +12,8 @@ class BrowseMoviesContainer extends Component {
     isLoading: false,
     error: "",
     searchWords: "",
-  };
+    currentPage: 1,
+    totalPages: 1 };
 
   componentDidMount() {
     getMovieGenres()
@@ -58,23 +59,29 @@ class BrowseMoviesContainer extends Component {
       genreTitle: "",
       isLoading: true,
       error: "",
+      currentPage: 1,
     });
-
-    if (filter === "top") {
+    if (filter === "top_rated") {
       getMoviesFromType("top_rated")
-        .then(movies => this.setState({ movies, isLoading: false }))
+        .then(movies => this.setState({ movies: movies.results,
+          isLoading: false,
+          totalPages: movies.total_pages }))
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch movies :(" });
         });
     } else if (filter === "upcoming") {
       getMoviesFromType("upcoming")
-        .then(movies => this.setState({ movies, isLoading: false }))
+        .then(movies => this.setState({ movies: movies.results,
+          isLoading: false,
+          totalPages: movies.total_pages }))
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch movies :(" });
         });
     } else if (filter === "popular") {
-      getMoviesFromType("popular")
-        .then(movies => this.setState({ movies, isLoading: false }))
+      getMoviesFromType("popular", this.state.currentPage)
+        .then(movies => this.setState({ movies: movies.results,
+          isLoading: false,
+          totalPages: movies.total_pages }))
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch movies :(" });
         });
@@ -82,7 +89,9 @@ class BrowseMoviesContainer extends Component {
       if (id) {
         this.setGenreTitle(id);
         getGenreMovies(id)
-          .then(movies => this.setState({ movies, isLoading: false }))
+          .then(movies => this.setState({ movies: movies.results,
+            isLoading: false,
+            totalPages: movies.total_pages }))
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch movies :(" });
           });
@@ -94,7 +103,9 @@ class BrowseMoviesContainer extends Component {
         getMoviesFromYear(id)
           .then((movies) => {
             if (movies.length === 0) this.setState({ error: "The database could not find any movies from that year" });
-            this.setState({ movies, isLoading: false });
+            this.setState({ movies: movies.results,
+              isLoading: false,
+              totalPages: movies.total_pages });
           })
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch movies :(" });
@@ -107,10 +118,40 @@ class BrowseMoviesContainer extends Component {
     }
   }
 
+  loadMoreAndAppend = async () => {
+    const { filter, id } = this.props.match.params;
+    try {
+      let resp;
+      if (filter === "genre") {
+        resp = await getGenreMovies(id, this.state.currentPage + 1);
+      } else if (filter === "year") {
+        resp = await getMoviesFromYear(id, this.state.currentPage + 1);
+      } else {
+        resp = await getMoviesFromType(filter, this.state.currentPage + 1);
+      }
+      /* The following piece of code removes duplicate movies as the api sometimes returns
+           movies that already was fetched before. */
+      const index = this.state.movies.concat(resp.results);
+      const resArr = [];
+      index.forEach((item) => {
+        const i = resArr.findIndex(x => x.id === item.id);
+        if (i <= -1) {
+          resArr.push(item);
+        }
+      });
+      this.setState({
+        movies: resArr,
+        currentPage: resp.page,
+        totalPages: resp.total_pages });
+    } catch (error) {
+      this.setState({ error });
+    }
+  }
+
   render() {
     const tabLinks = {
       Popular: "/movies/popular",
-      Top: "/movies/top",
+      Top: "/movies/top_rated",
       Upcoming: "/movies/upcoming",
       Genre: "/movies/genre",
       Year: "/movies/year",
@@ -127,6 +168,9 @@ class BrowseMoviesContainer extends Component {
         searchValue={this.state.searchWords}
         search={this.searchHandler}
         setSearchbarValue={this.setSearchbarValue}
+        currentPage={this.state.currentPage}
+        totalPages={this.state.totalPages}
+        loadMoreFunc={this.loadMoreAndAppend}
       />
     );
   }
