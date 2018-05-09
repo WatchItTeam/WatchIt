@@ -128,8 +128,7 @@ export function getMoviesFromYear(year, page = 1) {
 export function getShowsFromYear(year, page = 1) {
   const moviesUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}&first_air_date_year=${year}`;
   return fetch(moviesUrl)
-    .then(checkResponse)
-    .then(json => json.results);
+    .then(checkResponse);
 }
 
 export async function getTVInfo(id) {
