@@ -12,7 +12,25 @@ export const watchStates = {
 const getUserID = () => firebaseApp.auth().currentUser.uid;
 
 /**
- * Adds a movie to a list
+ * Adds a movie to a list.
+ * Returns a promise that resolves if succesful.
+ *
+ * Usage:
+ * addToList(movie, watchStatus)
+ *  .then(() => {  // <-- note that there is no resolved value in the then
+ *    // success
+ *  }).catch((error) => {
+ *    // failed
+ *  })
+ *
+ * or:
+ * try {
+ *  await addToList(movie, watchStatus);
+ *  // success
+ * } catch (error) {
+ *  // failed
+ * }
+ *
  * @param {Object} mov The movie to add
  * @param {String} watchStatus "watching", "plan_to_watch", "completed", "dropped"
  * @returns {Promise}
@@ -41,7 +59,21 @@ export function addToList(movie, watchStatus = watchStates.planToWatch) {
 }
 
 /**
- * Fetches list entries from the database
+ * Fetches list entries from the database, returns a promise that resolves
+ * to an array of movies.
+ *
+ * Usage:
+ * fetchAllFromList(...)
+ *  .then((list) => ...)
+ *  .catch((error) => ...)
+ *
+ * or:
+ *
+ * try {
+ *  const list = await fetchAllFromList(...)
+ * } catch (error) {
+ *  ...
+ * }
  */
 export async function fetchAllFromList(userId, watchStatus, mediaType) {
   let req;
@@ -62,7 +94,8 @@ export async function fetchAllFromList(userId, watchStatus, mediaType) {
 }
 
 /**
- * Fetches one specific movie/show from a user's list
+ * Fetches one specific movie/show from a user's list.
+ * Returns a promise that resolves to the movie (if exits) or null.
  */
 export function fetchOneFromList(userId, movieId) {
   return db.doc(`/users/${userId}/list/${movieId}`)
