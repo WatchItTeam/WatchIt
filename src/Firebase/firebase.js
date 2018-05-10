@@ -12,6 +12,7 @@ const config = {
 };
 const firebaseApp = firebase.initializeApp(config);
 
+// Initialize the Firestore database
 const db = firebase.firestore();
 db.settings({
   timestampsInSnapshots: true, // firebase prints an error in the console without this

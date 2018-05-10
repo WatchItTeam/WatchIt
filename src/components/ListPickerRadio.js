@@ -25,8 +25,11 @@ ListPickerRadio.defaultProps = {
 };
 
 ListPickerRadio.propTypes = {
+  /* value represents the list this radio button corresponds to */
   value: PropTypes.string.isRequired,
+  /* current is the value of the currently selected radio button in the ListPickerModal */
   current: PropTypes.string,
+  /* what happens when a radio button is selected */
   onChange: PropTypes.func.isRequired,
 };
 

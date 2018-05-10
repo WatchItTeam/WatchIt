@@ -12,13 +12,16 @@ import ListPickerModal from "./ListPickerModal";
 
 class AddToListBtn extends Component {
   static propTypes = {
+    /* Which movie to add when clicking */
     currentMovie: PropTypes.object.isRequired,
+    /* Comes from the withUser function */
     user: PropTypes.object.isRequired,
   }
 
   state = {
     isLoading: false,
     modalIsOpen: false,
+    /* the watch status/list the current movie is in, if the user has already added it */
     statusOfCurrentMovie: null,
   }
 
@@ -80,7 +83,7 @@ class AddToListBtn extends Component {
     const { user } = this.props;
     const { onModalSubmit, hideModal, showModal } = this;
 
-    let label;
+    let label; // the text on the button
     if (isLoading) {
       label = "Loading...";
     } else if (statusOfCurrentMovie && user) {

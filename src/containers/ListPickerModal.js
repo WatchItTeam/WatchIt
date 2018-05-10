@@ -13,9 +13,10 @@ import "../css/ListPickerModal.scss";
 class ListPickerModal extends Component {
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
+    /* function to hide this modal */
     hideFunc: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    statusOfCurrent: PropTypes.string, // eslint-disable-line
+    statusOfCurrent: PropTypes.string,
   }
 
   static defaultProps = {
@@ -44,6 +45,10 @@ class ListPickerModal extends Component {
     window.removeEventListener("keydown", this.keyListener);
   }
 
+  /**
+   * Listen for keydown events so the user can dismiss the modal with Esc
+   * and confirm/save with Enter
+   */
   keyListener = (event) => {
     const { isOpen } = this.props;
     if (event.key === "Escape" && isOpen) {
@@ -57,18 +62,24 @@ class ListPickerModal extends Component {
     this.setState({ current: event.target.value });
   }
 
+  /**
+   * What happens when the cancel button is pressed or if the user clicks outside
+   */
   cancelModal = () => {
     this.formRef.current.reset();
     this.props.hideFunc();
   }
 
+  /**
+   * When the user clicks on save, call the onSubmit prop function
+   */
   onSaveClick = () => {
     const { current } = this.state;
     const { onSubmit, hideFunc, statusOfCurrent } = this.props;
 
-    // only call onSubmit if the user has actually selected
-    // one of the lists, skip if no list is selected or
-    // if the user doesn't change selected list
+    // only call onSubmit if the user has actually selected one of the lists,
+    // skip if no list is selected or if the user doesn't change selected list
+    // so we don't have to write the same data to the database
     if (current && current !== statusOfCurrent) {
       onSubmit(current);
     }
@@ -81,6 +92,7 @@ class ListPickerModal extends Component {
     const { cancelModal, onRadioChange, onSaveClick } = this;
     return (
       <Fragment>
+        {/* The actual modal */}
         <div className={`listpicker-modal ${isOpen ? "open" : "closed"}`}>
           <h1>Add to:</h1>
           <form ref={this.formRef}>
@@ -102,6 +114,8 @@ class ListPickerModal extends Component {
             <PrimaryButton onClick={onSaveClick}>Save</PrimaryButton>
           </div>
         </div>
+
+        {/* The dark background behind the modal */}
         <div
           className={isOpen ? "modal-underlay open" : "modal-underlay closed"}
           onClick={cancelModal}
