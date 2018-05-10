@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { DropTarget } from "react-dnd";
-import { successToast, errorToast } from "../utils/toast";
+import { successToast } from "../utils/toast";
 
 /**
  * This component is a drop zone for PosterCards

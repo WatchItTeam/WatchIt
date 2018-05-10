@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment-mini";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { getFullImgPath } from "../api/APIUtils";
 import minutesToHours from "../utils/minutesToHours";
 import PrimaryButton from "./PrimaryButton";
 import ImageWithFallback from "./ImageWithFallback";
