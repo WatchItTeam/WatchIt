@@ -9,7 +9,7 @@ export const watchStates = {
   dropped: "dropped",
 };
 
-export const getUserID = () => firebaseApp.auth().currentUser.uid;
+const getUserID = () => firebaseApp.auth().currentUser.uid;
 
 /**
  * Adds a movie to a list.
