@@ -59,9 +59,13 @@ class UserList extends Component {
   }
 
   deleteEntry = (id) => {
-    removeFromList(id);
-    const newList = this.state.listEntries.filter(item => item.id !== id);
-    this.setState({ listEntries: newList });
+    removeFromList(id)
+      .then(() => {
+        const newList = this.state.listEntries.filter(item => item.id !== id);
+        this.setState({ listEntries: newList });
+      }).catch(() => {
+        this.setState({ error: true });
+      });
   }
 
   render() {
