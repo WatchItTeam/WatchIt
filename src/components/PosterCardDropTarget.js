@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { DropTarget } from "react-dnd";
 import { successToast, errorToast } from "../utils/toast";
+import parseName from "../utils/parseName";
+
 
 /**
  * This component is a drop zone for PosterCards
@@ -31,7 +33,7 @@ const listTarget = {
   // is called when a PosterCard is dropped on this component
   drop(props, monitor) {
     const item = monitor.getItem();
-    successToast(`Added ${item.title} to ${props.targetName}`);
+    successToast(`Added ${item.title} to ${parseName(props.targetName)}`);
   },
 };
 
