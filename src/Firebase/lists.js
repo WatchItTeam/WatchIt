@@ -9,7 +9,7 @@ export const watchStates = {
   dropped: "dropped",
 };
 
-const getUserID = () => firebaseApp.auth().currentUser.uid;
+export const getUserID = () => firebaseApp.auth().currentUser.uid;
 
 /**
  * Adds a movie to a list.
@@ -39,7 +39,6 @@ export function addToList(movie, watchStatus = watchStates.planToWatch) {
   /* eslint-disable camelcase */
   const user = getUserID();
   if (!user) throw new Error("User is not logged in");
-
   // we don't need to save the _entire_ movie object, so we pick out the
   // properties we want in order to save space and speed up read/writes
   const {
@@ -55,6 +54,15 @@ export function addToList(movie, watchStatus = watchStates.planToWatch) {
     release_date,
     release_year,
     vote_average,
+  });
+}
+
+export function updateWatchStatus(movie, watchStatus) {
+  const user = getUserID();
+  if (!user) throw new Error("User is not logged in");
+
+  return db.doc(`users/${user}/list/${movie.id}`).update({
+    watch_status: watchStatus,
   });
 }
 
