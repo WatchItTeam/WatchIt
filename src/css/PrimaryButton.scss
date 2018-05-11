@@ -4,16 +4,11 @@
   font-weight: bold;
   color: white;
   background: $primary-color;
-  padding: 10px 35px;
+  padding: 10px 45px;
   border-radius: 50px;
 
   &:active {
     background: darken($primary-color, 20%);
     color: white;
-  }
-
-  &:disabled {
-    background: rgba($primary-color, 0.3);
-    cursor: not-allowed;
   }
 }

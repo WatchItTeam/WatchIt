@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import moment from "moment-mini";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import minutesToHours from "../utils/minutesToHours";
-import AddToListBtn from "../containers/AddToListBtn";
+import PrimaryButton from "./PrimaryButton";
 import ImageWithFallback from "./ImageWithFallback";
 import "../css/DetailsTitle.scss";
 
 /**
  * The title (poster, name, rating etc) for the movie details page
  */
-function DetailsTitle({ movie }) {
+function DetailsTitle({ movie, onBtnClick }) {
   const {
     // movie info
     title,
@@ -84,7 +84,7 @@ function DetailsTitle({ movie }) {
           {infoLine}
         </div>
         <div className="bottom">
-          <AddToListBtn currentMovie={movie} />
+          <PrimaryButton onClick={onBtnClick}>+ Add to</PrimaryButton>
           &nbsp;&nbsp;
           <span className="rating">
             <span className="star-icon"><FontAwesomeIcon icon="star" /></span> {rating}
@@ -97,6 +97,7 @@ function DetailsTitle({ movie }) {
 
 DetailsTitle.propTypes = {
   movie: PropTypes.object.isRequired,
+  onBtnClick: PropTypes.func.isRequired,
 };
 
 export default DetailsTitle;
