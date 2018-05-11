@@ -9,25 +9,14 @@ export const watchStates = {
   dropped: "dropped",
 };
 
+<<<<<<< HEAD
+const getUserID = () => firebaseApp.auth().currentUser.uid;
+=======
 export const getUserID = () => firebaseApp.auth().currentUser.uid;
-
-/**
- * Takes in an array and sorts them by some property.
- *
- * Usage:
- * const sorted = sortBy(movies, "title");
- *
- * @param {Array} array  Array to sort
- * @param {String} orderBy  Which property to sort after
- */
-function sortBy(array, orderBy) {
-  function compare(a, b) {
-    if (a[orderBy] < b[orderBy]) return -1; // a is before b
-    if (a[orderBy] > b[orderBy]) return 1; // b is before a
-    return 0; // a and b are equal
-  }
-  return array.sort(compare);
-}
+<<<<<<< HEAD
+>>>>>>> parent of c7d3cf9... Megre lists-component
+=======
+>>>>>>> parent of c7d3cf9... Megre lists-component
 
 /**
  * Adds a movie to a list.
@@ -53,12 +42,10 @@ function sortBy(array, orderBy) {
  * @param {String} watchStatus "watching", "plan_to_watch", "completed", "dropped"
  * @returns {Promise}
  */
-export function addToList(movie, watchStatus) {
+export function addToList(movie, watchStatus = watchStates.planToWatch) {
   /* eslint-disable camelcase */
   const user = getUserID();
   if (!user) throw new Error("User is not logged in");
-  if (!watchStatus) throw new Error("watchStatus must be defined to add to list");
-
   // we don't need to save the _entire_ movie object, so we pick out the
   // properties we want in order to save space and speed up read/writes
   const {
@@ -74,15 +61,6 @@ export function addToList(movie, watchStatus) {
     release_date,
     release_year,
     vote_average,
-  });
-}
-
-export function updateWatchStatus(movie, watchStatus) {
-  const user = getUserID();
-  if (!user) throw new Error("User is not logged in");
-
-  return db.doc(`users/${user}/list/${movie.id}`).update({
-    watch_status: watchStatus,
   });
 }
 
@@ -107,17 +85,18 @@ export async function fetchAllFromList(userId, watchStatus, mediaType) {
   let req;
   if (mediaType === "all") {
     req = await db.collection(`/users/${userId}/list`)
-      .where("watch_status", "==", watchStatus);
+      .where("watch_status", "==", watchStatus)
+      .orderBy("title");
   } else {
     req = await db.collection(`/users/${userId}/list`)
       .where("watch_status", "==", watchStatus)
-      .where("media_type", "==", mediaType);
+      .where("media_type", "==", mediaType)
+      .orderBy("title");
   }
   const snapShots = await req.get();
 
   const entries = snapShots.docs.map(doc => doc.data());
-  const sorted = sortBy(entries, "title");
-  return sorted;
+  return entries;
 }
 
 /**
