@@ -21,7 +21,6 @@ function PosterGrid({ movies }) {
             posterPath={movie.poster_path}
             releaseDate={movie.release_year}
             mediaType={movie.media_type}
-            voteAverage={movie.vote_average}
           />
         );
       })}

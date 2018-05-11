@@ -41,7 +41,7 @@ function Sidebar({ isOpen }) {
                   // dynamically create a link to each list
                   // instead of hard coding
                   Object.values(watchStates).map(watchState => (
-                    <PosterCardDropTarget key={watchState} targetName={watchState}>
+                    <PosterCardDropTarget key={watchState} targetName={parseName(watchState)}>
                       <SidebarNavLink to={`/user/${user.uid}/${watchState}/`}>
                         {parseName(watchState)}
                       </SidebarNavLink>
