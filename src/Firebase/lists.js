@@ -12,6 +12,24 @@ export const watchStates = {
 const getUserID = () => firebaseApp.auth().currentUser.uid;
 
 /**
+ * Takes in an array and sorts them by some property.
+ *
+ * Usage:
+ * const sorted = sortBy(movies, "title");
+ *
+ * @param {Array} array  Array to sort
+ * @param {String} orderBy  Which property to sort after
+ */
+function sortBy(array, orderBy) {
+  function compare(a, b) {
+    if (a[orderBy] < b[orderBy]) return -1; // a is before b
+    if (a[orderBy] > b[orderBy]) return 1; // b is before a
+    return 0; // a and b are equal
+  }
+  return array.sort(compare);
+}
+
+/**
  * Adds a movie to a list.
  * Returns a promise that resolves if succesful.
  *
@@ -79,18 +97,17 @@ export async function fetchAllFromList(userId, watchStatus, mediaType) {
   let req;
   if (mediaType === "all") {
     req = await db.collection(`/users/${userId}/list`)
-      .where("watch_status", "==", watchStatus)
-      .orderBy("title");
+      .where("watch_status", "==", watchStatus);
   } else {
     req = await db.collection(`/users/${userId}/list`)
       .where("watch_status", "==", watchStatus)
-      .where("media_type", "==", mediaType)
-      .orderBy("title");
+      .where("media_type", "==", mediaType);
   }
   const snapShots = await req.get();
 
   const entries = snapShots.docs.map(doc => doc.data());
-  return entries;
+  const sorted = sortBy(entries, "title");
+  return sorted;
 }
 
 /**
