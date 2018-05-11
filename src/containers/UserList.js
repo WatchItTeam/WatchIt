@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ResponsiveList from "../components/WatchList/ResponsiveList";
 import parseName from "../utils/parseName";
 import ErrorMessage from "../components/ErrorMessage";
-import { fetchAllFromList } from "../Firebase/lists";
+import { fetchAllFromList, removeFromList } from "../Firebase/lists";
 
 class UserList extends Component {
   static propTypes = {
@@ -58,9 +58,14 @@ class UserList extends Component {
     });
   }
 
-  // TODO
   deleteEntry = (id) => {
-    alert(`Delete item ${id}`);
+    removeFromList(id)
+      .then(() => {
+        const newList = this.state.listEntries.filter(item => item.id !== id);
+        this.setState({ listEntries: newList });
+      }).catch(() => {
+        this.setState({ error: true });
+      });
   }
 
   render() {
