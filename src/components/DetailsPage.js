@@ -4,7 +4,6 @@ import DetailsBanner from "./DetailsBanner";
 import DetailsTitle from "./DetailsTitle";
 import MovieInformation from "../containers/MovieInformationContainer";
 
-
 /**
  * Markup for the details page
  */
@@ -12,7 +11,7 @@ function DetailsPage({ currentMovie }) {
   return (
     <div id="detailspage">
       <DetailsBanner backdropPath={currentMovie.backdrop_path} />
-      <DetailsTitle movie={currentMovie} onBtnClick={() => 1} />
+      <DetailsTitle movie={currentMovie} />
       <MovieInformation currentMovie={currentMovie} />
     </div>
   );

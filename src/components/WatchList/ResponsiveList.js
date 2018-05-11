@@ -8,10 +8,27 @@ import CardList from "./CardList";
 import "../../css/ResponsiveList.scss";
 
 function ResponsiveList({
-  listDisplayName, tabLinks, entries,
+  isLoading, listDisplayName, tabLinks, entries,
   toggleEditMode, deleteEntry, isEditMode,
 }) {
   const btnContent = isEditMode ? "Done" : <FontAwesomeIcon icon="edit" />;
+  let lists;
+  if (isLoading) {
+    lists = "Loading...";
+  } else if (entries.length === 0) {
+    lists = "Nothing in this list";
+  } else {
+    lists = (
+      <div>
+        <Desktop>
+          <TableList entries={entries} isEditMode={isEditMode} deleteEntry={deleteEntry} />
+        </Desktop>
+        <Mobile>
+          <CardList entries={entries} isEditMode={isEditMode} deleteEntry={deleteEntry} />
+        </Mobile>
+      </div>
+    );
+  }
   return (
     <section className="watch-list container">
       <div className="title-bar">
@@ -21,18 +38,14 @@ function ResponsiveList({
         </button>
       </div>
       <Tabs links={tabLinks} />
-      <Desktop>
-        <TableList entries={entries} isEditMode={isEditMode} deleteEntry={deleteEntry} />
-      </Desktop>
-      <Mobile>
-        <CardList entries={entries} isEditMode={isEditMode} deleteEntry={deleteEntry} />
-      </Mobile>
+      {lists}
     </section>
 
   );
 }
 
 ResponsiveList.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
   listDisplayName: PropTypes.string.isRequired,
   // key is name of tab, value is url tab should navigate to
   tabLinks: PropTypes.shape({
