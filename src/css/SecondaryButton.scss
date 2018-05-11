@@ -1,0 +1,16 @@
+@import "global";
+
+.secondary-btn {
+  box-sizing: border-box;
+  color: $primary-color;
+  font-weight: bold;
+  background: none;
+  border: 2px solid $primary-color;
+  padding: 10px 45px;
+  border-radius: 50px;
+
+  &:active {
+    background: $primary-color;
+    color: white;
+  }
+}

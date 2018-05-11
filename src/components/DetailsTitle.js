@@ -5,6 +5,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { getFullImgPath } from "../api/APIUtils";
 import minutesToHours from "../utils/minutesToHours";
 import PrimaryButton from "./PrimaryButton";
+import SecondaryButton from "./SecondaryButton";
 import ImageWithFallback from "./ImageWithFallback";
 import "../css/DetailsTitle.scss";
 
@@ -28,6 +29,7 @@ function DetailsTitle({ movie, onBtnClick }) {
     episode_run_time: episodeRunTime,
     number_of_episodes: numberOfEpisodes,
     number_of_seasons: numberOfSeasons,
+    id,
   } = movie;
 
   let infoLine;
@@ -67,6 +69,27 @@ function DetailsTitle({ movie, onBtnClick }) {
     );
   }
 
+  let buttons;
+
+  if (isMovie) {
+    buttons = (
+      <div>
+        <PrimaryButton onClick={onBtnClick}>+ Add to</PrimaryButton>
+        &nbsp;&nbsp;
+      </div>
+    );
+  } else {
+    buttons = (
+      <div>
+        <PrimaryButton onClick={onBtnClick}>+ Add to</PrimaryButton>
+        &nbsp;&nbsp;
+        <SecondaryButton to={`${id}/episodes`}>Browse episodes</SecondaryButton>
+        &nbsp;&nbsp;
+      </div>
+    );
+  }
+
+
   const displayName = title || name;
   const displayDate = releaseDate || firstAirDate;
 
@@ -85,8 +108,7 @@ function DetailsTitle({ movie, onBtnClick }) {
           {infoLine}
         </div>
         <div className="bottom">
-          <PrimaryButton onClick={onBtnClick}>+ Add to</PrimaryButton>
-          &nbsp;&nbsp;
+          {buttons}
           <span className="rating">
             <span className="star-icon"><FontAwesomeIcon icon="star" /></span> {rating}
           </span>

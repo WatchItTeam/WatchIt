@@ -1,0 +1,27 @@
+#episodeItem {
+  display: flex;
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+
+#episodeTextBox {
+  justify-content: center;
+  margin-left: 5px;
+  word-wrap: break-word;
+}
+
+#episodeTitle {
+  font-size: 20px;
+}
+
+#episodeTextContent {
+  font-size: 10px;
+}
+
+.episodePic {
+  object-position: 50% 0;
+  object-fit: cover;
+  max-width: 150px;
+  height: 100%;
+  border-radius: 5px;
+}

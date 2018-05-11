@@ -12,7 +12,7 @@ function DetailsPage({ currentMovie }) {
   return (
     <div id="detailspage">
       <DetailsBanner backdropPath={currentMovie.backdrop_path} />
-      <DetailsTitle movie={currentMovie} onBtnClick={() => 1} />
+      <DetailsTitle movie={currentMovie} onAddClick={() => 1} />
       <MovieInformation currentMovie={currentMovie} />
     </div>
   );

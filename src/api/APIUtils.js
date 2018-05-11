@@ -81,6 +81,12 @@ export function getMovieInfo(id) {
     .then(checkResponse);
 }
 
+export async function getTVInfo(id) {
+  const url = `${baseUrl}/tv/${id}?api_key=${API_KEY}&append_to_response=videos,credits,recommendations`;
+  const res = await fetch(url);
+  return checkResponse(res);
+}
+
 export function getMovieGenres() {
   const genreUrl = `${baseUrl}/genre/movie/list?api_key=${API_KEY}&language=en-US`;
   return fetch(genreUrl)
@@ -137,10 +143,11 @@ export function getShowsFromYear(year) {
     .then(json => json.results);
 }
 
-export async function getTVInfo(id) {
-  const url = `${baseUrl}/tv/${id}?api_key=${API_KEY}&append_to_response=videos,credits,recommendations`;
-  const res = await fetch(url);
-  return checkResponse(res);
+export function getSeasonFromId(id, season) {
+  const episodesUrl = `${baseUrl}/tv/${id}/season/${season}?api_key=${API_KEY}`;
+  return fetch(episodesUrl)
+    .then(checkResponse)
+    .then(json => json.episodes);
 }
 
 export async function multiSearch(query, page = 1) {
