@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import moment from "moment-mini";
 import { Link } from "react-router-dom";
-import { getFullImgPath } from "../../api/APIUtils";
+import { normalizeMovie, getFullImgPath } from "../../api/APIUtils";
 import ListDeleteBtn from "./ListDeleteBtn";
 import "../../css/CardList.scss";
 
@@ -12,7 +11,8 @@ function CardList({ entries, isEditMode, deleteEntry }) {
     <div className="card-list">
       <ul>
         {
-          entries.map((movie) => {
+          entries.map((mov) => {
+            const movie = normalizeMovie(mov);
             const icon = (movie.media_type === "movie") ? "film" : "tv";
             const url = `/${movie.media_type}/${movie.id}`;
             return (
@@ -30,12 +30,12 @@ function CardList({ entries, isEditMode, deleteEntry }) {
                     </Link>
                   </h1>
                   <div className="info">
-                    <div className="progress">{movie.progress || "-"}</div>
+                    <div className="progress">{movie.progress}</div>
                     <div className="rating">
                       <FontAwesomeIcon icon="star" />
-                      {movie.vote_average || "-"}
+                      {movie.my_rating}
                     </div>
-                    <div className="added">Added {moment(movie.added.toDate()).fromNow()}</div>
+                    <div className="added">added {movie.added}</div>
                     <div className="media-type">
                       <FontAwesomeIcon icon={icon} />
                     </div>

@@ -1,5 +1,4 @@
 import * as firebase from "firebase";
-import "firebase/firestore";
 
 // Initialize Firebase
 const config = {
@@ -12,11 +11,5 @@ const config = {
 };
 const firebaseApp = firebase.initializeApp(config);
 
-// Initialize the Firestore database
-const db = firebase.firestore();
-db.settings({
-  timestampsInSnapshots: true, // firebase prints an error in the console without this
-});
-
-export { db };
 export default firebaseApp;
+export const database = firebaseApp.database();
