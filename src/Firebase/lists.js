@@ -14,9 +14,12 @@ const getUserID = () => firebaseApp.auth().currentUser.uid;
 =======
 export const getUserID = () => firebaseApp.auth().currentUser.uid;
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> parent of c7d3cf9... Megre lists-component
 =======
 >>>>>>> parent of c7d3cf9... Megre lists-component
+=======
+>>>>>>> b981606162ad3d82c3d18aae34988b6cb94728c8
 
 /**
  * Adds a movie to a list.
