@@ -77,6 +77,17 @@ export function addToList(movie, watchStatus) {
   });
 }
 
+export function removeFromList(movieID) {
+  const user = getUserID();
+  if (!user) throw new Error("User is not logged in");
+  return db.doc(`users/${user}/list/${movieID}`).delete()
+    .then(() => {
+      console.log("Document successfully deleted!");
+    }).catch((error) => {
+      console.error("Error removing document: ", error);
+    });
+}
+
 /**
  * Fetches list entries from the database, returns a promise that resolves
  * to an array of movies.
