@@ -58,9 +58,17 @@ class UserList extends Component {
     });
   }
 
-  // TODO
   deleteEntry = (id) => {
     removeFromList(id);
+    const newList = this.state.listEntries.filter(item => item.id !== id);
+    this.setState({ listEntries: newList });
+  /*
+    for (let i = 0; i < this.state.listEntries.length; i++) {
+      if (this.state.listEntries[i].id === id) {
+        this.setState({ listEntries: this.state.listEntries.splice(i, 1) });
+      }
+    }
+  */
   }
 
   render() {
