@@ -53,10 +53,11 @@ function sortBy(array, orderBy) {
  * @param {String} watchStatus "watching", "plan_to_watch", "completed", "dropped"
  * @returns {Promise}
  */
-export function addToList(movie, watchStatus = watchStates.planToWatch) {
+export function addToList(movie, watchStatus) {
   /* eslint-disable camelcase */
   const user = getUserID();
   if (!user) throw new Error("User is not logged in");
+  if (!watchStatus) throw new Error("watchStatus must be defined to add to list");
 
   // we don't need to save the _entire_ movie object, so we pick out the
   // properties we want in order to save space and speed up read/writes
