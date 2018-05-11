@@ -10,10 +10,8 @@ class BrowseTvContainer extends Component {
     genreTitle: "",
     genres: [],
     isLoading: false,
-    error: "",
+    error: false,
     searchWords: "",
-    currentPage: 1,
-    totalPages: 1,
   };
 
   componentDidMount() {
@@ -60,29 +58,23 @@ class BrowseTvContainer extends Component {
       genreTitle: "",
       isLoading: true,
       error: "",
-      currentPage: 1,
     });
-    if (filter === "top_rated") {
-      getShowsFromType("top_rated", this.state.currentPage)
-        .then(movies => this.setState({ movies: movies.results,
-          isLoading: false,
-          totalPages: movies.total_pages }))
+
+    if (filter === "top") {
+      getShowsFromType("top_rated")
+        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch tv shows :(" });
         });
-    } else if (filter === "airing_today") {
+    } else if (filter === "airing") {
       getShowsFromType("airing_today")
-        .then(movies => this.setState({ movies: movies.results,
-          isLoading: false,
-          totalPages: movies.total_pages }))
+        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch tv shows :(" });
         });
     } else if (filter === "popular") {
       getShowsFromType("popular")
-        .then(movies => this.setState({ movies: movies.results,
-          isLoading: false,
-          totalPages: movies.total_pages }))
+        .then(movies => this.setState({ movies, isLoading: false }))
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch tv shows :(" });
         });
@@ -90,9 +82,7 @@ class BrowseTvContainer extends Component {
       if (id) {
         this.setGenreTitle(id);
         getGenreShows(id)
-          .then(movies => this.setState({ movies: movies.results,
-            isLoading: false,
-            totalPages: movies.total_pages }))
+          .then(movies => this.setState({ movies, isLoading: false }))
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch tv shows :(" });
           });
@@ -104,9 +94,7 @@ class BrowseTvContainer extends Component {
         getShowsFromYear(id)
           .then((movies) => {
             if (movies.length === 0) this.setState({ error: "The database could not find any shows from that year" });
-            this.setState({ movies: movies.results,
-              isLoading: false,
-              totalPages: movies.total_pages });
+            this.setState({ movies, isLoading: false });
           })
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch tv shows :(" });
@@ -119,41 +107,11 @@ class BrowseTvContainer extends Component {
     }
   }
 
-  loadMoreAndAppend = async () => {
-    const { filter, id } = this.props.match.params;
-    try {
-      let resp;
-      if (filter === "genre") {
-        resp = await getGenreShows(id, this.state.currentPage + 1);
-      } else if (filter === "year") {
-        resp = await getShowsFromYear(id, this.state.currentPage + 1);
-      } else {
-        resp = await getShowsFromType(filter, this.state.currentPage + 1);
-      }
-      /* The following piece of code removes duplicate movies as the api sometimes returns
-           movies that already was fetched before. */
-      const index = this.state.movies.concat(resp.results);
-      const resArr = [];
-      index.forEach((item) => {
-        const i = resArr.findIndex(x => x.id === item.id);
-        if (i <= -1) {
-          resArr.push(item);
-        }
-      });
-      this.setState({
-        movies: resArr,
-        currentPage: resp.page,
-        totalPages: resp.total_pages });
-    } catch (error) {
-      this.setState({ error });
-    }
-  }
-
   render() {
     const tabLinks = {
       Popular: "/shows/popular",
-      Top: "/shows/top_rated",
-      Airing: "/shows/airing_today",
+      Top: "/shows/top",
+      Airing: "/shows/airing",
       Genre: "/shows/genre",
       Year: "/shows/year",
     };
@@ -169,9 +127,6 @@ class BrowseTvContainer extends Component {
         searchValue={this.state.searchWords}
         search={this.searchHandler}
         setSearchbarValue={this.setSearchbarValue}
-        currentPage={this.state.currentPage}
-        totalPages={this.state.totalPages}
-        loadMoreFunc={this.loadMoreAndAppend}
       />
     );
   }

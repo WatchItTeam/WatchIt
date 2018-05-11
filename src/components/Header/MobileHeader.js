@@ -12,7 +12,9 @@ import "../../css/Header.scss";
  */
 class MobileHeader extends Component {
   static propTypes = {
+    username: PropTypes.string.isRequired,
     toggleSidebar: PropTypes.func.isRequired,
+    onSignOutClick: PropTypes.func.isRequired,
     searchbarValue: PropTypes.string.isRequired,
     searchHandler: PropTypes.func.isRequired,
     setSearchbarValue: PropTypes.func.isRequired,
@@ -49,7 +51,7 @@ class MobileHeader extends Component {
 
   render() {
     const {
-      toggleSidebar, setSearchbarValue, searchbarValue, searchHandler,
+      username, onSignOutClick, toggleSidebar, setSearchbarValue, searchbarValue, searchHandler,
     } = this.props;
 
     if (this.state.searchIsVisible) {

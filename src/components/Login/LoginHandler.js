@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import "../../css/LoginHandler.scss";
 import firebase from "../../Firebase/firebase";
 import UserLayout from "./UserLayout";
-import { errorToast } from "../../utils/toast";
-import "../../css/LoginHandler.scss";
 
 class LoginHandler extends Component {
   state = {
@@ -11,34 +10,34 @@ class LoginHandler extends Component {
     password: "",
     user: null,
   };
-
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged((user) => {
-      this.setState({ user });
-    });
-  }
-
   signUpClick = (event) => {
+    console.log("Trying do sign in");
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorMessage);
+    });
     event.preventDefault();
-    const { email, password } = this.state;
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .catch((error) => {
-        errorToast(error.message);
-      });
   }
 
   signInClick = (event) => {
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorMessage);
+    });
     event.preventDefault();
-    const { email, password } = this.state;
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        errorToast(error.message);
-      });
   }
 
   signOut = () => {
     firebase.auth().signOut();
     this.setState({ email: "", password: "" });
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.setState({ user });
+    });
   }
 
   handleChange = (event) => {
@@ -50,20 +49,21 @@ class LoginHandler extends Component {
     }
   }
 
+
   render() {
-    const { user, email, password } = this.state;
     return (
       <UserLayout
+        {...this.props}
         onSignOutClick={this.signOut}
         handleChange={this.handleChange}
         signInClick={this.signInClick}
         signUpClick={this.signUpClick}
-        user={user}
-        email={email}
-        password={password}
+        user={this.state.user}
       />
     );
   }
 }
 
+LoginHandler.propTypes = {
+};
 export default withRouter(LoginHandler);

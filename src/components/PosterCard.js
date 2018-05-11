@@ -58,7 +58,10 @@ const cardSource = {
     return {
       id: props.id,
       title: props.title,
-      mediaType: props.mediaType,
+      media_type: props.mediaType,
+      vote_average: props.voteAverage,
+      release_date: props.releaseDate,
+      poster_path: props.posterPath,
     };
   },
 };

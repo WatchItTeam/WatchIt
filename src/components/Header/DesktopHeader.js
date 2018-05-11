@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Searchbar from "../Searchbar";
 import LoginHandler from "../Login/LoginHandler";
 import "../../css/Header.scss";

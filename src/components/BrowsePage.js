@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroller";
 import Tabs from "./Tabs";
 import BrowseGenresContainer from "../containers/BrowseGenresContainer";
 import PosterGrid from "./PosterGrid";
@@ -19,9 +18,7 @@ function BrowsePage({
   searchValue,
   search,
   setSearchbarValue,
-  currentPage,
-  totalPages,
-  loadMoreFunc }) {
+}) {
   let titleTabs;
   let statusMsg;
 
@@ -79,9 +76,6 @@ function BrowsePage({
                 search={search}
                 setSearchbarValue={setSearchbarValue}
                 statusMsg={statusMsg}
-                currentPage={currentPage}
-                totalPages={totalPages}
-                loadMoreFunc={loadMoreFunc}
               />
             </div>
           )}
@@ -91,12 +85,7 @@ function BrowsePage({
           render={() => (
             <div>
               {statusMsg}
-              <InfiniteScroll
-                loadMore={loadMoreFunc}
-                hasMore={currentPage !== totalPages}
-              >
-                <PosterGrid movies={movies} />
-              </InfiniteScroll>
+              <PosterGrid movies={movies} />
             </div>
           )}
         />
@@ -118,9 +107,6 @@ BrowsePage.propTypes = {
   searchValue: PropTypes.string.isRequired,
   search: PropTypes.func.isRequired,
   setSearchbarValue: PropTypes.func.isRequired,
-  loadMoreFunc: PropTypes.func.isRequired,
-  currentPage: PropTypes.any.isRequired,
-  totalPages: PropTypes.any.isRequired,
 };
 
 export default BrowsePage;
