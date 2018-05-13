@@ -45,8 +45,10 @@ class MovieInformation extends Component {
       if (this.props.currentMovie.credits.cast.length === 0) {
         cast = <div>No cast to show</div>;
       } else {
+        this.props.currentMovie.credits.cast =
+        this.props.currentMovie.credits.cast.sort((a, b) => a.order - b.order);
         cast = (
-          <Scroll>
+          <Scroll arrayLength={this.props.currentMovie.credits.cast.length}>
             {
               this.props.currentMovie.credits.cast.map((person) => {
                 if (person.profile_path === null) {
@@ -79,7 +81,7 @@ class MovieInformation extends Component {
         recommendations = <div className="botPadding">No recommendations to show</div>;
       } else {
         recommendations = (
-          <Scroll>
+          <Scroll arrayLength={this.props.currentMovie.recommendations.results.length}>
             {
               this.props.currentMovie.recommendations.results.map((mov) => {
                 const movie = normalizeMovie(mov);
@@ -104,6 +106,14 @@ class MovieInformation extends Component {
       let trailers;
       if (this.props.currentMovie.videos.results.length === 0) {
         trailers = <div>No trailers to show</div>;
+      } else if (this.props.currentMovie.videos.results.length === 1) {
+        trailers = (
+          <div className="OuterDiv">
+            <div className="embed-container">
+              <iframe src={this.state.source} frameBorder="0" title={this.state.currentTrailer} allowFullScreen />
+            </div>
+          </div>
+        );
       } else {
         trailers = (
           <div className="OuterDiv">

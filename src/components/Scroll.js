@@ -8,6 +8,23 @@ import "../css/Scroll.scss";
  * Taken from https://reacttraining.com/react-router/web/guides/scroll-restoration
  */
 class Scroll extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { width: 0 };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth });
+  }
+
   scrollRight = () => {
     const containerWidth = this.inputRef.current.offsetWidth;
     this.inputRef.current.scrollLeft += containerWidth;
@@ -21,18 +38,31 @@ class Scroll extends Component {
 
   static propTypes = {
     children: PropTypes.node.isRequired,
+    arrayLength: PropTypes.number.isRequired,
   }
 
   render() {
-    return (
-      <div className="OuterDiv">
-        <button className="leftbutton scroll-button" onClick={this.scrollLeft}><FontAwesomeIcon icon="angle-left" /></button>
-        <div className="scrolling-wrapper-flexbox" ref={this.inputRef}>
-          {this.props.children}
+    let result = <div className="OuterDiv" />;
+    if ((this.props.arrayLength * 170) < (this.state.width - 250)) {
+      result = (
+        <div className="OuterDiv">
+          <div className="scrolling-wrapper-flexbox" ref={this.inputRef}>
+            {this.props.children}
+          </div>
         </div>
-        <button className="rightbutton scroll-button" onClick={this.scrollRight}><FontAwesomeIcon icon="angle-right" /></button>
-      </div>
-    );
+      );
+    } else {
+      result = (
+        <div className="OuterDiv">
+          <button className="leftbutton scroll-button" onClick={this.scrollLeft}><FontAwesomeIcon icon="angle-left" /></button>
+          <div className="scrolling-wrapper-flexbox" ref={this.inputRef}>
+            {this.props.children}
+          </div>
+          <button className="rightbutton scroll-button" onClick={this.scrollRight}><FontAwesomeIcon icon="angle-right" /></button>
+        </div>
+      );
+    }
+    return result;
   }
 }
 
