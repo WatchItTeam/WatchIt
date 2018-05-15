@@ -8,26 +8,59 @@ import "../css/Scroll.scss";
  * Taken from https://reacttraining.com/react-router/web/guides/scroll-restoration
  */
 class Scroll extends Component {
-  scrollRight = () => {
-    const containerWidth = this.inputRef.current.offsetWidth;
-    this.inputRef.current.scrollLeft += containerWidth;
-  }
-  scrollLeft = () => {
-    const containerWidth = this.inputRef.current.offsetWidth;
-    this.inputRef.current.scrollLeft -= containerWidth;
-  }
-
-  inputRef = React.createRef();
-
   static propTypes = {
     children: PropTypes.node.isRequired,
+    arrayLength: PropTypes.number.isRequired,
   }
 
+  state = {
+    width: 0,
+  };
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({ width: window.innerWidth });
+  }
+
+  scrollRight = () => {
+    const containerWidth = this.scrollRef.current.offsetWidth;
+    this.scrollRef.current.scrollLeft += containerWidth;
+  }
+
+  scrollLeft = () => {
+    const containerWidth = this.scrollRef.current.offsetWidth;
+    this.scrollRef.current.scrollLeft -= containerWidth;
+  }
+
+  scrollRef = React.createRef();
+
   render() {
+    // Fixed width of all postercard images such as cast and recommendations.
+    const imageWidth = 170;
+    // sidebar width is constant 250px.
+    const sidebarWidth = 250;
+    if ((this.props.arrayLength * imageWidth) < (this.state.width - sidebarWidth)) {
+      return (
+        <div className="OuterDiv">
+          <div className="scrolling-wrapper-flexbox" ref={this.scrollRef}>
+            {this.props.children}
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="OuterDiv">
         <button className="leftbutton scroll-button" onClick={this.scrollLeft}><FontAwesomeIcon icon="angle-left" /></button>
-        <div className="scrolling-wrapper-flexbox" ref={this.inputRef}>
+        <div className="scrolling-wrapper-flexbox" ref={this.scrollRef}>
           {this.props.children}
         </div>
         <button className="rightbutton scroll-button" onClick={this.scrollRight}><FontAwesomeIcon icon="angle-right" /></button>
