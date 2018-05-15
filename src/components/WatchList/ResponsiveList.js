@@ -31,8 +31,6 @@ function ResponsiveList({
     );
   }
 
-  let butt = <h1>hej</h1>;
-
   return (
     <section className="watch-list container">
       <div className="title-bar">
@@ -40,20 +38,15 @@ function ResponsiveList({
         <SignedIn>
           {(user) => {
             if (user.uid === listUserId) {
-              console.log("inuti");
-              butt = (
-                <div>
-                  <button className="edit-btn" onClick={toggleEditMode}>
-                    {btnContent}
-                  </button>
-                </div>);
-              console.log(butt);
+              return (
+                <button className="edit-btn" onClick={toggleEditMode}>
+                  {btnContent}
+                </button>);
             }
             return null;
           }
           }
         </SignedIn>
-        {butt}
       </div>
       <Tabs links={tabLinks} />
       {lists}
