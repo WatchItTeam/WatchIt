@@ -29,8 +29,8 @@
     .user-img {
       height: 40px;
       width: 40px;
-      background: gray;
       border-radius: 50%;
+      overflow: hidden; // needed so the avatar (which is square) is within the round div
     }
   }
 }
