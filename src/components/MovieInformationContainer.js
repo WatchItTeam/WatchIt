@@ -3,10 +3,10 @@ import propTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import PosterCard from "./PosterCard";
 import { normalizeMovie } from "../api/APIUtils";
-import "../css/MovieInfo.scss";
-import "../css/Scroll.scss";
 import Scroll from "./Scroll";
 import Trailers from "./Trailers";
+import "../css/MovieInfo.scss";
+import "../css/Scroll.scss";
 
 
 /**
@@ -65,7 +65,7 @@ function MovieInformation({ currentMovie }) {
                   linkTo={`/${(movie.media_type)}/${movie.id}`}
                   title={movie.title}
                   posterPath={movie.poster_path}
-                  releaseDate={movie.release_year}
+                  releaseDate={movie.release_date}
                   mediaType={movie.media_type}
                 />
               </div>

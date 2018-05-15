@@ -9,7 +9,7 @@ export const watchStates = {
   dropped: "dropped",
 };
 
-const getUserID = () => firebaseApp.auth().currentUser.uid;
+export const getUserID = () => firebaseApp.auth().currentUser.uid;
 
 /**
  * Takes in an array and sorts them by some property.
@@ -74,6 +74,14 @@ export function addToList(movie, watchStatus) {
     release_date,
     release_year,
     vote_average,
+  });
+}
+
+export function updateWatchStatus(movie, watchStatus) {
+  const user = getUserID();
+  if (!user) throw new Error("User is not logged in");
+  return db.doc(`users/${user}/list/${movie.id}`).update({
+    watch_status: watchStatus,
   });
 }
 

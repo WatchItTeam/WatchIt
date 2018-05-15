@@ -12,6 +12,7 @@ class Scroll extends Component {
     children: PropTypes.node.isRequired,
     arrayLength: PropTypes.number.isRequired,
   }
+
   state = {
     width: 0,
   };
@@ -33,6 +34,7 @@ class Scroll extends Component {
     const containerWidth = this.scrollRef.current.offsetWidth;
     this.scrollRef.current.scrollLeft += containerWidth;
   }
+
   scrollLeft = () => {
     const containerWidth = this.scrollRef.current.offsetWidth;
     this.scrollRef.current.scrollLeft -= containerWidth;
@@ -54,6 +56,7 @@ class Scroll extends Component {
         </div>
       );
     }
+
     return (
       <div className="OuterDiv">
         <button className="leftbutton scroll-button" onClick={this.scrollLeft}><FontAwesomeIcon icon="angle-left" /></button>
