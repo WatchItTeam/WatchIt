@@ -29,6 +29,9 @@ function ImageWithFallback({ src, imgSize, mediaType, alt, className }) {
     case "tv":
       icon = "tv";
       break;
+    case "person":
+      icon = "user";
+      break;
     default:
       icon = "image";
       break;

@@ -36,13 +36,34 @@ export function normalizeMovie(movie) {
   /* eslint-disable camelcase */
   if (movie.isNormalized) return movie;
 
-  const { title, name, release_date, first_air_date } = movie;
-  const mediaType = title ? "movie" : "tv";
+  const {
+    title,
+    name,
+    release_date,
+    first_air_date,
+    media_type,
+    poster_path,
+    profile_path,
+  } = movie;
+
+  let determinedMediaType;
+  if (media_type) {
+    // if the media_type property already exists, no need to
+    // manually determine the media type
+    determinedMediaType = media_type;
+  } else {
+    // only movies have the "title" property
+    // tv and persons have "name" instead
+    determinedMediaType = title ? "movie" : "tv";
+  }
+
   const releaseDate = release_date || first_air_date;
+
   return {
     ...movie,
     title: title || name,
-    media_type: mediaType,
+    media_type: determinedMediaType,
+    poster_path: poster_path || profile_path,
     release_date: releaseDate,
     release_year: releaseDate ? getYearFromDate(releaseDate) : "",
     isNormalized: true,
