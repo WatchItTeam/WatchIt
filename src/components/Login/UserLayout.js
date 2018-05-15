@@ -10,7 +10,12 @@ function UserLayout({
   if (user) {
     return (
       <div id="user-info">
-        <div className="user-img" />
+        {/* Github style avatar generated based in the user's uid */}
+        <img
+          className="user-img"
+          src={`https://avatars.dicebear.com/v2/identicon/${user.uid}.svg`}
+          alt="User avatar"
+        />
         {user.email}
         <button onClick={onSignOutClick}>
           <FontAwesomeIcon icon="sign-out-alt" /> Sign out
