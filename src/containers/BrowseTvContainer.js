@@ -5,6 +5,16 @@ import { getShowsFromType, getGenreShows, getShowGenres, getShowsFromYear } from
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 
 class BrowseTvContainer extends Component {
+  static getDerivedStateFromProps(props) {
+    // if the current tab isn't "Year", reset the year searchbar
+    if (!props.location.pathname.includes("year")) {
+      return {
+        searchWords: "",
+      };
+    }
+    return {};
+  }
+
   state = {
     movies: [],
     genreTitle: "",
