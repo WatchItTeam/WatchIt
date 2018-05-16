@@ -81,7 +81,7 @@ class MobileHeader extends Component {
           <FontAwesomeIcon icon="search" />
         </button>
         <SignedIn>
-          {user => ( // Does not work if user is not defined
+          {() => ( // Shows signout-icon if user is signed in, login icon otherwise
             <nav>
               {
                 <button id="signin-mobile-btn">
