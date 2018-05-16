@@ -7,6 +7,7 @@ import "../../css/Header.scss";
 import { SignedIn, SignedOut } from "../UserState/UserState";
 import { signOut } from "../../Firebase/UserUtils";
 import Modal from "../Modal";
+import LoginHandler from "../Login/LoginHandler";
 
 /**
  * The header for desktop, which includes search bar and user info
@@ -106,7 +107,7 @@ class MobileHeader extends Component {
               <FontAwesomeIcon icon="user" />
             </button>
             <Modal className="loginModal" isOpen={this.state.modalIsVisible} hideFunc={this.hideModal}>
-              Hejhooo
+              <LoginHandler />
             </Modal>
           </Fragment>
         </SignedOut>
