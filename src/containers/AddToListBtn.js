@@ -2,8 +2,8 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import firebase from "../Firebase/firebase";
-import { addToList, fetchOneFromList } from "../Firebase/lists";
-import { successToast, errorToast } from "../utils/toast";
+import { addToList, fetchOneFromList, updateWatchStatus } from "../Firebase/lists";
+import { successToast, errorToast, infoToast } from "../utils/toast";
 import { withUser } from "../Firebase/UserContext";
 import { normalizeMovie } from "../api/APIUtils";
 import parseName from "../utils/parseName";
@@ -69,9 +69,15 @@ class AddToListBtn extends Component {
     const { currentMovie } = this.props;
     const movie = normalizeMovie(currentMovie);
     try {
-      await addToList(movie, selectedList);
-      successToast(`Added ${movie.title} to ${parseName(selectedList)}`);
-      this.setState({ statusOfCurrentMovie: selectedList });
+      if (this.state.statusOfCurrentMovie) {
+        updateWatchStatus(movie, selectedList);
+        this.setState({ statusOfCurrentMovie: selectedList });
+        infoToast(`${movie.title} moved to ${selectedList}`);
+      } else {
+        await addToList(movie, selectedList);
+        successToast(`Added ${movie.title} to ${parseName(selectedList)}`);
+        this.setState({ statusOfCurrentMovie: selectedList });
+      }
     } catch (error) {
       errorToast(`Something went wrong when adding ${movie.title}`);
     }
