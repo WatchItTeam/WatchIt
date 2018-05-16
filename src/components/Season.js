@@ -4,7 +4,7 @@ import { Desktop, Mobile } from "./Responsive";
 import EpisodeItem from "./EpisodeItem";
 import EpisodeMobileItem from "./EpisodeMobileItem";
 
-function Season({ episodes, seasonNumber, addEpisode }) {
+function Season({ episodes, seasonNumber, addEpisode, removeEpisode, showId }) {
   return (
     <div>
       <h2>{`Season ${seasonNumber}`}</h2>
@@ -16,8 +16,10 @@ function Season({ episodes, seasonNumber, addEpisode }) {
               name={episode.name}
               poster={episode.still_path}
               addEpisode={addEpisode}
+              removeEpisode={removeEpisode}
               description={episode.overview}
-              watched={false}
+              episodeId={episode.id}
+              showId={showId}
             />
           </Mobile>
           <Desktop>
@@ -37,6 +39,9 @@ function Season({ episodes, seasonNumber, addEpisode }) {
 Season.propTypes = {
   episodes: PropTypes.array.isRequired,
   seasonNumber: PropTypes.number.isRequired,
+  addEpisode: PropTypes.func.isRequired,
+  removeEpisode: PropTypes.func.isRequired,
+  showId: PropTypes.number.isRequired,
 };
 
 export default Season;

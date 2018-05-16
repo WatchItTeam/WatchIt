@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import EpisodePage from "../components/EpisodePage";
 import { getSeasonFromId, getTVInfo } from "../api/APIUtils";
 
@@ -33,14 +34,23 @@ class EpisodeContainer extends Component {
   }
 
   addEpisode = (show) => {
-    if (!(this.state.shows[show.id] === null)) {
-      this.setState({ shows: {
-        ...this.state.shows,
-        [show.id]: "apa",
-      },
-      });
-    }
-    console.log(this.state.shows);
+    const shows = Object.assign({}, this.state.shows);
+    shows[show.id] = {
+      ...shows[show.id],
+      [show.episode]: true,
+    };
+    this.setState({ shows });
+    return true;
+  }
+
+  removeEpisode = (show) => {
+    const shows = Object.assign({}, this.state.shows);
+    shows[show.id] = {
+      ...shows[show.id],
+      [show.episode]: false,
+    };
+    this.setState({ shows });
+    return false;
   }
 
   render() {
@@ -48,12 +58,19 @@ class EpisodeContainer extends Component {
       <EpisodePage
         title={this.state.title}
         episodes={this.state.episodes}
+        showId={this.props.match.params.id}
         seasonNumber={1}
         isLoading={this.state.isLoading}
         addEpisode={this.addEpisode}
+        removeEpisode={this.removeEpisode}
       />
     );
   }
 }
+
+EpisodeContainer.propTypes = {
+  match: PropTypes.object.isRequired,
+  currentMovie: PropTypes.object.isRequired,
+};
 
 export default EpisodeContainer;

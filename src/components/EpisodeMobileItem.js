@@ -5,25 +5,35 @@ import CheckCircle from "@fortawesome/fontawesome-free-regular/faCheckCircle";
 import Circle from "@fortawesome/fontawesome-free-regular/faCircle";
 import "../css/EpisodeMobileItem.scss";
 
-// ({ episodeNumber, name, poster, checkClicked, watched })
-
 class EpisodeMobileItem extends Component {
-  state = { isOpen: false };
+  state = {
+    isOpen: false,
+    watched: false,
+  };
 
   render() {
     let mobileItem;
     let checkBox;
-    const show = { id: 20 };
+    const show = {
+      id: this.props.showId,
+      episode: this.props.episodeId,
+    };
 
-    if (this.props.watched) {
+    if (this.state.watched) {
       checkBox = (
-        <button className="episodeExpandBtn" onClick={() => this.props.addEpisode(show)}>
+        <button
+          className="episodeExpandBtn"
+          onClick={() => this.setState({ watched: this.props.removeEpisode(show) })}
+        >
           <FontAwesomeIcon icon={CheckCircle} />
         </button>
       );
     } else {
       checkBox = (
-        <button className="episodeExpandBtn" onClick={this.props.checkClicked}>
+        <button
+          className="episodeExpandBtn"
+          onClick={() => this.setState({ watched: this.props.addEpisode(show) })}
+        >
           <FontAwesomeIcon icon={Circle} />
         </button >
       );
@@ -72,7 +82,13 @@ class EpisodeMobileItem extends Component {
 }
 
 EpisodeMobileItem.propTypes = {
-
+  addEpisode: PropTypes.func.isRequired,
+  removeEpisode: PropTypes.func.isRequired,
+  showId: PropTypes.number.isRequired,
+  episodeId: PropTypes.number.isRequired,
+  episodeNumber: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default EpisodeMobileItem;
