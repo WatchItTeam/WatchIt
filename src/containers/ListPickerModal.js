@@ -70,7 +70,7 @@ class ListPickerModal extends Component {
     const { current } = this.state;
     const { cancelModal, onRadioChange, onSaveClick } = this;
     return (
-      <Modal isOpen={isOpen} hideFunc={hideFunc} onEnter={onSaveClick}>
+      <Modal className="listpicker-modal" isOpen={isOpen} hideFunc={hideFunc} onEnter={onSaveClick}>
         <h1>Add to:</h1>
         <form ref={this.formRef}>
           {

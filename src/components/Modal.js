@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
+import "../css/Modal.scss";
 
 /**
  * A reusable modal/popup component.
@@ -22,10 +23,12 @@ class Modal extends Component {
     hideFunc: PropTypes.func.isRequired,
     /* optional: what happens when user presses Enter */
     onEnter: PropTypes.func,
+    className: PropTypes.string,
     children: PropTypes.node.isRequired,
   }
 
   static defaultProps = {
+    className: "",
     onEnter: () => {}, // no op function
   }
 
@@ -57,12 +60,12 @@ class Modal extends Component {
   }
 
   render() {
-    const { isOpen, children } = this.props;
+    const { isOpen, children, className, hideFunc, onEnter, ...rest } = this.props;
     const { cancelModal } = this;
     return (
       <Fragment>
         {/* The actual modal */}
-        <div className={`listpicker-modal ${isOpen ? "open" : "closed"}`}>
+        <div {...rest} className={`${className} modal ${isOpen ? "open" : "closed"}`}>
           {children}
         </div>
 
