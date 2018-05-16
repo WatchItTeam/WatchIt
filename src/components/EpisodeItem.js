@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ImageWithFallback from "./ImageWithFallback";
 import "../css/EpisodeItem.scss";
 
-function EpisodeItem({ episodeNumber, name, poster }) {
+function EpisodeItem({ episodeNumber, name, poster, description }) {
   return (
     <div id="episodeItem">
       <ImageWithFallback
@@ -20,7 +20,7 @@ function EpisodeItem({ episodeNumber, name, poster }) {
           {name}
         </div>
         <div id="episodeTextContent">
-          a
+          {description}
         </div>
       </div>
     </div>

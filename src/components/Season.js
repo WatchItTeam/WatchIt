@@ -4,26 +4,28 @@ import { Desktop, Mobile } from "./Responsive";
 import EpisodeItem from "./EpisodeItem";
 import EpisodeMobileItem from "./EpisodeMobileItem";
 
-function Season({ episodes, seasonNumber }) {
+function Season({ episodes, seasonNumber, addEpisode }) {
   return (
     <div>
       <h2>{`Season ${seasonNumber}`}</h2>
       {episodes.map(episode => (
-        <div>
+        <div key={episode.id}>
           <Mobile>
             <EpisodeMobileItem
-              key={episode.id}
               episodeNumber={episode.episode_number}
               name={episode.name}
               poster={episode.still_path}
+              addEpisode={addEpisode}
+              description={episode.overview}
+              watched={false}
             />
           </Mobile>
           <Desktop>
             <EpisodeItem
-              key={episode.id}
               episodeNumber={episode.episode_number}
               name={episode.name}
               poster={episode.still_path}
+              description={episode.overview}
             />
           </Desktop>
         </div>

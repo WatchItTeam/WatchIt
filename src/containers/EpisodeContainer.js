@@ -7,6 +7,7 @@ class EpisodeContainer extends Component {
     episodes: [],
     title: "",
     isLoading: true,
+    shows: {},
   };
 
   componentDidMount() {
@@ -31,6 +32,17 @@ class EpisodeContainer extends Component {
     });
   }
 
+  addEpisode = (show) => {
+    if (!(this.state.shows[show.id] === null)) {
+      this.setState({ shows: {
+        ...this.state.shows,
+        [show.id]: "apa",
+      },
+      });
+    }
+    console.log(this.state.shows);
+  }
+
   render() {
     return (
       <EpisodePage
@@ -38,6 +50,7 @@ class EpisodeContainer extends Component {
         episodes={this.state.episodes}
         seasonNumber={1}
         isLoading={this.state.isLoading}
+        addEpisode={this.addEpisode}
       />
     );
   }

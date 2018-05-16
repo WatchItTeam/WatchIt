@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Season from "./Season";
 
-function EpisodePage({ title, episodes, seasonNumber, isLoading }) {
+function EpisodePage({ title, episodes, seasonNumber, isLoading, addEpisode }) {
   if (isLoading) {
     return (
       <div className="container">Loading...</div>
@@ -15,7 +15,7 @@ function EpisodePage({ title, episodes, seasonNumber, isLoading }) {
       <Season
         episodes={episodes}
         seasonNumber={seasonNumber}
-        posters
+        addEpisode={addEpisode}
       />
     </section>
   );
