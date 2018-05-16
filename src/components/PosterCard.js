@@ -43,9 +43,9 @@ class PosterCard extends Component {
             alt={`Poster for ${title}`}
             className="poster"
           />
-          <span className="title">
+          <p className="title">
             {title}{releaseYear}
-          </span>
+          </p>
         </Link>
       </div>
     ));
