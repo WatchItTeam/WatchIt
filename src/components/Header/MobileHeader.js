@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
@@ -6,6 +6,7 @@ import Searchbar from "../Searchbar";
 import "../../css/Header.scss";
 import { SignedIn, SignedOut } from "../UserState/UserState";
 import { signOut } from "../../Firebase/UserUtils";
+import Modal from "../Modal";
 
 /**
  * The header for desktop, which includes search bar and user info
@@ -30,7 +31,17 @@ class MobileHeader extends Component {
     return { location: props.location };
   }
 
-  state = { searchIsVisible: false };
+  state = {
+    searchIsVisible: false,
+    modalIsVisible: false,
+  }
+
+  componentDidUpdate() {
+    if (this.state.searchIsVisible) {
+      // if the searchbar becomes visible, focus on the input
+      this.searchbarRef.current.inputRef.current.focus();
+    }
+  }
 
   searchbarRef = React.createRef();
 
@@ -42,11 +53,12 @@ class MobileHeader extends Component {
     this.setState({ searchIsVisible: false });
   }
 
-  componentDidUpdate() {
-    if (this.state.searchIsVisible) {
-      // if the searchbar becomes visible, focus on the input
-      this.searchbarRef.current.inputRef.current.focus();
-    }
+  showModal = () => {
+    this.setState({ modalIsVisible: true });
+  }
+
+  hideModal = () => {
+    this.setState({ modalIsVisible: false });
   }
 
   render() {
@@ -89,9 +101,14 @@ class MobileHeader extends Component {
             )}
         </SignedIn>
         <SignedOut>
-          <button id="signin-mobile-btn">
-            <FontAwesomeIcon icon="user" />
-          </button>
+          <Fragment>
+            <button id="signin-mobile-btn" onClick={this.showModal}>
+              <FontAwesomeIcon icon="user" />
+            </button>
+            <Modal className="loginModal" isOpen={this.state.modalIsVisible} hideFunc={this.hideModal}>
+              Hejhooo
+            </Modal>
+          </Fragment>
         </SignedOut>
       </header>
     );
