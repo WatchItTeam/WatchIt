@@ -1,14 +1,14 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { watchStates } from "../Firebase/lists";
+import Modal from "../components/Modal";
 import PrimaryButton from "../components/PrimaryButton";
 import ListPickerRadio from "../components/ListPickerRadio";
 import "../css/ListPickerModal.scss";
 
 /**
  * Component for the popup modal that appears when clicking the
- * Add to button on the movie details page.
- * Can be dismissed with the Esc key and submitted with enter.
+ * Add to button on the movie details page..
  */
 class ListPickerModal extends Component {
   static propTypes = {
@@ -36,27 +36,6 @@ class ListPickerModal extends Component {
 
   state = { current: "" }
   formRef = React.createRef();
-
-  componentDidMount() {
-    window.addEventListener("keydown", this.keyListener);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("keydown", this.keyListener);
-  }
-
-  /**
-   * Listen for keydown events so the user can dismiss the modal with Esc
-   * and confirm/save with Enter
-   */
-  keyListener = (event) => {
-    const { isOpen } = this.props;
-    if (event.key === "Escape" && isOpen) {
-      this.cancelModal();
-    } else if (event.key === "Enter" && isOpen) {
-      this.onSaveClick();
-    }
-  }
 
   onRadioChange = (event) => {
     this.setState({ current: event.target.value });
@@ -87,41 +66,31 @@ class ListPickerModal extends Component {
   }
 
   render() {
-    const { isOpen } = this.props;
+    const { isOpen, hideFunc } = this.props;
     const { current } = this.state;
     const { cancelModal, onRadioChange, onSaveClick } = this;
     return (
-      <Fragment>
-        {/* The actual modal */}
-        <div className={`listpicker-modal ${isOpen ? "open" : "closed"}`}>
-          <h1>Add to:</h1>
-          <form ref={this.formRef}>
-            {
-              // dynamically add a radio button for each watch state
-              // instead of hard coding them
-              Object.values(watchStates).map(state => (
-                <ListPickerRadio
-                  key={state}
-                  value={state}
-                  current={current}
-                  onChange={onRadioChange}
-                />
-              ))
-            }
-          </form>
-          <div className="buttons">
-            <button className="cancel-btn" onClick={cancelModal}>Cancel</button>
-            <PrimaryButton onClick={onSaveClick}>Save</PrimaryButton>
-          </div>
+      <Modal isOpen={isOpen} hideFunc={hideFunc} onEnter={onSaveClick}>
+        <h1>Add to:</h1>
+        <form ref={this.formRef}>
+          {
+            // dynamically add a radio button for each watch state
+            // instead of hard coding them
+            Object.values(watchStates).map(state => (
+              <ListPickerRadio
+                key={state}
+                value={state}
+                current={current}
+                onChange={onRadioChange}
+              />
+            ))
+          }
+        </form>
+        <div className="buttons">
+          <button className="cancel-btn" onClick={cancelModal}>Cancel</button>
+          <PrimaryButton onClick={onSaveClick}>Save</PrimaryButton>
         </div>
-
-        {/* The dark background behind the modal */}
-        <div
-          className={isOpen ? "modal-underlay open" : "modal-underlay closed"}
-          onClick={cancelModal}
-          role="presentation"
-        />
-      </Fragment>
+      </Modal>
     );
   }
 }
