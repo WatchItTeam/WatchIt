@@ -1,27 +1,20 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import firebase from "../../Firebase/firebase";
 import UserLayout from "./UserLayout";
 import { errorToast } from "../../utils/toast";
 import "../../css/LoginHandler.scss";
+import { signIn, signOut, signUp } from "../../Firebase/UserUtils";
 
 class LoginHandler extends Component {
   state = {
     email: "",
     password: "",
-    user: null,
   };
-
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged((user) => {
-      this.setState({ user });
-    });
-  }
 
   signUpClick = (event) => {
     event.preventDefault();
     const { email, password } = this.state;
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+    signUp(email, password)
       .catch((error) => {
         errorToast(error.message);
       });
@@ -30,14 +23,14 @@ class LoginHandler extends Component {
   signInClick = (event) => {
     event.preventDefault();
     const { email, password } = this.state;
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    signIn(email, password)
       .catch((error) => {
         errorToast(error.message);
       });
   }
 
-  signOut = () => {
-    firebase.auth().signOut();
+  signOutClick = () => {
+    signOut();
     this.setState({ email: "", password: "" });
   }
 
@@ -51,14 +44,13 @@ class LoginHandler extends Component {
   }
 
   render() {
-    const { user, email, password } = this.state;
+    const { email, password } = this.state;
     return (
       <UserLayout
-        onSignOutClick={this.signOut}
+        onSignOutClick={this.signOutClick}
         handleChange={this.handleChange}
         signInClick={this.signInClick}
         signUpClick={this.signUpClick}
-        user={user}
         email={email}
         password={password}
       />
