@@ -68,18 +68,18 @@ class AddToListBtn extends Component {
 
     const { currentMovie } = this.props;
     const movie = normalizeMovie(currentMovie);
-    if (this.state.statusOfCurrentMovie) {
-      updateWatchStatus(movie, selectedList);
-      this.setState({ statusOfCurrentMovie: selectedList });
-      infoToast(`${movie.title} moved to ${selectedList}`);
-    } else {
-      try {
+    try {
+      if (this.state.statusOfCurrentMovie) {
+        updateWatchStatus(movie, selectedList);
+        this.setState({ statusOfCurrentMovie: selectedList });
+        infoToast(`${movie.title} moved to ${selectedList}`);
+      } else {
         await addToList(movie, selectedList);
         successToast(`Added ${movie.title} to ${parseName(selectedList)}`);
         this.setState({ statusOfCurrentMovie: selectedList });
-      } catch (error) {
-        errorToast(`Something went wrong when adding ${movie.title}`);
       }
+    } catch (error) {
+      errorToast(`Something went wrong when adding ${movie.title}`);
     }
     this.setState({ isLoading: false });
   }
