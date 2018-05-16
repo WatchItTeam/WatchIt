@@ -1,9 +1,7 @@
 import { toast } from "react-toastify";
 
 export function successToast(text) {
-  toast.success(text, {
-    progressClassName: "toast-progress-bar",
-  });
+  toast.success(text);
 }
 
 export function errorToast(text) {

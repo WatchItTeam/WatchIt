@@ -121,6 +121,7 @@ class App extends Component {
           {sidebarOverlay}
           <ToastContainer
             className="toast-container"
+            toastClassName="toast"
             hideProgressBar
             closeButton={false}
             position="bottom-left"
