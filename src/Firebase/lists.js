@@ -20,7 +20,7 @@ export const getUserID = () => firebaseApp.auth().currentUser.uid;
  * @param {Array} array  Array to sort
  * @param {String} orderBy  Which property to sort after
  */
-function sortBy(array, orderBy) {
+export function sortBy(array, orderBy) {
   function compare(a, b) {
     if (a[orderBy] < b[orderBy]) return -1; // a is before b
     if (a[orderBy] > b[orderBy]) return 1; // b is before a
@@ -108,7 +108,7 @@ export function removeFromList(movieID) {
  *  ...
  * }
  */
-export async function fetchAllFromList(userId, watchStatus, mediaType) {
+export async function fetchAllFromList(userId, watchStatus, mediaType, updateList) {
   let req;
   if (mediaType === "all") {
     req = await db.collection(`/users/${userId}/list`)
@@ -118,11 +118,7 @@ export async function fetchAllFromList(userId, watchStatus, mediaType) {
       .where("watch_status", "==", watchStatus)
       .where("media_type", "==", mediaType);
   }
-  const snapShots = await req.get();
-
-  const entries = snapShots.docs.map(doc => doc.data());
-  const sorted = sortBy(entries, "title");
-  return sorted;
+  return req.onSnapshot(updateList);
 }
 
 /**

@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import moment from "moment-mini";
-import { getFullImgPath } from "../../api/APIUtils";
 import ListDeleteBtn from "./ListDeleteBtn";
+import PosterCard from "../PosterCard";
 import "../../css/TableList.scss";
 
 function TableList({ entries, isEditMode, deleteEntry }) {
@@ -24,14 +23,17 @@ function TableList({ entries, isEditMode, deleteEntry }) {
           entries.map(movie => (
             <tr key={movie.id}>
               <td className="poster-name">
-                <Link to={`/${movie.media_type}/${movie.id}`}>
-                  <img
-                    src={getFullImgPath(movie.poster_path, "w92")}
-                    className="poster"
-                    alt=""
-                  />
-                  {movie.title} ({movie.release_year})
-                </Link>
+                <PosterCard
+                  className="poster"
+                  key={movie.id}
+                  id={movie.id}
+                  linkTo={`/${(movie.media_type)}/${movie.id}`}
+                  title={movie.title}
+                  posterPath={movie.poster_path}
+                  releaseDate={movie.release_date}
+                  mediaType={movie.media_type}
+                  voteAverage={movie.vote_average}
+                />
               </td>
               <td>{movie.media_type}</td>
               <td>{movie.vote_average || "-"}</td>

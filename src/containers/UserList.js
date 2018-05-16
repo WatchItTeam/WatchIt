@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ResponsiveList from "../components/WatchList/ResponsiveList";
 import parseName from "../utils/parseName";
 import ErrorMessage from "../components/ErrorMessage";
-import { fetchAllFromList, removeFromList } from "../Firebase/lists";
+import { fetchAllFromList, removeFromList, sortBy } from "../Firebase/lists";
 
 class UserList extends Component {
   static propTypes = {
@@ -36,20 +36,18 @@ class UserList extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   async fetchList() {
-    const { userId, listName, mediaType } = this.props.match.params;
-
     this.setState({ isLoading: true });
-
-    try {
-      const listEntries = await fetchAllFromList(userId, listName, mediaType);
-      this.setState({ listEntries, error: false });
-    } catch (error) {
-      console.error(error);
-      this.setState({ error: true });
-    }
-
-    this.setState({ isLoading: false });
+    const { userId, listName, mediaType } = this.props.match.params;
+    this.unsubscribe = await fetchAllFromList(userId, listName, mediaType, (snapshot) => {
+      const entries = snapshot.docs.map(doc => doc.data());
+      const sorted = sortBy(entries, "title");
+      this.setState({ listEntries: sorted, isLoading: false });
+    });
   }
 
   toggleEditMode = () => {
