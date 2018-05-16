@@ -12,7 +12,6 @@ function ResponsiveList({
   isLoading, listDisplayName, tabLinks, entries,
   toggleEditMode, deleteEntry, isEditMode, listUserId,
 }) {
-  const btnContent = isEditMode ? "Done" : <FontAwesomeIcon icon="edit" />;
   let lists;
   if (isLoading) {
     lists = "Loading...";
@@ -31,6 +30,8 @@ function ResponsiveList({
     );
   }
 
+  const btnContent = isEditMode ? "Done" : <div><FontAwesomeIcon icon="edit" /> Edit</div>;
+
   return (
     <section className="watch-list container">
       <div className="title-bar">
@@ -44,14 +45,12 @@ function ResponsiveList({
                 </button>);
             }
             return null;
-          }
-          }
+          }}
         </SignedIn>
       </div>
       <Tabs links={tabLinks} />
       {lists}
     </section>
-
   );
 }
 

@@ -62,4 +62,15 @@
       .bottom { justify-content: center; }
     }
   }
+
+  .watch-list {
+    .title-bar {
+      h1 {
+        font-size: 1.7em;
+      }
+      .edit-btn {
+        font-size: 1em;
+      }
+    }
+  }
 }
