@@ -192,15 +192,6 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
-                path="/search"
-                render={() => (
-                  <SearchpageContainer
-                    searchResults={searchResults}
-                    setSearchResults={this.setSearchResults}
-                  />
-                )}
-              />
               <Route exact path="/user/:userId/:listName/" render={() => <Redirect to="all" />} />
               <Route
                 path={`/user/:userId/:listName(${listNames})/:mediaType(all|movie|tv)`}
