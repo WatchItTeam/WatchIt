@@ -96,6 +96,7 @@ class UserList extends Component {
         toggleEditMode={this.toggleEditMode}
         deleteEntry={this.deleteEntry}
         isEditMode={isEditMode}
+        listUserId={userId}
       />
     );
   }

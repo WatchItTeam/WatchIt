@@ -5,11 +5,12 @@ import { Desktop, Mobile } from "../Responsive";
 import Tabs from "../Tabs";
 import TableList from "./TableList";
 import CardList from "./CardList";
+import { SignedIn } from "../UserState/UserState";
 import "../../css/ResponsiveList.scss";
 
 function ResponsiveList({
   isLoading, listDisplayName, tabLinks, entries,
-  toggleEditMode, deleteEntry, isEditMode,
+  toggleEditMode, deleteEntry, isEditMode, listUserId,
 }) {
   const btnContent = isEditMode ? "Done" : <FontAwesomeIcon icon="edit" />;
   let lists;
@@ -29,13 +30,23 @@ function ResponsiveList({
       </div>
     );
   }
+
   return (
     <section className="watch-list container">
       <div className="title-bar">
         <h1>{listDisplayName}</h1>
-        <button className="edit-btn" onClick={toggleEditMode}>
-          {btnContent}
-        </button>
+        <SignedIn>
+          {(user) => {
+            if (user.uid === listUserId) {
+              return (
+                <button className="edit-btn" onClick={toggleEditMode}>
+                  {btnContent}
+                </button>);
+            }
+            return null;
+          }
+          }
+        </SignedIn>
       </div>
       <Tabs links={tabLinks} />
       {lists}
@@ -55,6 +66,7 @@ ResponsiveList.propTypes = {
   toggleEditMode: PropTypes.func.isRequired,
   deleteEntry: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
+  listUserId: PropTypes.string.isRequired,
 };
 
 export default ResponsiveList;
