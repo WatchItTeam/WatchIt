@@ -5,16 +5,6 @@ import { getMoviesFromType, getGenreMovies, getMovieGenres, getMoviesFromYear } 
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 
 class BrowseMoviesContainer extends Component {
-  static getDerivedStateFromProps(props) {
-    // if the current tab isn't "Year", reset the year searchbar
-    if (!props.location.pathname.includes("year")) {
-      return {
-        searchWords: "",
-      };
-    }
-    return {};
-  }
-
   state = {
     movies: [],
     genreTitle: "",
@@ -23,7 +13,8 @@ class BrowseMoviesContainer extends Component {
     error: "",
     searchWords: "",
     currentPage: 1,
-    totalPages: 1 };
+    totalPages: 1,
+  }
 
   componentDidMount() {
     getMovieGenres()
@@ -70,6 +61,7 @@ class BrowseMoviesContainer extends Component {
       isLoading: true,
       error: "",
       currentPage: 1,
+      totalPages: 1,
     });
     if (filter === "top_rated") {
       getMoviesFromType("top_rated")
@@ -109,13 +101,25 @@ class BrowseMoviesContainer extends Component {
         this.setState({ isLoading: false });
       }
     } else if (filter === "year") {
-      if (id) {
-        getMoviesFromYear(id)
+      const { searchWords } = this.state;
+      // id is undefined when clicking on the "Year" tab the first time
+      // searchWords is defined if the user has previously searched for a year
+      // and switches tab to something else, and then back to "Year"
+      // so we search for the same year that the user searched for previously
+      // instead of resetting the searchbar
+      if (id || searchWords) {
+        getMoviesFromYear(id || searchWords)
           .then((movies) => {
-            if (movies.length === 0) this.setState({ error: "The database could not find any movies from that year" });
-            this.setState({ movies: movies.results,
+            if (movies.length === 0) {
+              this.setState({
+                error: "The database could not find any movies from that year",
+              });
+            }
+            this.setState({
+              movies: movies.results,
               isLoading: false,
-              totalPages: movies.total_pages });
+              totalPages: movies.total_pages,
+            });
           })
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch movies :(" });
@@ -152,7 +156,8 @@ class BrowseMoviesContainer extends Component {
       this.setState({
         movies: resArr,
         currentPage: resp.page,
-        totalPages: resp.total_pages });
+        totalPages: resp.total_pages,
+      });
     } catch (error) {
       this.setState({ error });
     }

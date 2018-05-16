@@ -5,16 +5,6 @@ import { getShowsFromType, getGenreShows, getShowGenres, getShowsFromYear } from
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 
 class BrowseTvContainer extends Component {
-  static getDerivedStateFromProps(props) {
-    // if the current tab isn't "Year", reset the year searchbar
-    if (!props.location.pathname.includes("year")) {
-      return {
-        searchWords: "",
-      };
-    }
-    return {};
-  }
-
   state = {
     movies: [],
     genreTitle: "",
@@ -71,6 +61,7 @@ class BrowseTvContainer extends Component {
       isLoading: true,
       error: "",
       currentPage: 1,
+      totalPages: 1,
     });
     if (filter === "top_rated") {
       getShowsFromType("top_rated", this.state.currentPage)
@@ -110,13 +101,25 @@ class BrowseTvContainer extends Component {
         this.setState({ isLoading: false });
       }
     } else if (filter === "year") {
-      if (id) {
-        getShowsFromYear(id)
+      const { searchWords } = this.state;
+      // id is undefined when clicking on the "Year" tab the first time
+      // searchWords is defined if the user has previously searched for a year
+      // and switches tab to something else, and then back to "Year"
+      // so we search for the same year that the user searched for previously
+      // instead of resetting the searchbar
+      if (id || searchWords) {
+        getShowsFromYear(id || searchWords)
           .then((movies) => {
-            if (movies.length === 0) this.setState({ error: "The database could not find any shows from that year" });
-            this.setState({ movies: movies.results,
+            if (movies.length === 0) {
+              this.setState({
+                error: "The database could not find any shows from that year",
+              });
+            }
+            this.setState({
+              movies: movies.results,
               isLoading: false,
-              totalPages: movies.total_pages });
+              totalPages: movies.total_pages,
+            });
           })
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch tv shows :(" });
