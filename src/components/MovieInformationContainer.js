@@ -67,6 +67,7 @@ function MovieInformation({ currentMovie }) {
                   posterPath={movie.poster_path}
                   releaseDate={movie.release_date}
                   mediaType={movie.media_type}
+                  voteAverage={movie.vote_average}
                 />
               </div>
             );
