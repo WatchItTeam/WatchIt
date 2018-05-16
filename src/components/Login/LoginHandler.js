@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import UserLayout from "./UserLayout";
 import { errorToast } from "../../utils/toast";
 import "../../css/LoginHandler.scss";
-import { signIn, signOut, signUp } from "../UserState/UserUtils";
+import { signIn, signOut, signUp } from "../../Firebase/UserUtils";
 
 class LoginHandler extends Component {
   state = {

@@ -1,4 +1,4 @@
-import firebase from "../../Firebase/firebase";
+import firebase from "./firebase";
 
 export function signUp(email, password) {
   return firebase.auth().createUserWithEmailAndPassword(email, password);

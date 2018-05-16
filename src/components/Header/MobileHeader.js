@@ -5,7 +5,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Searchbar from "../Searchbar";
 import "../../css/Header.scss";
 import { SignedIn, SignedOut } from "../UserState/UserState";
-import { signOut } from "../UserState/UserUtils";
+import { signOut } from "../../Firebase/UserUtils";
 
 /**
  * The header for desktop, which includes search bar and user info
