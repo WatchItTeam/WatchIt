@@ -82,17 +82,13 @@ class MobileHeader extends Component {
         </button>
         <SignedIn>
           {() => ( // Shows signout-icon if user is signed in, login icon otherwise
-            <nav>
-              {
-                <button id="signin-mobile-btn">
-                  <FontAwesomeIcon icon="sign-out-alt" />
-                </button>
-                }
-            </nav>
+            <button id="signin-mobile-btn">
+              <FontAwesomeIcon icon="sign-out-alt" />
+            </button>
             )}
         </SignedIn>
         <SignedOut>
-          <button id="signin-mobile-btn">
+          <button id="signout-mobile-btn">
             <FontAwesomeIcon icon="user" />
           </button>
         </SignedOut>
