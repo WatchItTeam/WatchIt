@@ -5,6 +5,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Searchbar from "../Searchbar";
 import "../../css/Header.scss";
 import { SignedIn, SignedOut } from "../UserState/UserState";
+import { signOut } from "../UserState/UserUtils";
 
 /**
  * The header for desktop, which includes search bar and user info
@@ -82,13 +83,13 @@ class MobileHeader extends Component {
         </button>
         <SignedIn>
           {() => ( // Shows signout-icon if user is signed in, login icon otherwise
-            <button id="signin-mobile-btn">
+            <button id="signout-mobile-btn" onClick={signOut}>
               <FontAwesomeIcon icon="sign-out-alt" />
             </button>
             )}
         </SignedIn>
         <SignedOut>
-          <button id="signout-mobile-btn">
+          <button id="signin-mobile-btn">
             <FontAwesomeIcon icon="user" />
           </button>
         </SignedOut>
