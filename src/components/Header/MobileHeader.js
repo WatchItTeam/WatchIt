@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Searchbar from "../Searchbar";
 import "../../css/Header.scss";
+import { SignedIn, SignedOut } from "../UserState/UserState";
 
 /**
  * The header for desktop, which includes search bar and user info
@@ -79,6 +80,22 @@ class MobileHeader extends Component {
         <button id="header-search-btn" onClick={this.showSearch}>
           <FontAwesomeIcon icon="search" />
         </button>
+        <SignedIn>
+          {user => ( // Does not work if user is not defined
+            <nav>
+              {
+                <button id="signin-mobile-btn">
+                  <FontAwesomeIcon icon="sign-out-alt" />
+                </button>
+                }
+            </nav>
+            )}
+        </SignedIn>
+        <SignedOut>
+          <button id="signin-mobile-btn">
+            <FontAwesomeIcon icon="user" />
+          </button>
+        </SignedOut>
       </header>
     );
   }
