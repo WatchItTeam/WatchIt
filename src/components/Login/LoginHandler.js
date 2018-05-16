@@ -9,14 +9,7 @@ class LoginHandler extends Component {
   state = {
     email: "",
     password: "",
-    user: null,
   };
-
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged((user) => {
-      this.setState({ user });
-    });
-  }
 
   signUpClick = (event) => {
     event.preventDefault();
@@ -51,14 +44,13 @@ class LoginHandler extends Component {
   }
 
   render() {
-    const { user, email, password } = this.state;
+    const { email, password } = this.state;
     return (
       <UserLayout
         onSignOutClick={this.signOut}
         handleChange={this.handleChange}
         signInClick={this.signInClick}
         signUpClick={this.signUpClick}
-        user={user}
         email={email}
         password={password}
       />
