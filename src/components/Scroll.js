@@ -15,7 +15,11 @@ class Scroll extends Component {
 
   state = {
     width: 0,
+    hasScrolledToEnd: false,
+    hasScrolledToStart: true,
   };
+
+  scrollRef = React.createRef();
 
   componentDidMount() {
     this.updateWindowDimensions();
@@ -28,6 +32,19 @@ class Scroll extends Component {
 
   updateWindowDimensions = () => {
     this.setState({ width: window.innerWidth });
+  }
+
+  checkArrows = (elem) => {
+    const hasScrolledToEnd = (elem.scrollLeft >= elem.scrollWidth - elem.offsetWidth);
+    const hasScrolledToStart = (elem.scrollLeft <= 0);
+    this.setState({
+      hasScrolledToEnd,
+      hasScrolledToStart,
+    });
+  }
+
+  onScroll = (event) => {
+    this.checkArrows(event.target);
   }
 
   scrollRight = () => {
@@ -44,32 +61,33 @@ class Scroll extends Component {
     smoothScrollTo(elem, scrollLeft - scrollDistance, 400);
   }
 
-  scrollRef = React.createRef();
-
   render() {
+    const { hasScrolledToEnd, hasScrolledToStart } = this.state;
     // Fixed width of all postercard images such as cast and recommendations.
     const imageWidth = 170;
     // sidebar width is constant 250px.
     const sidebarWidth = 250;
-    if ((this.props.arrayLength * imageWidth) < (this.state.width - sidebarWidth)) {
-      return (
-        <div className="OuterDiv">
-          <div className="scrolling-wrapper-flexbox" ref={this.scrollRef}>
-            {this.props.children}
-          </div>
-        </div>
-      );
-    }
+
+    // is true if there are enough elements so that scroll is enabled
+    const isOverFlow = !(this.props.arrayLength * imageWidth) < (this.state.width - sidebarWidth);
+
+    // don't show arrows if scrolled to the end/beginning
+    const showLeftArrow = !hasScrolledToStart && isOverFlow;
+    const showRightArrow = !hasScrolledToEnd && isOverFlow;
+
+    // add the "hidden" class if the arrows shouldn't be visible
+    const leftArrowClasses = `leftbutton scroll-button ${!showLeftArrow ? "hidden" : ""}`;
+    const rightArrowClasses = `rightbutton scroll-button ${!showRightArrow ? "hidden" : ""}`;
 
     return (
       <div className="OuterDiv">
-        <button className="leftbutton scroll-button" onClick={this.scrollLeft}>
+        <button className={leftArrowClasses} onClick={this.scrollLeft}>
           <FontAwesomeIcon icon="angle-left" />
         </button>
-        <div className="scrolling-wrapper-flexbox" ref={this.scrollRef}>
+        <div className="scrolling-wrapper-flexbox" ref={this.scrollRef} onScroll={this.onScroll}>
           {this.props.children}
         </div>
-        <button className="rightbutton scroll-button" onClick={this.scrollRight}>
+        <button className={rightArrowClasses} onClick={this.scrollRight}>
           <FontAwesomeIcon icon="angle-right" />
         </button>
       </div>

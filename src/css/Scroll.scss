@@ -1,20 +1,29 @@
 @import "global";
+
 .leftbutton {
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:-30px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -10px;
 }
+
 .rightbutton {
-  position:absolute;
-  top:0;
-  bottom:0;
-  right:-30px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -10px;
 }
+
 .OuterDiv {
-  position:relative;
+  position: relative;
 }
+
 .scroll-button {
-    outline: none;
-    font-size: 40px;
+  outline: none;
+  font-size: 40px;
+  transition: opacity 300ms;
+
+  &.hidden {
+    opacity: 0;
+  }
 }
