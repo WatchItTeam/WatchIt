@@ -1,5 +1,7 @@
 .episodeItem {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   max-width: 100%;
   margin-bottom: 10px;
   padding: 0px 5px 0px 0px;
@@ -15,19 +17,28 @@
 }
 
 .episodeTitle {
-  padding: 15px 15px 15px 15px;
   font-size: 26px;
   margin-bottom: 10px;
+}
+
+.episodeTitleWrapper {
+  display: flex;
 }
 
 .episodeTextContent {
   font-size: 16px;
 }
 
+.episodeCheckbox {
+  padding: 0px 20px 0px 20px;
+  height: 100%;
+  font-size: 40px;
+}
+
 .episodePic {
   object-position: 50% 0;
   object-fit: cover;
-  max-width: 150%;
-  height: 100%;
+  max-width: 200px;
+  max-height: 100%;
   border-radius: 5px;
 }

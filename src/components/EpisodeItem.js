@@ -38,21 +38,23 @@ class EpisodeItem extends Component {
 
     return (
       <div className="episodeItem">
-        <ImageWithFallback
-          src={this.props.poster}
-          imgSize="original"
-          mediaType="tv"
-          alt={`Poster for ${this.props.name}`}
-          className="episodePic"
-        />
-        <div className="episodeTextBox">
-          <div className="episodeTitle">
-            {this.props.episodeNumber}
-            &nbsp;
-            {this.props.name}
-          </div>
-          <div id="episodeTextContent">
-            {this.props.description}
+        <div className="episodeTitleWrapper">
+          <ImageWithFallback
+            src={this.props.poster}
+            imgSize="original"
+            mediaType="tv"
+            alt={`Poster for ${this.props.name}`}
+            className="episodePic"
+          />
+          <div className="episodeTextBox">
+            <div className="episodeTitle">
+              {this.props.episodeNumber}
+              &nbsp;
+              {this.props.name}
+            </div>
+            <div className="episodeTextContent">
+              {this.props.description}
+            </div>
           </div>
         </div>
         {checkBox}

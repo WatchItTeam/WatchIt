@@ -22,7 +22,7 @@ class EpisodeMobileItem extends Component {
     if (this.state.watched) {
       checkBox = (
         <button
-          className="episodeCheckbox"
+          className="episodeMobileCheckbox"
           onClick={() => this.setState({ watched: this.props.removeEpisode(show) })}
         >
           <FontAwesomeIcon icon={CheckCircle} />
@@ -31,7 +31,7 @@ class EpisodeMobileItem extends Component {
     } else {
       checkBox = (
         <button
-          className="episodeCheckbox"
+          className="episodeMobileCheckbox"
           onClick={() => this.setState({ watched: this.props.addEpisode(show) })}
         >
           <FontAwesomeIcon icon={Circle} />
