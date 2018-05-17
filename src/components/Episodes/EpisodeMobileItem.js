@@ -6,17 +6,27 @@ import Circle from "@fortawesome/fontawesome-free-regular/faCircle";
 import "../../css/EpisodeMobileItem.scss";
 
 class EpisodeMobileItem extends Component {
-  state = {
-    isOpen: false,
-    watched: false,
+  static propTypes = {
+    addEpisode: PropTypes.func.isRequired,
+    removeEpisode: PropTypes.func.isRequired,
+    watched: PropTypes.bool.isRequired,
+    showId: PropTypes.string.isRequired,
+    episodeNumber: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
   }
 
-  toggle() {
+  state = {
+    isOpen: false,
+  }
+
+  toggle = () => {
     this.setState(state => ({ isOpen: !state.isOpen }));
   }
 
   render() {
     const { toggle } = this;
+    const { addEpisode, removeEpisode, watched, name, episodeNumber, description } = this.props;
 
     let mobileItem;
     let checkBox;
@@ -25,11 +35,11 @@ class EpisodeMobileItem extends Component {
       episodeNumber: this.props.episodeNumber,
     };
 
-    if (this.state.watched) {
+    if (watched) {
       checkBox = (
         <button
           className="episodeMobileCheckbox"
-          onClick={() => this.setState({ watched: this.props.removeEpisode(show) })}
+          onClick={() => removeEpisode(show)}
         >
           <FontAwesomeIcon icon={CheckCircle} />
         </button>
@@ -38,7 +48,7 @@ class EpisodeMobileItem extends Component {
       checkBox = (
         <button
           className="episodeMobileCheckbox"
-          onClick={() => this.setState({ watched: this.props.addEpisode(show) })}
+          onClick={() => addEpisode(show)}
         >
           <FontAwesomeIcon icon={Circle} />
         </button>
@@ -50,14 +60,14 @@ class EpisodeMobileItem extends Component {
         <div className="expandedItemBox">
           <div className="expandedTitleBar">
             <div className="episodeNumber">
-              {this.props.episodeNumber}
+              {episodeNumber}
             </div>
             <div className="episodeTitleBox">
-              {this.props.name}
+              {name}
             </div>
           </div>
           <div className="expandedDescriptionBox">
-            {this.props.description}
+            {description}
           </div>
           <button className="expandBoxButton" onClick={toggle} />
         </div>
@@ -67,11 +77,11 @@ class EpisodeMobileItem extends Component {
         <div className="episodeMobileItem">
           <div>
             <div className="episodeNumber">
-              {this.props.episodeNumber}
+              {episodeNumber}
             </div>
           </div>
           <div className="episodeMobileTitle">
-            {this.props.name}
+            {name}
           </div>
           <button className="expandBoxButton" onClick={toggle} />
           {checkBox}
@@ -86,14 +96,5 @@ class EpisodeMobileItem extends Component {
     );
   }
 }
-
-EpisodeMobileItem.propTypes = {
-  addEpisode: PropTypes.func.isRequired,
-  removeEpisode: PropTypes.func.isRequired,
-  showId: PropTypes.string.isRequired,
-  episodeNumber: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-};
 
 export default EpisodeMobileItem;

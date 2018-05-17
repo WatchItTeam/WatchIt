@@ -7,6 +7,7 @@ import Season from "./Season";
 function EpisodePage({
   title,
   episodes,
+  watchedEpisodes,
   seasonNumber,
   isLoading,
   addEpisode,
@@ -30,6 +31,7 @@ function EpisodePage({
       </Link>
       <Season
         episodes={episodes}
+        watchedEpisodes={watchedEpisodes}
         seasonNumber={seasonNumber}
         addEpisode={addEpisode}
         removeEpisode={removeEpisode}
@@ -42,6 +44,7 @@ function EpisodePage({
 EpisodePage.propTypes = {
   title: PropTypes.string.isRequired,
   episodes: PropTypes.array.isRequired,
+  watchedEpisodes: PropTypes.object.isRequired,
   seasonNumber: PropTypes.number.isRequired,
   isLoading: PropTypes.bool.isRequired,
   addEpisode: PropTypes.func.isRequired,

@@ -75,7 +75,7 @@ export function addToList(movie, watchStatus) {
     release_date,
     release_year,
     vote_average,
-  });
+  }, { merge: true });
 }
 
 export function updateWatchStatus(movie, watchStatus) {
@@ -144,6 +144,16 @@ export function setEpisodeStatus(showId, episodeNumber, hasWatched) {
   }, { merge: true });
 }
 
+/**
+ * Subscribe to changes to a show for a user
+ *
+ * Usage:
+ *
+ * onShowSnapshot(userId, showId, (doc) => {
+ *   // this is called on first use, and each time
+ *   // the episode data changes in firebase
+ * })
+ */
 export function onShowSnapshot(userId, showId, callback) {
   return db.doc(`users/${userId}/list/${showId}`).onSnapshot(callback);
 }
