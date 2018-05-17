@@ -13,6 +13,7 @@ function EpisodePage({
   addEpisode,
   removeEpisode,
   showId,
+  setSeason,
 }) {
   if (isLoading) {
     return (
@@ -36,6 +37,7 @@ function EpisodePage({
         addEpisode={addEpisode}
         removeEpisode={removeEpisode}
         showId={showId}
+        setSeason={setSeason}
       />
     </section>
   );
@@ -50,6 +52,7 @@ EpisodePage.propTypes = {
   addEpisode: PropTypes.func.isRequired,
   removeEpisode: PropTypes.func.isRequired,
   showId: PropTypes.string.isRequired,
+  setSeason: PropTypes.func.isRequired,
 };
 
 export default EpisodePage;

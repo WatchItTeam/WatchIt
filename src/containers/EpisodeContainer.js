@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import EpisodePage from "../components/Episodes/EpisodePage";
 import { getSeasonFromId, getTVInfo, normalizeMovie } from "../api/APIUtils";
-import { setEpisodeStatus, onShowSnapshot, addToList, watchStates } from "../Firebase/lists";
 import { successToast, errorToast } from "../utils/toast";
 import firebase from "../Firebase/firebase";
 import parseName from "../utils/parseName";
+import {
+  setEpisodeStatus, onShowSnapshot, addToList, watchStates, setSeasonStatus,
+} from "../Firebase/lists";
 
 class EpisodeContainer extends Component {
   static propTypes = {
@@ -61,7 +63,7 @@ class EpisodeContainer extends Component {
       if (!data) return;
 
       this.setState({
-        watchedEpisodes: data.episodes_watched,
+        watchedEpisodes: data.episodes_watched || {},
         statusOfCurrentMovie: data.watch_status,
       });
     });
@@ -92,6 +94,11 @@ class EpisodeContainer extends Component {
     setEpisodeStatus(id, episodeNumber, false);
   }
 
+  setSeason = (seasonNumber, hasWatched) => {
+    const { episodes, currentShow } = this.state;
+    setSeasonStatus(currentShow.id, seasonNumber, episodes.length, hasWatched);
+  }
+
   render() {
     return (
       <EpisodePage
@@ -103,6 +110,7 @@ class EpisodeContainer extends Component {
         isLoading={this.state.isLoading}
         addEpisode={this.addEpisode}
         removeEpisode={this.removeEpisode}
+        setSeason={this.setSeason}
       />
     );
   }

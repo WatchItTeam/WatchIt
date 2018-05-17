@@ -145,6 +145,23 @@ export function setEpisodeStatus(showId, episodeNumber, hasWatched) {
 }
 
 /**
+ * Sets a whole season of a show as watched.
+ */
+export function setSeasonStatus(showId, seasonNumber, seasonLength, hasWatched) {
+  const user = getUserID();
+  if (!user) throw new Error("User is not logged in");
+
+  const episodesWatched = {};
+  const episodeOffset = seasonLength * (seasonNumber - 1);
+  for (let i = 1; i <= seasonLength; i++) {
+    episodesWatched[episodeOffset + i] = hasWatched;
+  }
+  return db.doc(`users/${user}/list/${showId}`).set({
+    episodes_watched: episodesWatched,
+  }, { merge: true });
+}
+
+/**
  * Subscribe to changes to a show for a user
  *
  * Usage:
