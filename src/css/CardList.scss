@@ -70,4 +70,10 @@
       .media-type { grid-area: icon; justify-self: end; }
     }
   }
+  .buttonWrapper {        
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
 }

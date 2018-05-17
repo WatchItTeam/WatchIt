@@ -5,9 +5,10 @@ import moment from "moment-mini";
 import { Link } from "react-router-dom";
 import { getFullImgPath } from "../../api/APIUtils";
 import ListDeleteBtn from "./ListDeleteBtn";
+import ListMoveBtn from "./ListMoveBtn";
 import "../../css/CardList.scss";
 
-function CardList({ entries, isEditMode, deleteEntry }) {
+function CardList({ entries, isEditMode, deleteEntry, onMove }) {
   return (
     <div className="card-list">
       <ul>
@@ -16,8 +17,8 @@ function CardList({ entries, isEditMode, deleteEntry }) {
             const icon = (movie.media_type === "movie") ? "film" : "tv";
             const url = `/${movie.media_type}/${movie.id}`;
             return (
-              <div className="card-list-item-wrapper">
-                <li key={movie.id} className="card-list-item">
+              <div key={movie.id} className="card-list-item-wrapper">
+                <li className="card-list-item">
                   <Link className="poster" to={url}>
                     <img
                       src={getFullImgPath(movie.poster_path, "w185")}
@@ -41,7 +42,10 @@ function CardList({ entries, isEditMode, deleteEntry }) {
                     </div>
                   </div>
                 </li>
-                {isEditMode && <ListDeleteBtn onClick={() => deleteEntry(movie.id)} />}
+                <div className="buttonWrapper">
+                  {isEditMode && <ListMoveBtn onClick={() => onMove(movie)} />}
+                  {isEditMode && <ListDeleteBtn onClick={() => deleteEntry(movie)} />}
+                </div>
               </div>
             );
           })
@@ -55,6 +59,7 @@ CardList.propTypes = {
   entries: PropTypes.array.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   deleteEntry: PropTypes.func.isRequired,
+  onMove: PropTypes.func.isRequired,
 };
 
 export default CardList;

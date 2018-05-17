@@ -1,3 +1,5 @@
+@import "global";
+
 .watch-list-table {
   width: 100%;
   overflow-x: scroll;
@@ -7,6 +9,8 @@
     border-bottom: 2px solid #EDEDED;
 
     .delete-text { color: red; }
+    .move-text { color: #3498db; }
+    
   }
 
   th {
