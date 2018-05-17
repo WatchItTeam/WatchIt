@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { Desktop, Mobile } from "../Responsive";
 import EpisodeItem from "./EpisodeItem";
@@ -9,7 +9,7 @@ function Season({ episodes, seasonNumber, addEpisode, removeEpisode, showId }) {
     <div>
       <h2>{`Season ${seasonNumber}`}</h2>
       {episodes.map(episode => (
-        <div key={episode.id}>
+        <Fragment key={episode.id}>
           <Mobile>
             <EpisodeMobileItem
               episodeNumber={episode.episode_number}
@@ -33,7 +33,7 @@ function Season({ episodes, seasonNumber, addEpisode, removeEpisode, showId }) {
               showId={showId}
             />
           </Desktop>
-        </div>
+        </Fragment>
       ))}
     </div>
   );

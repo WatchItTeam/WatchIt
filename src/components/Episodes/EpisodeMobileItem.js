@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import CheckCircle from "@fortawesome/fontawesome-free-regular/faCheckCircle";
+import CheckCircle from "@fortawesome/fontawesome-free-solid/faCheckCircle";
 import Circle from "@fortawesome/fontawesome-free-regular/faCircle";
 import "../../css/EpisodeMobileItem.scss";
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import CheckCircle from "@fortawesome/fontawesome-free-regular/faCheckCircle";
+import CheckCircle from "@fortawesome/fontawesome-free-solid/faCheckCircle";
 import Circle from "@fortawesome/fontawesome-free-regular/faCircle";
 import ImageWithFallback from "../ImageWithFallback";
 import "../../css/EpisodeItem.scss";
@@ -38,7 +38,7 @@ class EpisodeItem extends Component {
 
     return (
       <div className="episodeItem">
-        <div className="episodeTitleWrapper">
+        <div className="image-wrapper">
           <ImageWithFallback
             src={this.props.poster}
             imgSize="original"
@@ -46,15 +46,15 @@ class EpisodeItem extends Component {
             alt={`Poster for ${this.props.name}`}
             className="episodePic"
           />
-          <div className="episodeTextBox">
-            <div className="episodeTitle">
-              {this.props.episodeNumber}
-              &nbsp;
-              {this.props.name}
-            </div>
-            <div className="episodeTextContent">
-              {this.props.description}
-            </div>
+        </div>
+        <div className="episodeTextBox">
+          <h1 className="episodeTitle">
+            {this.props.episodeNumber}
+            &nbsp;
+            {this.props.name}
+          </h1>
+          <div className="episodeTextContent">
+            {this.props.description}
           </div>
         </div>
         {checkBox}
