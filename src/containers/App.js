@@ -17,6 +17,7 @@ import DetailspageContainer from "./DetailspageContainer";
 import UserList from "../containers/UserList";
 import BrowseMoviesContainer from "./BrowseMoviesContainer";
 import BrowseTvContainer from "./BrowseTvContainer";
+import EpisodeContainer from "./EpisodeContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import NotFoundPage from "../components/404";
 import "../css/App.scss";
@@ -183,6 +184,13 @@ class App extends Component {
                     currentMovie={currentMovie}
                     setCurrentMovie={this.setCurrentMovie}
                   />)}
+              />
+              <Route
+                exact
+                path="/tv/:id/episodes"
+                render={props => (
+                  <EpisodeContainer {...props} currentMovie={currentMovie} />
+                )}
               />
               <Route
                 path="/search"

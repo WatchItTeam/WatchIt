@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import moment from "moment-mini";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import minutesToHours from "../utils/minutesToHours";
+import SecondaryButton from "./SecondaryButton";
 import AddToListBtn from "../containers/AddToListBtn";
 import ImageWithFallback from "./ImageWithFallback";
 import "../css/DetailsTitle.scss";
@@ -27,6 +28,7 @@ function DetailsTitle({ movie }) {
     episode_run_time: episodeRunTime,
     number_of_episodes: numberOfEpisodes,
     number_of_seasons: numberOfSeasons,
+    id,
   } = movie;
 
   let infoLine;
@@ -66,6 +68,27 @@ function DetailsTitle({ movie }) {
     );
   }
 
+  let buttons;
+
+  if (isMovie) {
+    buttons = (
+      <div>
+        <AddToListBtn currentMovie={movie} />
+        &nbsp;&nbsp;
+      </div>
+    );
+  } else {
+    buttons = (
+      <div>
+        <AddToListBtn currentMovie={movie} />
+        &nbsp;&nbsp;
+        <SecondaryButton to={`${id}/episodes`}>Episodes</SecondaryButton>
+        &nbsp;&nbsp;
+      </div>
+    );
+  }
+
+
   const displayName = title || name;
   const displayDate = releaseDate || firstAirDate;
 
@@ -79,16 +102,18 @@ function DetailsTitle({ movie }) {
         mediaType={isMovie ? "movie" : "tv"}
       />
       <div className="text">
-        <h1 className="title">{`${displayName} (${moment(displayDate).format("YYYY")})`}</h1>
+        <h1 className="title">
+          {`${displayName} (${moment(displayDate).format("YYYY")})`}
+          &nbsp;
+          <span className="rating">
+            <span className="star-icon"><FontAwesomeIcon icon="star" /></span> {rating}
+          </span>
+        </h1>
         <div className="info">
           {infoLine}
         </div>
         <div className="bottom">
-          <AddToListBtn currentMovie={movie} />
-          &nbsp;&nbsp;
-          <span className="rating">
-            <span className="star-icon"><FontAwesomeIcon icon="star" /></span> {rating}
-          </span>
+          {buttons}
         </div>
       </div>
     </div>
