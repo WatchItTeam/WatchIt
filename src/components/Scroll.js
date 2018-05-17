@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import smoothScrollTo from "../utils/smoothScroll";
 import "../css/Scroll.scss";
 
 /**
- * This component makes the browser scroll to the top of the page when the route changes
- * Taken from https://reacttraining.com/react-router/web/guides/scroll-restoration
+ * Component for a horizontal scrolling list
  */
 class Scroll extends Component {
   static propTypes = {
@@ -31,13 +31,17 @@ class Scroll extends Component {
   }
 
   scrollRight = () => {
-    const containerWidth = this.scrollRef.current.offsetWidth;
-    this.scrollRef.current.scrollLeft += containerWidth;
+    const elem = this.scrollRef.current;
+    const { offsetWidth, scrollLeft } = elem;
+    const scrollDistance = offsetWidth * 0.66;
+    smoothScrollTo(elem, scrollLeft + scrollDistance, 400);
   }
 
   scrollLeft = () => {
-    const containerWidth = this.scrollRef.current.offsetWidth;
-    this.scrollRef.current.scrollLeft -= containerWidth;
+    const elem = this.scrollRef.current;
+    const { offsetWidth, scrollLeft } = elem;
+    const scrollDistance = offsetWidth * 0.66;
+    smoothScrollTo(elem, scrollLeft - scrollDistance, 400);
   }
 
   scrollRef = React.createRef();
@@ -59,11 +63,15 @@ class Scroll extends Component {
 
     return (
       <div className="OuterDiv">
-        <button className="leftbutton scroll-button" onClick={this.scrollLeft}><FontAwesomeIcon icon="angle-left" /></button>
+        <button className="leftbutton scroll-button" onClick={this.scrollLeft}>
+          <FontAwesomeIcon icon="angle-left" />
+        </button>
         <div className="scrolling-wrapper-flexbox" ref={this.scrollRef}>
           {this.props.children}
         </div>
-        <button className="rightbutton scroll-button" onClick={this.scrollRight}><FontAwesomeIcon icon="angle-right" /></button>
+        <button className="rightbutton scroll-button" onClick={this.scrollRight}>
+          <FontAwesomeIcon icon="angle-right" />
+        </button>
       </div>
     );
   }
