@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Desktop, Mobile } from "./Responsive";
+import { Desktop, Mobile } from "../Responsive";
 import EpisodeItem from "./EpisodeItem";
 import EpisodeMobileItem from "./EpisodeMobileItem";
 

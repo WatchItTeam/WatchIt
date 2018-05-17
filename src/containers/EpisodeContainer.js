@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import EpisodePage from "../components/EpisodePage";
+import EpisodePage from "../components/Episodes/EpisodePage";
 import { getSeasonFromId, getTVInfo } from "../api/APIUtils";
 
 class EpisodeContainer extends Component {

@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import CheckCircle from "@fortawesome/fontawesome-free-regular/faCheckCircle";
 import Circle from "@fortawesome/fontawesome-free-regular/faCircle";
-import ImageWithFallback from "./ImageWithFallback";
-import "../css/EpisodeItem.scss";
+import ImageWithFallback from "../ImageWithFallback";
+import "../../css/EpisodeItem.scss";
 
 class EpisodeItem extends Component {
   state = { watched: false };
@@ -32,7 +32,7 @@ class EpisodeItem extends Component {
           onClick={() => this.setState({ watched: this.props.addEpisode(show) })}
         >
           <FontAwesomeIcon icon={Circle} />
-        </button >
+        </button>
       );
     }
 
