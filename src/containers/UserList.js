@@ -1,9 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import ResponsiveList from "../components/WatchList/ResponsiveList";
 import parseName from "../utils/parseName";
 import ErrorMessage from "../components/ErrorMessage";
-import { fetchAllFromList, removeFromList, sortBy } from "../Firebase/lists";
+import ListPickerModal from "./ListPickerModal";
+import { successToast, errorToast, infoToast } from "../utils/toast";
+import { normalizeMovie } from "../api/APIUtils";
+import { fetchAllFromList, removeFromList, sortBy, updateWatchStatus } from "../Firebase/lists";
 
 class UserList extends Component {
   static propTypes = {
@@ -24,6 +27,8 @@ class UserList extends Component {
     listDisplayName: "",
     isEditMode: false,
     listEntries: [],
+    modalIsOpen: false,
+    currentMovie: null,
   }
 
   componentDidMount() {
@@ -56,14 +61,41 @@ class UserList extends Component {
     });
   }
 
-  deleteEntry = (id) => {
-    removeFromList(id)
+  deleteEntry = (movie) => {
+    removeFromList(movie.id)
       .then(() => {
-        const newList = this.state.listEntries.filter(item => item.id !== id);
+        successToast(`Successfuly removed ${movie.title}`);
+        const newList = this.state.listEntries.filter(item => item.id !== movie.id);
         this.setState({ listEntries: newList });
       }).catch(() => {
         this.setState({ error: true });
       });
+  }
+
+  showModal = (currentMovie) => {
+    this.setState({ modalIsOpen: true, currentMovie });
+  }
+
+  hideModal = () => {
+    this.setState({ modalIsOpen: false });
+  }
+
+  /**
+   * Adds the current movie to the list that the user selects
+   * from the ListPickerModal
+   */
+  onModalSubmit = async (selectedList) => {
+    this.setState({ isLoading: true });
+
+    const { currentMovie } = this.state;
+    const movie = normalizeMovie(currentMovie);
+    try {
+      updateWatchStatus(movie, selectedList);
+      infoToast(`${movie.title} moved to ${parseName(selectedList)}`);
+    } catch (error) {
+      errorToast(`Something went wrong when adding ${movie.title}`);
+    }
+    this.setState({ isLoading: false });
   }
 
   render() {
@@ -86,16 +118,25 @@ class UserList extends Component {
     };
 
     return (
-      <ResponsiveList
-        isLoading={isLoading}
-        listDisplayName={listDisplayName}
-        tabLinks={tabLinks}
-        entries={listEntries}
-        toggleEditMode={this.toggleEditMode}
-        deleteEntry={this.deleteEntry}
-        isEditMode={isEditMode}
-        listUserId={userId}
-      />
+      <Fragment>
+        <ResponsiveList
+          isLoading={isLoading}
+          listDisplayName={listDisplayName}
+          tabLinks={tabLinks}
+          entries={listEntries}
+          toggleEditMode={this.toggleEditMode}
+          deleteEntry={this.deleteEntry}
+          isEditMode={isEditMode}
+          listUserId={userId}
+          onMove={this.showModal}
+        />
+        <ListPickerModal
+          isOpen={this.state.modalIsOpen}
+          hideFunc={this.hideModal}
+          onSubmit={this.onModalSubmit}
+          statusOfCurrent={listName}
+        />
+      </Fragment>
     );
   }
 }

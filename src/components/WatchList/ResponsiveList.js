@@ -11,6 +11,7 @@ import "../../css/ResponsiveList.scss";
 function ResponsiveList({
   isLoading, listDisplayName, tabLinks, entries,
   toggleEditMode, deleteEntry, isEditMode, listUserId,
+  onMove,
 }) {
   let lists;
   if (isLoading) {
@@ -21,10 +22,20 @@ function ResponsiveList({
     lists = (
       <div>
         <Desktop>
-          <TableList entries={entries} isEditMode={isEditMode} deleteEntry={deleteEntry} />
+          <TableList
+            entries={entries}
+            isEditMode={isEditMode}
+            deleteEntry={deleteEntry}
+            onMove={onMove}
+          />
         </Desktop>
         <Mobile>
-          <CardList entries={entries} isEditMode={isEditMode} deleteEntry={deleteEntry} />
+          <CardList
+            entries={entries}
+            isEditMode={isEditMode}
+            deleteEntry={deleteEntry}
+            onMove={onMove}
+          />
         </Mobile>
       </div>
     );
@@ -66,6 +77,7 @@ ResponsiveList.propTypes = {
   deleteEntry: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   listUserId: PropTypes.string.isRequired,
+  onMove: PropTypes.func.isRequired,
 };
 
 export default ResponsiveList;
