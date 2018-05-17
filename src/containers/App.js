@@ -18,6 +18,7 @@ import UserList from "../containers/UserList";
 import BrowseMoviesContainer from "./BrowseMoviesContainer";
 import BrowseTvContainer from "./BrowseTvContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
+import NewPassword from "../components/NewPassword";
 import NotFoundPage from "../components/404";
 import "../css/App.scss";
 
@@ -197,6 +198,13 @@ class App extends Component {
               <Route
                 path={`/user/:userId/:listName(${listNames})/:mediaType(all|movie|tv)`}
                 component={UserList}
+              />
+              <Route
+                exact
+                path="/forgot_password"
+                render={() => (
+                  <NewPassword />
+                )}
               />
               <Route component={NotFoundPage} />
             </Switch>
