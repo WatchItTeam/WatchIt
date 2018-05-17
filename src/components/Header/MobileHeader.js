@@ -1,9 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Searchbar from "../Searchbar";
 import "../../css/Header.scss";
+import { SignedIn, SignedOut } from "../UserState/UserState";
+import { signOut } from "../../Firebase/UserUtils";
+import Modal from "../Modal";
+import LoginHandler from "../Login/LoginHandler";
 
 /**
  * The header for desktop, which includes search bar and user info
@@ -12,9 +16,7 @@ import "../../css/Header.scss";
  */
 class MobileHeader extends Component {
   static propTypes = {
-    username: PropTypes.string.isRequired,
     toggleSidebar: PropTypes.func.isRequired,
-    onSignOutClick: PropTypes.func.isRequired,
     searchbarValue: PropTypes.string.isRequired,
     searchHandler: PropTypes.func.isRequired,
     setSearchbarValue: PropTypes.func.isRequired,
@@ -30,7 +32,17 @@ class MobileHeader extends Component {
     return { location: props.location };
   }
 
-  state = { searchIsVisible: false };
+  state = {
+    searchIsVisible: false,
+    modalIsVisible: false,
+  }
+
+  componentDidUpdate() {
+    if (this.state.searchIsVisible) {
+      // if the searchbar becomes visible, focus on the input
+      this.searchbarRef.current.inputRef.current.focus();
+    }
+  }
 
   searchbarRef = React.createRef();
 
@@ -42,16 +54,17 @@ class MobileHeader extends Component {
     this.setState({ searchIsVisible: false });
   }
 
-  componentDidUpdate() {
-    if (this.state.searchIsVisible) {
-      // if the searchbar becomes visible, focus on the input
-      this.searchbarRef.current.inputRef.current.focus();
-    }
+  showModal = () => {
+    this.setState({ modalIsVisible: true });
+  }
+
+  hideModal = () => {
+    this.setState({ modalIsVisible: false });
   }
 
   render() {
     const {
-      username, onSignOutClick, toggleSidebar, setSearchbarValue, searchbarValue, searchHandler,
+      toggleSidebar, setSearchbarValue, searchbarValue, searchHandler,
     } = this.props;
 
     if (this.state.searchIsVisible) {
@@ -81,6 +94,23 @@ class MobileHeader extends Component {
         <button id="header-search-btn" onClick={this.showSearch}>
           <FontAwesomeIcon icon="search" />
         </button>
+        <SignedIn>
+          {() => ( // Shows signout-icon if user is signed in, login icon otherwise
+            <button id="signout-mobile-btn" onClick={signOut}>
+              <FontAwesomeIcon icon="sign-out-alt" />
+            </button>
+            )}
+        </SignedIn>
+        <SignedOut>
+          <Fragment>
+            <button id="signin-mobile-btn" onClick={this.showModal}>
+              <FontAwesomeIcon icon="user" />
+            </button>
+            <Modal className="loginModal" isOpen={this.state.modalIsVisible} hideFunc={this.hideModal}>
+              <LoginHandler />
+            </Modal>
+          </Fragment>
+        </SignedOut>
       </header>
     );
   }

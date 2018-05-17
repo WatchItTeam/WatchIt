@@ -29,19 +29,19 @@
     .user-img {
       height: 40px;
       width: 40px;
-      background: gray;
       border-radius: 50%;
+      overflow: hidden; // needed so the avatar (which is square) is within the round div
     }
   }
 }
 
 #app-header-mobile {
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto auto;
   grid-gap: 15px;
   padding: 10px 15px;
   height: 65px;
 
-  button {
+  & > button {
     font-size: 20px;
     width: 35px;
     text-align: center;
@@ -51,8 +51,12 @@
   #header-title {
     text-align: center;
     font-weight: 800;
-    padding: 6px 0;
+    padding: 6px 0 6px 50px;
   }
+}
+
+.loginModal {
+  color: $text-color;
 }
 
 .header-wrapper {

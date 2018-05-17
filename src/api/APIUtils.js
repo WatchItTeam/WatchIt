@@ -36,13 +36,34 @@ export function normalizeMovie(movie) {
   /* eslint-disable camelcase */
   if (movie.isNormalized) return movie;
 
-  const { title, name, release_date, first_air_date } = movie;
-  const mediaType = title ? "movie" : "tv";
+  const {
+    title,
+    name,
+    release_date,
+    first_air_date,
+    media_type,
+    poster_path,
+    profile_path,
+  } = movie;
+
+  let determinedMediaType;
+  if (media_type) {
+    // if the media_type property already exists, no need to
+    // manually determine the media type
+    determinedMediaType = media_type;
+  } else {
+    // only movies have the "title" property
+    // tv and persons have "name" instead
+    determinedMediaType = title ? "movie" : "tv";
+  }
+
   const releaseDate = release_date || first_air_date;
+
   return {
     ...movie,
     title: title || name,
-    media_type: mediaType,
+    media_type: determinedMediaType,
+    poster_path: poster_path || profile_path,
     release_date: releaseDate,
     release_year: releaseDate ? getYearFromDate(releaseDate) : "",
     isNormalized: true,
@@ -101,46 +122,40 @@ export function getShowGenres() {
     .then(json => json.genres);
 }
 
-export function getGenreMovies(genre) {
-  const genreMovieUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
+export function getGenreMovies(genre, page = 1) {
+  const genreMovieUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genre}`;
   return fetch(genreMovieUrl)
-    .then(checkResponse)
-    .then(json => json.results);
+    .then(checkResponse);
 }
 
-export function getGenreShows(genre) {
-  const genreMovieUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=1&with_genres=${genre}`;
+export function getGenreShows(genre, page = 1) {
+  const genreMovieUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=${page}&with_genres=${genre}`;
   return fetch(genreMovieUrl)
-    .then(checkResponse)
-    .then(json => json.results);
+    .then(checkResponse);
 }
 
-export function getMoviesFromType(type) {
-  const moviesUrl = `${baseUrl}/movie/${type}?api_key=${API_KEY}&language=en-US&page=1`;
+export function getMoviesFromType(type, page = 1) {
+  const moviesUrl = `${baseUrl}/movie/${type}?api_key=${API_KEY}&language=en-US&page=${page}`;
   return fetch(moviesUrl)
-    .then(checkResponse)
-    .then(json => json.results);
+    .then(checkResponse);
 }
 
-export function getShowsFromType(type) {
-  const moviesUrl = `${baseUrl}/tv/${type}?api_key=${API_KEY}&language=en-US&page=1`;
+export function getShowsFromType(type, page = 1) {
+  const moviesUrl = `${baseUrl}/tv/${type}?api_key=${API_KEY}&language=en-US&page=${page}`;
   return fetch(moviesUrl)
-    .then(checkResponse)
-    .then(json => json.results);
+    .then(checkResponse);
 }
 
-export function getMoviesFromYear(year) {
-  const moviesUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=1&primary_release_year=${year}`;
+export function getMoviesFromYear(year, page = 1) {
+  const moviesUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}&primary_release_year=${year}`;
   return fetch(moviesUrl)
-    .then(checkResponse)
-    .then(json => json.results);
+    .then(checkResponse);
 }
 
-export function getShowsFromYear(year) {
-  const moviesUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&sort_by=popularity.desc&page=1&first_air_date_year=${year}`;
+export function getShowsFromYear(year, page = 1) {
+  const moviesUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}&first_air_date_year=${year}`;
   return fetch(moviesUrl)
-    .then(checkResponse)
-    .then(json => json.results);
+    .then(checkResponse);
 }
 
 export function getSeasonFromId(id, season) {

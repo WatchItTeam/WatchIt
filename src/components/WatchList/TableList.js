@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { getFullImgPath, normalizeMovie } from "../../api/APIUtils";
+import moment from "moment-mini";
 import ListDeleteBtn from "./ListDeleteBtn";
+import PosterCard from "../PosterCard";
 import "../../css/TableList.scss";
 
 function TableList({ entries, isEditMode, deleteEntry }) {
@@ -12,7 +12,7 @@ function TableList({ entries, isEditMode, deleteEntry }) {
         <tr>
           <th>Name</th>
           <th>Type</th>
-          <th>My Rating</th>
+          <th>Rating</th>
           <th>Progress</th>
           <th>Added</th>
           {isEditMode && <th className="delete-text">Delete</th>}
@@ -20,28 +20,28 @@ function TableList({ entries, isEditMode, deleteEntry }) {
       </thead>
       <tbody>
         {
-          entries.map((mov) => {
-            const movie = normalizeMovie(mov);
-            return (
-              <tr key={movie.id}>
-                <td className="poster-name">
-                  <Link to={`/${movie.media_type}/${movie.id}`}>
-                    <img
-                      src={getFullImgPath(movie.poster_path, "w92")}
-                      className="poster"
-                      alt=""
-                    />
-                    {movie.title} ({movie.release_year})
-                  </Link>
-                </td>
-                <td>{movie.media_type}</td>
-                <td>{movie.my_rating}</td>
-                <td>{movie.progress}</td>
-                <td>{movie.added}</td>
-                {isEditMode && <td><ListDeleteBtn onClick={() => deleteEntry(movie.id)} /></td>}
-              </tr>
-            );
-          })
+          entries.map(movie => (
+            <tr key={movie.id}>
+              <td className="poster-name">
+                <PosterCard
+                  className="poster"
+                  key={movie.id}
+                  id={movie.id}
+                  linkTo={`/${(movie.media_type)}/${movie.id}`}
+                  title={movie.title}
+                  posterPath={movie.poster_path}
+                  releaseDate={movie.release_date}
+                  mediaType={movie.media_type}
+                  voteAverage={movie.vote_average}
+                />
+              </td>
+              <td>{movie.media_type}</td>
+              <td>{movie.vote_average || "-"}</td>
+              <td>{movie.progress || "-"}</td>
+              <td>{moment(movie.added.toDate()).fromNow()}</td>
+              {isEditMode && <td><ListDeleteBtn onClick={() => deleteEntry(movie.id)} /></td>}
+            </tr>
+          ))
         }
       </tbody>
     </table>

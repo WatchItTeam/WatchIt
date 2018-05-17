@@ -1,7 +1,7 @@
+@import "global";
 
-#signupButton{
+.signupButton{
         text-decoration: underline;
-        
  }
 .loginBars{
     display: grid;
@@ -9,6 +9,22 @@
     grid-template-rows: 30px;
     grid-gap: 5px;
 }
-#signupButton:hover{
+.signupButton:hover{
     opacity:0.6;
+}
+
+.login-btn-mobile{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.loginBarsMobile{
+    #emailBar, #passBar{
+        width:100%;
+    }
+}
+
+.signup-btn-mobile{
+    text-align: center;
 }

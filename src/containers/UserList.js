@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ResponsiveList from "../components/WatchList/ResponsiveList";
 import parseName from "../utils/parseName";
 import ErrorMessage from "../components/ErrorMessage";
+import { fetchAllFromList, removeFromList, sortBy } from "../Firebase/lists";
 
 class UserList extends Component {
   static propTypes = {
@@ -18,32 +19,11 @@ class UserList extends Component {
   }
 
   state = {
-    errorMsg: "",
+    error: false,
+    isLoading: false,
     listDisplayName: "",
     isEditMode: false,
-    listEntries: [
-      // placeholder data
-      {
-        id: "284054",
-        title: "Black Panther",
-        release_date: "2018-02-13",
-        poster_path: "/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
-        media_type: "movie",
-        my_rating: "10",
-        progress: "completed",
-        added: "a minute ago",
-      },
-      {
-        id: "300668",
-        title: "Annihilation",
-        release_date: "2018-02-22",
-        poster_path: "/d3qcpfNwbAMCNqWDHzPQsUYiUgS.jpg",
-        media_type: "movie",
-        my_rating: "10",
-        progress: "completed",
-        added: "a minute ago",
-      },
-    ],
+    listEntries: [],
   }
 
   componentDidMount() {
@@ -56,30 +36,18 @@ class UserList extends Component {
     }
   }
 
-  // TODO: fetch list items from firebase
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   async fetchList() {
+    this.setState({ isLoading: true });
     const { userId, listName, mediaType } = this.props.match.params;
-    console.log(`Fetching ${mediaType} from ${listName} by ${userId}`);
-    /*
-    something like this:
-
-    try {
-      const listEntries = await getListFromFirebase(userId, listName, mediaType);
-      this.setState({ listEntries, errorMsg: null });
-    } catch(error) {
-      this.setState({ errorMsg: error });
-    }
-
-    or
-
-    await getListFromFirebase(userId, listName, mediaType)
-      then((listEntries) => {
-        this.setState({ listEntries, errorMsg: null });
-      })
-      .catch((error) => {
-        this.setState({ errorMsg: error });
-      })
-    */
+    this.unsubscribe = await fetchAllFromList(userId, listName, mediaType, (snapshot) => {
+      const entries = snapshot.docs.map(doc => doc.data());
+      const sorted = sortBy(entries, "title");
+      this.setState({ listEntries: sorted, isLoading: false });
+    });
   }
 
   toggleEditMode = () => {
@@ -88,33 +56,45 @@ class UserList extends Component {
     });
   }
 
-  // TODO
   deleteEntry = (id) => {
-    alert(`Delete item ${id}`);
+    removeFromList(id)
+      .then(() => {
+        const newList = this.state.listEntries.filter(item => item.id !== id);
+        this.setState({ listEntries: newList });
+      }).catch(() => {
+        this.setState({ error: true });
+      });
   }
 
   render() {
-    const { errorMsg, listDisplayName, listEntries, isEditMode } = this.state;
-    if (errorMsg) {
-      return <ErrorMessage>{errorMsg}</ErrorMessage>;
+    const { isLoading, error, listDisplayName, listEntries, isEditMode } = this.state;
+
+    if (error) {
+      return (
+        <div className="container">
+          <ErrorMessage>Something went wrong :(</ErrorMessage>
+        </div>
+      );
     }
 
     const { userId, listName } = this.props.match.params;
     const baseUrl = `/user/${userId}/${listName}`;
     const tabLinks = {
       All: `${baseUrl}/all`,
-      Movies: `${baseUrl}/movies`,
+      Movies: `${baseUrl}/movie`,
       "TV Shows": `${baseUrl}/tv`,
     };
 
     return (
       <ResponsiveList
+        isLoading={isLoading}
         listDisplayName={listDisplayName}
         tabLinks={tabLinks}
         entries={listEntries}
         toggleEditMode={this.toggleEditMode}
         deleteEntry={this.deleteEntry}
         isEditMode={isEditMode}
+        listUserId={userId}
       />
     );
   }

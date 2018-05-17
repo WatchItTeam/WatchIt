@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { watchStates } from "../Firebase/lists";
+import parseName from "../utils/parseName";
 import SidebarNavLink from "./SidebarNavLink";
 import PosterCardDropTarget from "./PosterCardDropTarget";
 import { SignedIn, SignedOut } from "./UserState/UserState";
@@ -35,26 +37,17 @@ function Sidebar({ isOpen }) {
           <SignedIn>
             {user => (
               <nav>
-                <PosterCardDropTarget targetName="Watching">
-                  <SidebarNavLink to={`/user/${user.uid}/watching/`}>
-                    Watching
-                  </SidebarNavLink>
-                </PosterCardDropTarget>
-                <PosterCardDropTarget targetName="Plan to watch">
-                  <SidebarNavLink to={`/user/${user.uid}/plan_to_watch/`}>
-                    Plan to watch
-                  </SidebarNavLink>
-                </PosterCardDropTarget>
-                <PosterCardDropTarget targetName="Completed">
-                  <SidebarNavLink to={`/user/${user.uid}/completed/`}>
-                    Completed
-                  </SidebarNavLink>
-                </PosterCardDropTarget>
-                <PosterCardDropTarget targetName="Dropped">
-                  <SidebarNavLink to={`/user/${user.uid}/dropped/`}>
-                    Dropped
-                  </SidebarNavLink>
-                </PosterCardDropTarget>
+                {
+                  // dynamically create a link to each list
+                  // instead of hard coding
+                  Object.values(watchStates).map(watchState => (
+                    <PosterCardDropTarget key={watchState} targetName={watchState}>
+                      <SidebarNavLink to={`/user/${user.uid}/${watchState}/`}>
+                        {parseName(watchState)}
+                      </SidebarNavLink>
+                    </PosterCardDropTarget>
+                  ))
+                }
               </nav>
             )}
           </SignedIn>
