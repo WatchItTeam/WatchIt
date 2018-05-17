@@ -72,7 +72,7 @@ class AddToListBtn extends Component {
       if (this.state.statusOfCurrentMovie) {
         updateWatchStatus(movie, selectedList);
         this.setState({ statusOfCurrentMovie: selectedList });
-        infoToast(`${movie.title} moved to ${selectedList}`);
+        infoToast(`${movie.title} moved to ${parseName(selectedList)}`);
       } else {
         await addToList(movie, selectedList);
         successToast(`Added ${movie.title} to ${parseName(selectedList)}`);

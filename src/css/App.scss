@@ -18,7 +18,7 @@
   text-align: center;
 }
 
-.toast-success {
-  background: #303030;
-  color: white;
+.toast {
+  padding-top: calc(8px + env(safe-area-inset-bottom) / 2);
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
 }
