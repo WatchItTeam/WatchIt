@@ -1,10 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import moment from "moment-mini";
 import ListDeleteBtn from "./ListDeleteBtn";
 import ListMoveBtn from "./ListMoveBtn";
 import PosterCard from "../PosterCard";
+
 import "../../css/TableList.scss";
+
+function checkProgress(movie) {
+  if (movie.media_type === "tv") {
+    return (
+      <Link to={`/tv/${movie.id}/episodes`}>
+        {movie.progress || "See progress"}
+      </Link>
+    );
+  }
+  return movie.progress || "-";
+}
 
 function TableList({ entries, isEditMode, deleteEntry, onMove }) {
   return (
@@ -39,7 +52,9 @@ function TableList({ entries, isEditMode, deleteEntry, onMove }) {
               </td>
               <td>{movie.media_type}</td>
               <td>{movie.vote_average || "-"}</td>
-              <td>{movie.progress || "-"}</td>
+              <td>
+                {checkProgress(movie)}
+              </td>
               <td>{moment(movie.added.toDate()).fromNow()}</td>
               {isEditMode && <td><ListMoveBtn onClick={() => onMove(movie)} /></td>}
               {isEditMode && <td><ListDeleteBtn onClick={() => deleteEntry(movie)} /></td>}
