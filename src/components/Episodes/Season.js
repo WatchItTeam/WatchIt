@@ -17,7 +17,6 @@ function Season({ episodes, seasonNumber, addEpisode, removeEpisode, showId }) {
               addEpisode={addEpisode}
               removeEpisode={removeEpisode}
               description={episode.overview}
-              episodeId={episode.id}
               showId={showId}
             />
           </Mobile>
@@ -29,7 +28,6 @@ function Season({ episodes, seasonNumber, addEpisode, removeEpisode, showId }) {
               addEpisode={addEpisode}
               removeEpisode={removeEpisode}
               description={episode.overview}
-              episodeId={episode.id}
               showId={showId}
             />
           </Desktop>

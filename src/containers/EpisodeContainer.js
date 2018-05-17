@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import EpisodePage from "../components/Episodes/EpisodePage";
 import { getSeasonFromId, getTVInfo } from "../api/APIUtils";
+import { setEpisodeStatus } from "../Firebase/lists";
 
 class EpisodeContainer extends Component {
   state = {
     episodes: [],
     title: "",
     isLoading: true,
-    shows: {},
   };
 
   componentDidMount() {
@@ -33,24 +33,12 @@ class EpisodeContainer extends Component {
     });
   }
 
-  addEpisode = (show) => {
-    const shows = Object.assign({}, this.state.shows);
-    shows[show.id] = {
-      ...shows[show.id],
-      [show.episode]: true,
-    };
-    this.setState({ shows });
-    return true;
+  addEpisode = ({ id, episodeNumber }) => {
+    setEpisodeStatus(id, episodeNumber, true);
   }
 
-  removeEpisode = (show) => {
-    const shows = Object.assign({}, this.state.shows);
-    shows[show.id] = {
-      ...shows[show.id],
-      [show.episode]: false,
-    };
-    this.setState({ shows });
-    return false;
+  removeEpisode = ({ id, episodeNumber }) => {
+    setEpisodeStatus(id, episodeNumber, false);
   }
 
   render() {

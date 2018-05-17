@@ -13,7 +13,7 @@ class EpisodeItem extends Component {
     let checkBox;
     const show = {
       id: this.props.showId,
-      episode: this.props.episodeId,
+      episodeNumber: this.props.episodeNumber,
     };
 
     if (this.state.watched) {
@@ -71,7 +71,6 @@ EpisodeItem.propTypes = {
   addEpisode: PropTypes.func.isRequired,
   removeEpisode: PropTypes.func.isRequired,
   showId: PropTypes.string.isRequired,
-  episodeId: PropTypes.number.isRequired,
 };
 
 export default EpisodeItem;

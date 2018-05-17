@@ -9,14 +9,20 @@ class EpisodeMobileItem extends Component {
   state = {
     isOpen: false,
     watched: false,
-  };
+  }
+
+  toggle() {
+    this.setState(state => ({ isOpen: !state.isOpen }));
+  }
 
   render() {
+    const { toggle } = this;
+
     let mobileItem;
     let checkBox;
     const show = {
       id: this.props.showId,
-      episode: this.props.episodeId,
+      episodeNumber: this.props.episodeNumber,
     };
 
     if (this.state.watched) {
@@ -35,7 +41,7 @@ class EpisodeMobileItem extends Component {
           onClick={() => this.setState({ watched: this.props.addEpisode(show) })}
         >
           <FontAwesomeIcon icon={Circle} />
-        </button >
+        </button>
       );
     }
 
@@ -53,7 +59,7 @@ class EpisodeMobileItem extends Component {
           <div className="expandedDescriptionBox">
             {this.props.description}
           </div>
-          <button className="expandBoxButton" onClick={() => this.setState({ isOpen: !this.state.isOpen })} />
+          <button className="expandBoxButton" onClick={toggle} />
         </div>
       );
     } else {
@@ -67,7 +73,7 @@ class EpisodeMobileItem extends Component {
           <div className="episodeMobileTitle">
             {this.props.name}
           </div>
-          <button className="expandBoxButton" onClick={() => this.setState({ isOpen: !this.state.isOpen })} />
+          <button className="expandBoxButton" onClick={toggle} />
           {checkBox}
         </div>
       );
@@ -85,7 +91,6 @@ EpisodeMobileItem.propTypes = {
   addEpisode: PropTypes.func.isRequired,
   removeEpisode: PropTypes.func.isRequired,
   showId: PropTypes.string.isRequired,
-  episodeId: PropTypes.number.isRequired,
   episodeNumber: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

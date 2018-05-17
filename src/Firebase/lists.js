@@ -67,6 +67,7 @@ export function addToList(movie, watchStatus) {
   return db.doc(`users/${user}/list/${id}`).set({
     watch_status: watchStatus,
     added: new Date(),
+    episodes_watched: {},
     id,
     media_type,
     title,
@@ -92,21 +93,14 @@ export function removeFromList(movieID) {
 }
 
 /**
- * Fetches list entries from the database, returns a promise that resolves
- * to an array of movies.
+ * Listens to changes from a list and runs a callback when it changes in the database.
  *
  * Usage:
- * fetchAllFromList(...)
- *  .then((list) => ...)
- *  .catch((error) => ...)
  *
- * or:
- *
- * try {
- *  const list = await fetchAllFromList(...)
- * } catch (error) {
- *  ...
- * }
+ * fetchAllFromList(userId, "plan_to_watch", "movie" (snapshot) => {
+ *   // this is called the first time fetchAllFromList is called
+ *   // and each time the list changes in Firebase
+ * })
  */
 export async function fetchAllFromList(userId, watchStatus, mediaType, updateList) {
   let req;
@@ -129,4 +123,27 @@ export function fetchOneFromList(userId, movieId) {
   return db.doc(`/users/${userId}/list/${movieId}`)
     .get()
     .then(doc => doc.data());
+}
+
+/**
+ * Marks an episode of a show as watched or unwatched.
+ *
+ * Usage (set episode as watched):
+ *
+ * setEpisodeStatus(1230, 1, true);
+ */
+export function setEpisodeStatus(showId, episodeNumber, hasWatched) {
+  const user = getUserID();
+  if (!user) throw new Error("User is not logged in");
+  if (!episodeNumber) throw new Error("Invalid episodeNumber");
+
+  return db.doc(`users/${user}/list/${showId}`).set({
+    episodes_watched: {
+      [episodeNumber]: hasWatched,
+    },
+  }, { merge: true });
+}
+
+export function onShowSnapshot(userId, showId, callback) {
+  return db.doc(`users/${userId}/list/${showId}`).onSnapshot(callback);
 }
