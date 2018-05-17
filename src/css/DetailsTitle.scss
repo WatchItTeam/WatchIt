@@ -24,6 +24,14 @@
       margin: 10px 0;
     }
 
+    .rating {
+      font-size: 36px;
+
+      .star-icon {
+        color: #FFDE4D;
+      }
+    }
+
     .info {
       font-size: 14px;
       margin-bottom: 20px;
@@ -32,16 +40,6 @@
     .bottom {
       display: flex;
       align-content: center;
-
-      .rating {
-        font-size: 30px;
-        display: flex;
-        align-items: center;
-
-        .star-icon {
-          color: #FFDE4D;
-        }
-      }
     }
   }
 }

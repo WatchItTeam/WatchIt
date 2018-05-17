@@ -63,3 +63,10 @@
     }
   }
 }
+
+@media (max-width: 320px) {
+  .primary-btn, .secondary-btn {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}

@@ -83,7 +83,7 @@ function DetailsTitle({ movie, onBtnClick }) {
       <div>
         <PrimaryButton onClick={onBtnClick}>+ Add to</PrimaryButton>
         &nbsp;&nbsp;
-        <SecondaryButton to={`${id}/episodes`}>Browse episodes</SecondaryButton>
+        <SecondaryButton to={`${id}/episodes`}>Episodes</SecondaryButton>
         &nbsp;&nbsp;
       </div>
     );
@@ -103,15 +103,18 @@ function DetailsTitle({ movie, onBtnClick }) {
         mediaType={isMovie ? "movie" : "tv"}
       />
       <div className="text">
-        <h1 className="title">{`${displayName} (${moment(displayDate).format("YYYY")})`}</h1>
+        <h1 className="title">
+          {`${displayName} (${moment(displayDate).format("YYYY")})`}
+          &nbsp;
+          <span className="rating">
+            <span className="star-icon"><FontAwesomeIcon icon="star" /></span> {rating}
+          </span>
+        </h1>
         <div className="info">
           {infoLine}
         </div>
         <div className="bottom">
           {buttons}
-          <span className="rating">
-            <span className="star-icon"><FontAwesomeIcon icon="star" /></span> {rating}
-          </span>
         </div>
       </div>
     </div>

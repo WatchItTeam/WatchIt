@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Season from "./Season";
 
 function EpisodePage({
@@ -19,7 +21,13 @@ function EpisodePage({
 
   return (
     <section className="container">
-      <h1>{title}</h1>
+      <Link to={`/tv/${showId}`}>
+        <h1>
+          <FontAwesomeIcon icon="arrow-left" />
+          &nbsp;
+          {title}
+        </h1>
+      </Link>
       <Season
         episodes={episodes}
         seasonNumber={seasonNumber}

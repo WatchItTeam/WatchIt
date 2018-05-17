@@ -1,6 +1,7 @@
 @import "global";
 
 .primary-btn {
+  display: inline-block;
   font-weight: bold;
   color: white;
   background: $primary-color;
