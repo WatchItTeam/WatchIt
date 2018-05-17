@@ -41,7 +41,7 @@
   padding: 10px 15px;
   height: 65px;
 
-  button {
+  & > button {
     font-size: 20px;
     width: 35px;
     text-align: center;
@@ -53,6 +53,10 @@
     font-weight: 800;
     padding: 6px 0 6px 50px;
   }
+}
+
+.loginModal {
+  color: $text-color;
 }
 
 .header-wrapper {

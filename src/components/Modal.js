@@ -37,6 +37,7 @@ class Modal extends Component {
   }
 
   componentWillUnmount() {
+    this.props.hideFunc();
     window.removeEventListener("keydown", this.keyListener);
   }
 
