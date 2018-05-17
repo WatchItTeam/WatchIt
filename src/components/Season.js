@@ -14,7 +14,6 @@ function Season({ episodes, seasonNumber, addEpisode, removeEpisode, showId }) {
             <EpisodeMobileItem
               episodeNumber={episode.episode_number}
               name={episode.name}
-              poster={episode.still_path}
               addEpisode={addEpisode}
               removeEpisode={removeEpisode}
               description={episode.overview}
@@ -27,7 +26,11 @@ function Season({ episodes, seasonNumber, addEpisode, removeEpisode, showId }) {
               episodeNumber={episode.episode_number}
               name={episode.name}
               poster={episode.still_path}
+              addEpisode={addEpisode}
+              removeEpisode={removeEpisode}
               description={episode.overview}
+              episodeId={episode.id}
+              showId={showId}
             />
           </Desktop>
         </div>
@@ -41,7 +44,7 @@ Season.propTypes = {
   seasonNumber: PropTypes.number.isRequired,
   addEpisode: PropTypes.func.isRequired,
   removeEpisode: PropTypes.func.isRequired,
-  showId: PropTypes.number.isRequired,
+  showId: PropTypes.string.isRequired,
 };
 
 export default Season;

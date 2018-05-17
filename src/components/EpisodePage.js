@@ -38,7 +38,7 @@ EpisodePage.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   addEpisode: PropTypes.func.isRequired,
   removeEpisode: PropTypes.func.isRequired,
-  showId: PropTypes.number.isRequired,
+  showId: PropTypes.string.isRequired,
 };
 
 export default EpisodePage;

@@ -22,7 +22,7 @@ class EpisodeMobileItem extends Component {
     if (this.state.watched) {
       checkBox = (
         <button
-          className="episodeExpandBtn"
+          className="episodeCheckbox"
           onClick={() => this.setState({ watched: this.props.removeEpisode(show) })}
         >
           <FontAwesomeIcon icon={CheckCircle} />
@@ -31,7 +31,7 @@ class EpisodeMobileItem extends Component {
     } else {
       checkBox = (
         <button
-          className="episodeExpandBtn"
+          className="episodeCheckbox"
           onClick={() => this.setState({ watched: this.props.addEpisode(show) })}
         >
           <FontAwesomeIcon icon={Circle} />
@@ -64,7 +64,7 @@ class EpisodeMobileItem extends Component {
               {this.props.episodeNumber}
             </div>
           </div>
-          <div className="episodeTitle">
+          <div className="episodeMobileTitle">
             {this.props.name}
           </div>
           <button className="expandBoxButton" onClick={() => this.setState({ isOpen: !this.state.isOpen })} />
@@ -84,7 +84,7 @@ class EpisodeMobileItem extends Component {
 EpisodeMobileItem.propTypes = {
   addEpisode: PropTypes.func.isRequired,
   removeEpisode: PropTypes.func.isRequired,
-  showId: PropTypes.number.isRequired,
+  showId: PropTypes.string.isRequired,
   episodeId: PropTypes.number.isRequired,
   episodeNumber: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
