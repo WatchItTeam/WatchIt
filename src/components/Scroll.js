@@ -32,6 +32,7 @@ class Scroll extends Component {
 
   updateWindowDimensions = () => {
     this.setState({ width: window.innerWidth });
+    this.checkArrows(this.scrollRef.current);
   }
 
   checkArrows = (elem) => {
@@ -69,7 +70,7 @@ class Scroll extends Component {
     const sidebarWidth = 250;
 
     // is true if there are enough elements so that scroll is enabled
-    const isOverFlow = !(this.props.arrayLength * imageWidth) < (this.state.width - sidebarWidth);
+    const isOverFlow = (this.props.arrayLength * imageWidth) > (this.state.width - sidebarWidth);
 
     // don't show arrows if scrolled to the end/beginning
     const showLeftArrow = !hasScrolledToStart && isOverFlow;
