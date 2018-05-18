@@ -11,7 +11,7 @@ import "../../css/TableList.scss";
 function checkProgress(movie) {
   if (movie.media_type === "tv") {
     return (
-      <Link to={`/tv/${movie.id}/episodes`}>
+      <Link to={`/tv/${movie.id}/episodes/`}>
         {movie.progress || "See progress"}
       </Link>
     );

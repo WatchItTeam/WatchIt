@@ -205,7 +205,7 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/tv/:id/episodes/"
+                path="/tv/:id/episodes"
                 render={() => <Redirect to="all" />}
               />
               <Route
