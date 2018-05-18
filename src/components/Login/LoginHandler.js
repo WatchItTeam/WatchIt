@@ -3,22 +3,13 @@ import { withRouter } from "react-router-dom";
 import UserLayout from "./UserLayout";
 import { errorToast } from "../../utils/toast";
 import "../../css/LoginHandler.scss";
-import { signIn, signOut, signUp } from "../../Firebase/UserUtils";
+import { signIn, signOut } from "../../Firebase/UserUtils";
 
 class LoginHandler extends Component {
   state = {
     email: "",
     password: "",
   };
-
-  signUpClick = (event) => {
-    event.preventDefault();
-    const { email, password } = this.state;
-    signUp(email, password)
-      .catch((error) => {
-        errorToast(error.message);
-      });
-  }
 
   signInClick = (event) => {
     event.preventDefault();
@@ -50,7 +41,6 @@ class LoginHandler extends Component {
         onSignOutClick={this.signOutClick}
         handleChange={this.handleChange}
         signInClick={this.signInClick}
-        signUpClick={this.signUpClick}
         email={email}
         password={password}
       />

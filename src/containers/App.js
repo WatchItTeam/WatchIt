@@ -22,6 +22,7 @@ import EpisodeContainer from "./EpisodeContainer";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 import NewPassword from "../components/NewPassword";
 import NotFoundPage from "../components/404";
+import SignUpPage from "../components/Login/SignUpPage";
 import "../css/App.scss";
 
 const SEARCH_DEBOUNCE_TIME = 500;
@@ -235,6 +236,7 @@ class App extends Component {
                 path="/forgot_password"
                 component={NewPassword}
               />
+              <Route path="/signup" component={SignUpPage} />
               <Route component={NotFoundPage} />
             </Switch>
           </div>

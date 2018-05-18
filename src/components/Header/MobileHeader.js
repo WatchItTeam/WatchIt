@@ -20,6 +20,7 @@ class MobileHeader extends Component {
     searchbarValue: PropTypes.string.isRequired,
     searchHandler: PropTypes.func.isRequired,
     setSearchbarValue: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired,
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -37,10 +38,14 @@ class MobileHeader extends Component {
     modalIsVisible: false,
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (this.state.searchIsVisible) {
       // if the searchbar becomes visible, focus on the input
       this.searchbarRef.current.inputRef.current.focus();
+    }
+
+    if (this.props.location !== prevProps.location) {
+      this.hideModal();
     }
   }
 

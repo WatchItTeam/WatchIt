@@ -8,7 +8,7 @@ import { Mobile, Desktop } from "../Responsive";
 import PrimaryButton from "../PrimaryButton";
 
 function UserLayout({
-  onSignOutClick, handleChange, signInClick, signUpClick, email, password,
+  onSignOutClick, handleChange, signInClick, email, password,
 }) {
   // Render user info if signed in, signin-bars otherwise
   return (
@@ -53,7 +53,7 @@ function UserLayout({
                   <Link className="forgot-password" to="/forgot_password">Forgot password</Link>
                 </div>
                 <button className="login-btn">Log in</button>
-                <button className="signup-button" onClick={signUpClick}>Sign up</button>
+                <Link className="signup-button" to="/signup">Sign up</Link>
               </div>
             </form>
           </div>
@@ -82,7 +82,7 @@ function UserLayout({
               <PrimaryButton>Log in</PrimaryButton>
             </div>
             <div className="signup-btn-mobile">
-              <button className="signup-button" onClick={signUpClick}>Sign up</button>
+              <Link className="signup-button" to="/signup">Sign up</Link>
             </div>
           </form>
         </div>
