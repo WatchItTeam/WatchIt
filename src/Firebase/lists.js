@@ -125,21 +125,36 @@ export function fetchOneFromList(userId, movieId) {
     .then(doc => doc.data());
 }
 
+
+/**
+ * Takes a season number and episode number and transforms them
+ * into a string that's used in firebase as the key.
+ *
+ * Usage:
+ *
+ * episodeString(1, 2) gives SE01E02;
+ */
+export function episodeString(season, episode) {
+  const s = season < 10 ? `0${season}` : season;
+  const e = episode < 10 ? `0${episode}` : episode;
+  return `SE${s}E${e}`;
+}
+
 /**
  * Marks an episode of a show as watched or unwatched.
  *
  * Usage (set episode as watched):
  *
- * setEpisodeStatus(1230, 1, true);
+ * setEpisodeStatus(1230, 1, 1, true); // set SE1E1 as watched
  */
-export function setEpisodeStatus(showId, episodeNumber, hasWatched) {
+export function setEpisodeStatus(showId, seasonNumber, episodeNumber, hasWatched) {
   const user = getUserID();
   if (!user) throw new Error("User is not logged in");
   if (!episodeNumber) throw new Error("Invalid episodeNumber");
 
   return db.doc(`users/${user}/list/${showId}`).set({
     episodes_watched: {
-      [episodeNumber]: hasWatched,
+      [episodeString(seasonNumber, episodeNumber)]: hasWatched,
     },
   }, { merge: true });
 }
@@ -152,9 +167,8 @@ export function setSeasonStatus(showId, seasonNumber, seasonLength, hasWatched) 
   if (!user) throw new Error("User is not logged in");
 
   const episodesWatched = {};
-  const episodeOffset = seasonLength * (seasonNumber - 1);
   for (let i = 1; i <= seasonLength; i++) {
-    episodesWatched[episodeOffset + i] = hasWatched;
+    episodesWatched[episodeString(seasonNumber, i)] = hasWatched;
   }
   return db.doc(`users/${user}/list/${showId}`).set({
     episodes_watched: episodesWatched,

@@ -8,6 +8,7 @@ import "../../css/EpisodeItem.scss";
 
 function EpisodeItem({
   episodeNumber,
+  seasonNumber,
   name,
   poster,
   description,
@@ -20,6 +21,7 @@ function EpisodeItem({
   const show = {
     id: showId,
     episodeNumber,
+    seasonNumber,
   };
 
   if (watched) {
@@ -70,6 +72,7 @@ function EpisodeItem({
 
 EpisodeItem.propTypes = {
   episodeNumber: PropTypes.number.isRequired,
+  seasonNumber: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

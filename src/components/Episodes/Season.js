@@ -6,18 +6,18 @@ import EpisodeItem from "./EpisodeItem";
 import EpisodeMobileItem from "./EpisodeMobileItem";
 import PrimaryButton from "../PrimaryButton";
 import SecondaryButton from "../SecondaryButton";
+import { episodeString } from "../../Firebase/lists";
 import "../../css/Season.scss";
 
-function isWatched(watchedEpisodes, episodeNumber) {
+function isWatched(watchedEpisodes, seasonNumber, episodeNumber) {
   if (!watchedEpisodes) return false;
-  return watchedEpisodes[episodeNumber] === true;
+  return watchedEpisodes[episodeString(seasonNumber, episodeNumber)] === true;
 }
 
 function wholeSeasonIsWatched(watchedEpisodes, seasonLength, seasonNumber) {
   let epCounter = 0;
-  const episodeOffset = seasonLength * (seasonNumber - 1);
   for (let i = 1; i <= seasonLength; i++) {
-    if (watchedEpisodes[episodeOffset + i]) epCounter++;
+    if (watchedEpisodes[episodeString(seasonNumber, i)]) epCounter++;
   }
   return epCounter === seasonLength;
 }
@@ -41,6 +41,7 @@ function Season({
       </SecondaryButton>
     );
   }
+
   return (
     <div className="season">
       <div className="title-bar">
@@ -54,10 +55,11 @@ function Season({
           <Mobile>
             <EpisodeMobileItem
               episodeNumber={episode.episode_number}
+              seasonNumber={seasonNumber}
               name={episode.name}
               addEpisode={addEpisode}
               removeEpisode={removeEpisode}
-              watched={isWatched(watchedEpisodes, episode.episode_number)}
+              watched={isWatched(watchedEpisodes, seasonNumber, episode.episode_number)}
               description={episode.overview}
               showId={showId}
             />
@@ -65,11 +67,12 @@ function Season({
           <Desktop>
             <EpisodeItem
               episodeNumber={episode.episode_number}
+              seasonNumber={seasonNumber}
               name={episode.name}
               poster={episode.still_path}
               addEpisode={addEpisode}
               removeEpisode={removeEpisode}
-              watched={isWatched(watchedEpisodes, episode.episode_number)}
+              watched={isWatched(watchedEpisodes, seasonNumber, episode.episode_number)}
               description={episode.overview}
               showId={showId}
             />

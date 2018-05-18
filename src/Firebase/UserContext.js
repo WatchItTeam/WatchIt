@@ -21,6 +21,9 @@ export class UserProvider extends Component {
   state = {
     user: {
       status: "loading",
+      onChange: (callback) => {
+        firebaseApp.auth().onAuthStateChanged(callback);
+      },
     },
   }
 

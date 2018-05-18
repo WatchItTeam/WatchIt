@@ -12,6 +12,7 @@ class EpisodeMobileItem extends Component {
     watched: PropTypes.bool.isRequired,
     showId: PropTypes.string.isRequired,
     episodeNumber: PropTypes.number.isRequired,
+    seasonNumber: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
   }
@@ -26,13 +27,22 @@ class EpisodeMobileItem extends Component {
 
   render() {
     const { toggle } = this;
-    const { addEpisode, removeEpisode, watched, name, episodeNumber, description } = this.props;
+    const {
+      addEpisode,
+      removeEpisode,
+      watched,
+      name,
+      episodeNumber,
+      seasonNumber,
+      description,
+    } = this.props;
 
     let mobileItem;
     let checkBox;
     const show = {
       id: this.props.showId,
       episodeNumber: this.props.episodeNumber,
+      seasonNumber,
     };
 
     if (watched) {
