@@ -67,6 +67,7 @@ export function addToList(movie, watchStatus) {
   return db.doc(`users/${user}/list/${id}`).set({
     watch_status: watchStatus,
     added: new Date(),
+    episodes_watched: {},
     id,
     media_type,
     title,
@@ -74,7 +75,7 @@ export function addToList(movie, watchStatus) {
     release_date,
     release_year,
     vote_average,
-  });
+  }, { merge: true });
 }
 
 export function updateWatchStatus(movie, watchStatus) {
@@ -92,21 +93,14 @@ export function removeFromList(movieID) {
 }
 
 /**
- * Fetches list entries from the database, returns a promise that resolves
- * to an array of movies.
+ * Listens to changes from a list and runs a callback when it changes in the database.
  *
  * Usage:
- * fetchAllFromList(...)
- *  .then((list) => ...)
- *  .catch((error) => ...)
  *
- * or:
- *
- * try {
- *  const list = await fetchAllFromList(...)
- * } catch (error) {
- *  ...
- * }
+ * fetchAllFromList(userId, "plan_to_watch", "movie" (snapshot) => {
+ *   // this is called the first time fetchAllFromList is called
+ *   // and each time the list changes in Firebase
+ * })
  */
 export async function fetchAllFromList(userId, watchStatus, mediaType, updateList) {
   let req;
@@ -129,4 +123,68 @@ export function fetchOneFromList(userId, movieId) {
   return db.doc(`/users/${userId}/list/${movieId}`)
     .get()
     .then(doc => doc.data());
+}
+
+
+/**
+ * Takes a season number and episode number and transforms them
+ * into a string that's used in firebase as the key.
+ *
+ * Usage:
+ *
+ * episodeString(1, 2) gives SE01E02;
+ */
+export function episodeString(season, episode) {
+  const s = season < 10 ? `0${season}` : season;
+  const e = episode < 10 ? `0${episode}` : episode;
+  return `SE${s}E${e}`;
+}
+
+/**
+ * Marks an episode of a show as watched or unwatched.
+ *
+ * Usage (set episode as watched):
+ *
+ * setEpisodeStatus(1230, 1, 1, true); // set SE1E1 as watched
+ */
+export function setEpisodeStatus(showId, seasonNumber, episodeNumber, hasWatched) {
+  const user = getUserID();
+  if (!user) throw new Error("User is not logged in");
+  if (!episodeNumber) throw new Error("Invalid episodeNumber");
+
+  return db.doc(`users/${user}/list/${showId}`).set({
+    episodes_watched: {
+      [episodeString(seasonNumber, episodeNumber)]: hasWatched,
+    },
+  }, { merge: true });
+}
+
+/**
+ * Sets a whole season of a show as watched.
+ */
+export function setSeasonStatus(showId, seasonNumber, seasonLength, hasWatched) {
+  const user = getUserID();
+  if (!user) throw new Error("User is not logged in");
+
+  const episodesWatched = {};
+  for (let i = 1; i <= seasonLength; i++) {
+    episodesWatched[episodeString(seasonNumber, i)] = hasWatched;
+  }
+  return db.doc(`users/${user}/list/${showId}`).set({
+    episodes_watched: episodesWatched,
+  }, { merge: true });
+}
+
+/**
+ * Subscribe to changes to a show for a user
+ *
+ * Usage:
+ *
+ * onShowSnapshot(userId, showId, (doc) => {
+ *   // this is called on first use, and each time
+ *   // the episode data changes in firebase
+ * })
+ */
+export function onShowSnapshot(userId, showId, callback) {
+  return db.doc(`users/${userId}/list/${showId}`).onSnapshot(callback);
 }

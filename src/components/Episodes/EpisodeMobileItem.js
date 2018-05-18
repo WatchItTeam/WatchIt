@@ -3,27 +3,54 @@ import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import CheckCircle from "@fortawesome/fontawesome-free-solid/faCheckCircle";
 import Circle from "@fortawesome/fontawesome-free-regular/faCircle";
+import { SignedIn, SignedOut } from "../UserState/UserState";
 import "../../css/EpisodeMobileItem.scss";
 
 class EpisodeMobileItem extends Component {
+  static propTypes = {
+    addEpisode: PropTypes.func.isRequired,
+    removeEpisode: PropTypes.func.isRequired,
+    watched: PropTypes.bool.isRequired,
+    showId: PropTypes.string.isRequired,
+    episodeNumber: PropTypes.number.isRequired,
+    seasonNumber: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  }
+
   state = {
     isOpen: false,
-    watched: false,
-  };
+  }
+
+  toggle = () => {
+    this.setState(state => ({ isOpen: !state.isOpen }));
+  }
 
   render() {
+    const { toggle } = this;
+    const {
+      addEpisode,
+      removeEpisode,
+      watched,
+      name,
+      episodeNumber,
+      seasonNumber,
+      description,
+    } = this.props;
+
     let mobileItem;
     let checkBox;
     const show = {
       id: this.props.showId,
-      episode: this.props.episodeId,
+      episodeNumber: this.props.episodeNumber,
+      seasonNumber,
     };
 
-    if (this.state.watched) {
+    if (watched) {
       checkBox = (
         <button
           className="episodeMobileCheckbox"
-          onClick={() => this.setState({ watched: this.props.removeEpisode(show) })}
+          onClick={() => removeEpisode(show)}
         >
           <FontAwesomeIcon icon={CheckCircle} />
         </button>
@@ -32,10 +59,10 @@ class EpisodeMobileItem extends Component {
       checkBox = (
         <button
           className="episodeMobileCheckbox"
-          onClick={() => this.setState({ watched: this.props.addEpisode(show) })}
+          onClick={() => addEpisode(show)}
         >
           <FontAwesomeIcon icon={Circle} />
-        </button >
+        </button>
       );
     }
 
@@ -44,16 +71,16 @@ class EpisodeMobileItem extends Component {
         <div className="expandedItemBox">
           <div className="expandedTitleBar">
             <div className="episodeNumber">
-              {this.props.episodeNumber}
+              {episodeNumber}
             </div>
             <div className="episodeTitleBox">
-              {this.props.name}
+              {name}
             </div>
           </div>
           <div className="expandedDescriptionBox">
-            {this.props.description}
+            {description}
           </div>
-          <button className="expandBoxButton" onClick={() => this.setState({ isOpen: !this.state.isOpen })} />
+          <button className="expandBoxButton" onClick={toggle} />
         </div>
       );
     } else {
@@ -61,14 +88,18 @@ class EpisodeMobileItem extends Component {
         <div className="episodeMobileItem">
           <div>
             <div className="episodeNumber">
-              {this.props.episodeNumber}
+              {episodeNumber}
             </div>
           </div>
           <div className="episodeMobileTitle">
-            {this.props.name}
+            {name}
           </div>
-          <button className="expandBoxButton" onClick={() => this.setState({ isOpen: !this.state.isOpen })} />
-          {checkBox}
+          <button className="expandBoxButton" onClick={toggle} />
+          <SignedIn>
+            {() => checkBox}
+          </SignedIn>
+          {/* put an empty div so the three column layout still works */}
+          <SignedOut><div /></SignedOut>
         </div>
       );
     }
@@ -80,15 +111,5 @@ class EpisodeMobileItem extends Component {
     );
   }
 }
-
-EpisodeMobileItem.propTypes = {
-  addEpisode: PropTypes.func.isRequired,
-  removeEpisode: PropTypes.func.isRequired,
-  showId: PropTypes.string.isRequired,
-  episodeId: PropTypes.number.isRequired,
-  episodeNumber: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-};
 
 export default EpisodeMobileItem;

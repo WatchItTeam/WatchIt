@@ -4,7 +4,7 @@ import ResponsiveList from "../components/WatchList/ResponsiveList";
 import parseName from "../utils/parseName";
 import ErrorMessage from "../components/ErrorMessage";
 import ListPickerModal from "./ListPickerModal";
-import { successToast, errorToast, infoToast } from "../utils/toast";
+import { successToast, errorToast, infoToast, removeToast } from "../utils/toast";
 import { normalizeMovie } from "../api/APIUtils";
 import { fetchAllFromList, removeFromList, sortBy, updateWatchStatus } from "../Firebase/lists";
 
@@ -98,6 +98,20 @@ class UserList extends Component {
     this.setState({ isLoading: false });
   }
 
+  onModalRemove = async (selectedList) => {
+    this.setState({ isLoading: true });
+
+    const { currentMovie } = this.state;
+    const movie = normalizeMovie(currentMovie);
+    try {
+      await removeFromList(currentMovie.id);
+      removeToast(`Removed ${movie.title} from ${parseName(selectedList)}`);
+    } catch (error) {
+      errorToast(`Something went wrong when trying to remove ${movie.title}`);
+    }
+    this.setState({ isLoading: false });
+  }
+
   render() {
     const { isLoading, error, listDisplayName, listEntries, isEditMode } = this.state;
 
@@ -135,6 +149,7 @@ class UserList extends Component {
           hideFunc={this.hideModal}
           onSubmit={this.onModalSubmit}
           statusOfCurrent={listName}
+          onRemove={this.onModalRemove}
         />
       </Fragment>
     );

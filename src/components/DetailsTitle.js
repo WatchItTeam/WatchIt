@@ -82,7 +82,7 @@ function DetailsTitle({ movie }) {
       <div>
         <AddToListBtn currentMovie={movie} />
         &nbsp;&nbsp;
-        <SecondaryButton to={`${id}/episodes`}>Episodes</SecondaryButton>
+        <SecondaryButton to={`${id}/episodes/`}>Episodes</SecondaryButton>
         &nbsp;&nbsp;
       </div>
     );

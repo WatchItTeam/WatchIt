@@ -77,7 +77,7 @@ export function normalizeMovie(movie) {
 async function checkResponse(res) {
   const json = await res.json();
   if (json.status_code === API_ERROR_CODE) throw new Error("Invalid API key");
-  if (json.status_code === RESOURCE_NOT_FOUND) throw new Error("Movie doesn't exist =(");
+  if (json.status_code === RESOURCE_NOT_FOUND) throw new Error("Couldn't find anything =(");
 
   return json;
 }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import { watchStates } from "../Firebase/lists";
 import Modal from "../components/Modal";
@@ -17,6 +18,7 @@ class ListPickerModal extends Component {
     hideFunc: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     statusOfCurrent: PropTypes.string,
+    onRemove: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -65,13 +67,28 @@ class ListPickerModal extends Component {
     hideFunc();
   }
 
+  onRemoveClick = () => {
+    const { onRemove, hideFunc, statusOfCurrent } = this.props;
+    onRemove(statusOfCurrent);
+    hideFunc();
+  }
+
   render() {
-    const { isOpen, hideFunc } = this.props;
+    const { isOpen, hideFunc, statusOfCurrent } = this.props;
     const { current } = this.state;
     const { cancelModal, onRadioChange, onSaveClick } = this;
     return (
       <Modal className="listpicker-modal" isOpen={isOpen} hideFunc={hideFunc} onEnter={onSaveClick}>
-        <h1>Add to:</h1>
+        {
+          statusOfCurrent && (
+            <div className="trash-icon-button" >
+              <button onClick={this.onRemoveClick}>
+                <FontAwesomeIcon className="trash-icon" icon="trash-alt" />
+              </button>
+            </div>
+          )
+        }
+        <h1 className="addTo">Add to:</h1>
         <form ref={this.formRef}>
           {
             // dynamically add a radio button for each watch state
