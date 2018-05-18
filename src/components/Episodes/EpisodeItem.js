@@ -4,6 +4,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import CheckCircle from "@fortawesome/fontawesome-free-solid/faCheckCircle";
 import Circle from "@fortawesome/fontawesome-free-regular/faCircle";
 import ImageWithFallback from "../ImageWithFallback";
+import { SignedIn } from "../UserState/UserState";
 import "../../css/EpisodeItem.scss";
 
 function EpisodeItem({
@@ -65,7 +66,9 @@ function EpisodeItem({
           {description}
         </div>
       </div>
-      {checkBox}
+      <SignedIn>
+        {() => checkBox}
+      </SignedIn>
     </div>
   );
 }

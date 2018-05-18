@@ -7,6 +7,7 @@ import EpisodeMobileItem from "./EpisodeMobileItem";
 import PrimaryButton from "../PrimaryButton";
 import SecondaryButton from "../SecondaryButton";
 import { episodeString } from "../../Firebase/lists";
+import { SignedIn } from "../UserState/UserState";
 import "../../css/Season.scss";
 
 function isWatched(watchedEpisodes, seasonNumber, episodeNumber) {
@@ -47,7 +48,9 @@ function Season({
       <div className="title-bar">
         <h2>{`Season ${seasonNumber}`}</h2>
         <div>
-          {seasonBtn}
+          <SignedIn>
+            {() => seasonBtn}
+          </SignedIn>
         </div>
       </div>
       {episodes.map(episode => (

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import CheckCircle from "@fortawesome/fontawesome-free-solid/faCheckCircle";
 import Circle from "@fortawesome/fontawesome-free-regular/faCircle";
+import { SignedIn, SignedOut } from "../UserState/UserState";
 import "../../css/EpisodeMobileItem.scss";
 
 class EpisodeMobileItem extends Component {
@@ -94,7 +95,11 @@ class EpisodeMobileItem extends Component {
             {name}
           </div>
           <button className="expandBoxButton" onClick={toggle} />
-          {checkBox}
+          <SignedIn>
+            {() => checkBox}
+          </SignedIn>
+          {/* put an empty div so the three column layout still works */}
+          <SignedOut><div /></SignedOut>
         </div>
       );
     }
