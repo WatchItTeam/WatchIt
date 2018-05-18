@@ -31,29 +31,29 @@ function UserLayout({
         )}
         </SignedIn>
         <SignedOut>
-          <div className="Loginwindow user-info">
+          <div className="user-info">
             <form onSubmit={signInClick}>
-              <div className="loginBars">
+              <div className="login-bars">
                 <input
-                  id="emailBar"
+                  id="email-bar"
                   type="email"
                   value={email}
                   onChange={handleChange}
                   placeholder="Email"
                 />
-                <div className="passwordDiv">
+                <div className="password-div">
                   <input
-                    className="passwordInput"
-                    id="passBar"
+                    className="password-input"
+                    id="pass-bar"
                     type="password"
                     value={password}
                     onChange={handleChange}
                     placeholder="Password"
                   />
-                  <Link className="forgotpassword" to="/forgot_password">Forgot password</Link>
+                  <Link className="forgot-password" to="/forgot_password">Forgot password</Link>
                 </div>
                 <button className="login-btn">Log in</button>
-                <button className="signupButton" onClick={signUpClick}>Sign up</button>
+                <button className="signup-button" onClick={signUpClick}>Sign up</button>
               </div>
             </form>
           </div>
@@ -62,16 +62,16 @@ function UserLayout({
       <Mobile>
         <div>
           <form onSubmit={signInClick}>
-            <div className="loginBarsMobile">
+            <div className="login-barsMobile">
               <input
-                id="emailBar"
+                id="email-bar"
                 type="email"
                 value={email}
                 onChange={handleChange}
                 placeholder="Email"
               />
               <input
-                id="passBar"
+                id="pass-bar"
                 type="password"
                 value={password}
                 onChange={handleChange}
@@ -82,7 +82,7 @@ function UserLayout({
               <PrimaryButton>Log in</PrimaryButton>
             </div>
             <div className="signup-btn-mobile">
-              <button className="signupButton" onClick={signUpClick}>Sign up</button>
+              <button className="signup-button" onClick={signUpClick}>Sign up</button>
             </div>
           </form>
         </div>

@@ -80,7 +80,7 @@ class Scroll extends Component {
     const rightArrowClasses = `rightbutton scroll-button ${!showRightArrow ? "hidden" : ""}`;
 
     return (
-      <div className="OuterDiv">
+      <div className="outer-div">
         <button className={leftArrowClasses} onClick={this.scrollLeft}>
           <FontAwesomeIcon icon="angle-left" />
         </button>

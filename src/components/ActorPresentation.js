@@ -58,21 +58,30 @@ function ActorPresentation({ currentActor }) {
           mediaType="person"
         />
         <h1 className="personal">Personal Information</h1>
+
         <h2>Place of Birth</h2>
         <p>{currentActor.place_of_birth || "Not available"}</p>
+
         <h2>Birthday</h2>
         <p>{currentActor.birthday || "Not available"}</p>
+
         <h2>Known Credits</h2>
         <p>{knowncredits}</p>
+
         <h2>Official Homepage</h2>
         {currentActor.homepage ? <a href={`${currentActor.homepage}`}>Link</a> : "Not available"}
+
         <h2>Social Media</h2>
         {checkSocialMedia(currentActor.external_ids)}
       </div>
       <div>
         <h1>{currentActor.name}</h1>
         <p>Biography:</p>
-        {currentActor.biography ? currentActor.biography.split("\n").map(text => text && <p key={text}>{text}</p>) : "Not available"}
+        {currentActor.biography ?
+          currentActor.biography.split("\n").map(text => text && <p key={text}>{text}</p>)
+          :
+          "Not available"
+        }
       </div>
     </div>
   );

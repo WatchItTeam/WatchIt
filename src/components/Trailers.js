@@ -44,13 +44,13 @@ class Trailers extends Component {
 
     if (this.props.trailers.length === 1) {
       return (
-        <div className="OuterDiv">
+        <div className="outer-div">
           {trailerFrame}
         </div>
       );
     }
     return (
-      <div className="OuterDiv">
+      <div className="outer-div">
         <button className="leftbutton scroll-button">
           <FontAwesomeIcon icon="angle-left" onClick={this.scrollLeft} />
         </button>
