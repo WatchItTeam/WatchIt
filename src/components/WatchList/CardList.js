@@ -8,6 +8,17 @@ import ListDeleteBtn from "./ListDeleteBtn";
 import ListMoveBtn from "./ListMoveBtn";
 import "../../css/CardList.scss";
 
+function checkProgress(movie) {
+  if (movie.media_type === "tv") {
+    return (
+      <Link to={`/tv/${movie.id}/episodes`}>
+        {movie.progress || "See progress"}
+      </Link>
+    );
+  }
+  return movie.progress || "-";
+}
+
 function CardList({ entries, isEditMode, deleteEntry, onMove }) {
   return (
     <div className="card-list">
@@ -31,7 +42,7 @@ function CardList({ entries, isEditMode, deleteEntry, onMove }) {
                     </Link>
                   </h1>
                   <div className="info">
-                    <div className="progress">{movie.progress || "-"}</div>
+                    <div className="progress">{checkProgress(movie)}</div>
                     <div className="rating">
                       <FontAwesomeIcon icon="star" />
                       {movie.vote_average || "-"}
