@@ -3,11 +3,15 @@ import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import "../css/Tabs.scss";
 
-// this sort function always puts the "All" tab first, then sorts the rest normally
-function allFirstComp(a, b) {
-  if (a[0] === "All") return -1;
-  if (b[0] === "All") return 1;
-  return a - b;
+function allTab(links) {
+  if (links.All) {
+    return (
+      <li>
+        <NavLink className="tab-link" to={links.All}>All</NavLink>
+      </li>
+    );
+  }
+  return null;
 }
 
 function Tabs({ links }) {
@@ -15,10 +19,16 @@ function Tabs({ links }) {
     <nav className="tabs">
       <ul>
         {
-          Object.entries(links).sort(allFirstComp).map(([name, url]) => (
-            <li key={name}>
-              <NavLink className="tab-link" to={url}>{name}</NavLink>
-            </li>
+          // if there is a tab called All, always put it first
+          allTab(links)
+        }
+        {
+          Object.entries(links)
+            .filter(([name]) => name !== "All")
+            .map(([name, url]) => (
+              <li key={name}>
+                <NavLink className="tab-link" to={url}>{name}</NavLink>
+              </li>
           ))
         }
       </ul>
