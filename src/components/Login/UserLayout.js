@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import "../../css/LoginButton.scss";
@@ -40,13 +41,17 @@ function UserLayout({
                   onChange={handleChange}
                   placeholder="Email"
                 />
-                <input
-                  id="passBar"
-                  type="password"
-                  value={password}
-                  onChange={handleChange}
-                  placeholder="Password"
-                />
+                <div className="passwordDiv">
+                  <input
+                    className="passwordInput"
+                    id="passBar"
+                    type="password"
+                    value={password}
+                    onChange={handleChange}
+                    placeholder="Password"
+                  />
+                  <Link className="forgotpassword" to="/forgot_password">Forgot password</Link>
+                </div>
                 <button className="login-btn">Log in</button>
                 <button className="signupButton" onClick={signUpClick}>Sign up</button>
               </div>
