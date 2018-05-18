@@ -1,5 +1,6 @@
 import React from "react";
 import propTypes from "prop-types";
+import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import PosterCard from "./PosterCard";
 import { normalizeMovie } from "../api/APIUtils";
@@ -26,21 +27,25 @@ function MovieInformation({ currentMovie }) {
             if (person.profile_path === null) {
               return (
                 <div key={person.id}>
-                  <div className="no-poster">
-                    <FontAwesomeIcon icon="image" />
-                  </div>
-                  <p>
-                    <b className="nameBorder" >{person.name}</b><br /> {person.character}
-                  </p>
+                  <Link to={`/person/${person.id}`}>
+                    <div className="no-poster">
+                      <FontAwesomeIcon icon="image" />
+                    </div>
+                    <p>
+                      <b className="nameBorder" >{person.name}</b><br /> {person.character}
+                    </p>
+                  </Link>
                 </div>
               );
             }
             return (
               <div className="card" key={person.id}>
-                <img className="cast" src={`https://image.tmdb.org/t/p/w200/${person.profile_path}`} alt="cast" />
-                <p>
-                  <b className="nameBorder" >{person.name}</b><br /> {person.character}
-                </p>
+                <Link to={`/person/${person.id}`}>
+                  <img className="cast" src={`https://image.tmdb.org/t/p/w200/${person.profile_path}`} alt="cast" />
+                  <p>
+                    <b className="nameBorder" >{person.name}</b><br /> {person.character}
+                  </p>
+                </Link>
               </div>);
           })
         }
