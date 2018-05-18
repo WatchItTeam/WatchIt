@@ -3,8 +3,18 @@
 .listpicker-modal {
   h1 {
     text-align: center;
+    padding-left: 10px;
     font-size: 30px;
     margin: 0;
+  }
+
+  .trash-icon-button{
+    position: relative;
+    button {
+      top: 5px;
+      left: 10px;
+      position: absolute;
+    }
   }
 
   form {

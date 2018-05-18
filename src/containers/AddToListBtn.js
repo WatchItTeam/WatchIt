@@ -2,8 +2,8 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import firebase from "../Firebase/firebase";
-import { addToList, fetchOneFromList, updateWatchStatus } from "../Firebase/lists";
-import { successToast, errorToast, infoToast } from "../utils/toast";
+import { addToList, fetchOneFromList, updateWatchStatus, removeFromList } from "../Firebase/lists";
+import { successToast, errorToast, infoToast, removeToast } from "../utils/toast";
 import { withUser } from "../Firebase/UserContext";
 import { normalizeMovie } from "../api/APIUtils";
 import parseName from "../utils/parseName";
@@ -84,10 +84,25 @@ class AddToListBtn extends Component {
     this.setState({ isLoading: false });
   }
 
+  onModalRemove = async (selectedList) => {
+    this.setState({ isLoading: true });
+
+    const { currentMovie } = this.props;
+    const movie = normalizeMovie(currentMovie);
+    try {
+      await removeFromList(currentMovie.id);
+      removeToast(`Removed ${movie.title} from ${parseName(selectedList)}`);
+      this.setState({ statusOfCurrentMovie: null });
+    } catch (error) {
+      errorToast(`Something went wrong when trying to remove ${movie.title}`);
+    }
+    this.setState({ isLoading: false });
+  }
+
   render() {
     const { isLoading, modalIsOpen, statusOfCurrentMovie } = this.state;
     const { user } = this.props;
-    const { onModalSubmit, hideModal, showModal } = this;
+    const { onModalSubmit, hideModal, showModal, onModalRemove } = this;
 
     let label; // the text on the button
     if (isLoading) {
@@ -115,6 +130,7 @@ class AddToListBtn extends Component {
           hideFunc={hideModal}
           onSubmit={onModalSubmit}
           statusOfCurrent={statusOfCurrentMovie}
+          onRemove={onModalRemove}
         />
       </Fragment>
     );
