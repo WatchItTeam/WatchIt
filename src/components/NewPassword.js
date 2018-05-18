@@ -29,7 +29,7 @@ class NewPassword extends Component {
     render() {
       return (
         <div id="new-password" className="container">
-          <h3>Password Reset</h3>
+          <h1>Password Reset</h1>
           <p>Enter your email below to reset your password</p>
           <form onSubmit={this.retrievePasswordClick}>
             <input

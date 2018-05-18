@@ -202,9 +202,7 @@ class App extends Component {
               <Route
                 exact
                 path="/forgot_password"
-                render={() => (
-                  <NewPassword />
-                )}
+                component={NewPassword}
               />
               <Route component={NotFoundPage} />
             </Switch>
