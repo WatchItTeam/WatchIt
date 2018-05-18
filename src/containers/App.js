@@ -188,7 +188,12 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/tv/:id/episodes"
+                path="/tv/:id/episodes/"
+                render={() => <Redirect to="all" />}
+              />
+              <Route
+                exact
+                path="/tv/:id/episodes/:seasonNumber"
                 render={props => (
                   <EpisodeContainer {...props} currentMovie={currentMovie} />
                 )}
