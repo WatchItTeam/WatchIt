@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import EpisodePage from "../components/Episodes/EpisodePage";
 import { getSeasonFromId, getTVInfo, normalizeMovie } from "../api/APIUtils";
 import { successToast, errorToast } from "../utils/toast";
-import firebase from "../Firebase/firebase";
 import parseName from "../utils/parseName";
 import { withUser } from "../Firebase/UserContext";
 import {
@@ -19,15 +18,16 @@ class EpisodeContainer extends Component {
   }
 
   state = {
-    currentSeason: 1,
+    currentSeason: 1, // only used when browsing All seasons
     numberOfSeasons: 1,
-    episodes: [],
+    seasons: {},
     title: "",
     currentShow: {},
     isLoading: true,
     watchedEpisodes: {},
     /* the watch status/list the current show is in, if the user has already added it */
     statusOfCurrentMovie: null,
+    errorMsg: null,
   };
 
   componentDidMount() {
@@ -44,40 +44,60 @@ class EpisodeContainer extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       this.loadSeason();
-      if (this.props.user.status === "signedIn") {
-        this.checkCurrentShow(this.props.user);
-      }
     }
   }
 
   loadSeason() {
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, errorMsg: "" });
     const { id, seasonNumber } = this.props.match.params;
 
-    let season;
+    let seasonFetch;
     if (seasonNumber === "all") {
-      season = getSeasonFromId(id, this.state.currentSeason);
+      this.setState({ seasons: {} });
+      seasonFetch = getSeasonFromId(id, this.state.currentSeason);
     } else {
-      season = getSeasonFromId(id, (seasonNumber || 1));
+      seasonFetch = getSeasonFromId(id, (seasonNumber || 1));
     }
 
     const { currentMovie } = this.props;
-    let tvInfo;
     if (!currentMovie || currentMovie.id !== id) {
-      tvInfo = getTVInfo(this.props.match.params.id);
-    } else {
-      tvInfo = Promise.resolve(currentMovie);
+      getTVInfo(this.props.match.params.id)
+        .then((show) => {
+          this.setState({
+            title: show.name,
+            currentShow: normalizeMovie(show),
+            numberOfSeasons: show.number_of_seasons,
+          });
+        });
     }
 
-    Promise.all([season, tvInfo]).then(([episodes, show]) => {
+    seasonFetch.then((episodes) => {
+      this.setState(prevState => ({
+        seasons: {
+          ...prevState.seasons,
+          [seasonNumber === "all" ? this.state.currentSeason : seasonNumber]: episodes,
+        },
+        isLoading: false,
+      }));
+    }).catch((err) => {
       this.setState({
-        numberOfSeasons: show.number_of_seasons,
-        title: show.name,
-        currentShow: normalizeMovie(show),
-        episodes,
+        errorMsg: err.toString(),
         isLoading: false,
       });
     });
+  }
+
+  loadAndAppend = async () => {
+    const { id } = this.props.match.params;
+    const { currentSeason } = this.state;
+    const nextSeason = await getSeasonFromId(id, currentSeason + 1);
+    this.setState(prevState => ({
+      currentSeason: prevState.currentSeason + 1,
+      seasons: {
+        ...prevState.seasons,
+        [currentSeason + 1]: nextSeason,
+      },
+    }));
   }
 
   checkCurrentShow(user) {
@@ -120,8 +140,8 @@ class EpisodeContainer extends Component {
 
   // passed down to EpisodePage -> Season
   setSeason = (seasonNumber, add) => {
-    const { episodes, statusOfCurrentMovie, currentShow } = this.state;
-    setSeasonStatus(currentShow.id, seasonNumber, episodes.length, add);
+    const { seasons, statusOfCurrentMovie, currentShow } = this.state;
+    setSeasonStatus(currentShow.id, seasonNumber, seasons[seasonNumber].length, add);
 
     // if show isn't in list, add to watching by default
     if (!statusOfCurrentMovie && add) {
@@ -136,10 +156,12 @@ class EpisodeContainer extends Component {
 
   render() {
     const { id, seasonNumber } = this.props.match.params;
+
     return (
       <EpisodePage
         title={this.state.title}
-        episodes={this.state.episodes}
+        errorMsg={this.state.errorMsg}
+        seasons={this.state.seasons}
         numberOfSeasons={this.state.numberOfSeasons}
         watchedEpisodes={this.state.watchedEpisodes}
         showId={id}
@@ -148,6 +170,7 @@ class EpisodeContainer extends Component {
         addEpisode={this.addEpisode}
         removeEpisode={this.removeEpisode}
         setSeason={this.setSeason}
+        loadAndAppend={this.loadAndAppend}
       />
     );
   }

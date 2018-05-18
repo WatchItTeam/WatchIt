@@ -7,7 +7,7 @@ import "../css/Tabs.scss";
 function allFirstComp(a, b) {
   if (a[0] === "All") return -1;
   if (b[0] === "All") return 1;
-  return a > b;
+  return a - b;
 }
 
 function Tabs({ links }) {

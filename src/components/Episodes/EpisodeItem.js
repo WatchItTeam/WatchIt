@@ -73,11 +73,15 @@ function EpisodeItem({
   );
 }
 
+EpisodeItem.defaultProps = {
+  poster: "", // some episodes have no image
+};
+
 EpisodeItem.propTypes = {
   episodeNumber: PropTypes.number.isRequired,
   seasonNumber: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
+  poster: PropTypes.string,
   description: PropTypes.string.isRequired,
   addEpisode: PropTypes.func.isRequired,
   removeEpisode: PropTypes.func.isRequired,

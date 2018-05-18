@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import InfiniteScroll from "react-infinite-scroller";
 import Season from "./Season";
 import Tabs from "../Tabs";
 
@@ -18,7 +19,8 @@ function mapSeasonsToTabs(numberOfSeasons, showId) {
 
 function EpisodePage({
   title,
-  episodes,
+  seasons,
+  errorMsg,
   numberOfSeasons,
   watchedEpisodes,
   seasonNumber,
@@ -27,6 +29,7 @@ function EpisodePage({
   removeEpisode,
   showId,
   setSeason,
+  loadAndAppend,
 }) {
   if (isLoading) {
     return (
@@ -34,11 +37,48 @@ function EpisodePage({
     );
   }
 
-  const baseUrl = `/tv/${showId}`;
+  let content;
+  if (errorMsg) {
+    content = "No episodes found :(";
+  } else if (seasonNumber === "all") {
+    content = (
+      <InfiniteScroll
+        loadMore={loadAndAppend}
+        hasMore={seasonNumber !== numberOfSeasons}
+      >
+        {
+          Object.entries(seasons).map(([num, episodes]) => (
+            <Season
+              key={num}
+              episodes={episodes}
+              watchedEpisodes={watchedEpisodes}
+              seasonNumber={parseInt(num, 10)}
+              addEpisode={addEpisode}
+              removeEpisode={removeEpisode}
+              showId={showId}
+              setSeason={setSeason}
+            />
+          ))
+        }
+      </InfiniteScroll>
+    );
+  } else {
+    content = (
+      <Season
+        episodes={seasons[seasonNumber] || []}
+        watchedEpisodes={watchedEpisodes}
+        seasonNumber={parseInt(seasonNumber, 10)}
+        addEpisode={addEpisode}
+        removeEpisode={removeEpisode}
+        showId={showId}
+        setSeason={setSeason}
+      />
+    );
+  }
 
   return (
     <section className="container">
-      <Link to={baseUrl}>
+      <Link to={`/tv/${showId}`}>
         <h1>
           <FontAwesomeIcon icon="arrow-left" />
           &nbsp;
@@ -46,30 +86,28 @@ function EpisodePage({
         </h1>
       </Link>
       <Tabs links={mapSeasonsToTabs(numberOfSeasons, showId)} />
-      <Season
-        episodes={episodes}
-        watchedEpisodes={watchedEpisodes}
-        seasonNumber={seasonNumber}
-        addEpisode={addEpisode}
-        removeEpisode={removeEpisode}
-        showId={showId}
-        setSeason={setSeason}
-      />
+      {content}
     </section>
   );
 }
 
+EpisodePage.defaultProps = {
+  errorMsg: "",
+};
+
 EpisodePage.propTypes = {
   title: PropTypes.string.isRequired,
-  episodes: PropTypes.array.isRequired,
+  seasons: PropTypes.object.isRequired,
+  errorMsg: PropTypes.string,
   numberOfSeasons: PropTypes.number.isRequired,
   watchedEpisodes: PropTypes.object.isRequired,
-  seasonNumber: PropTypes.number.isRequired,
+  seasonNumber: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   isLoading: PropTypes.bool.isRequired,
   addEpisode: PropTypes.func.isRequired,
   removeEpisode: PropTypes.func.isRequired,
   showId: PropTypes.string.isRequired,
   setSeason: PropTypes.func.isRequired,
+  loadAndAppend: PropTypes.func.isRequired,
 };
 
 export default EpisodePage;

@@ -31,7 +31,12 @@ export class UserProvider extends Component {
     firebaseApp.auth().onAuthStateChanged((user) => {
       const status = user ? "signedIn" : "signedOut";
       const userObj = { ...user, status };
-      this.setState({ user: userObj });
+      this.setState(prevState => ({
+        user: {
+          ...prevState.user,
+          ...userObj,
+        },
+      }));
     });
   }
 
