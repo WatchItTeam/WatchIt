@@ -63,6 +63,12 @@
     }
   }
 
+  .presentation {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    grid-gap: 20px;
+  }
+
   .watch-list {
     .title-bar {
       h1 {

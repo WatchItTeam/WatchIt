@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { getMovieInfo, getTVInfo } from "../api/APIUtils";
+import { getPersonDetails } from "../api/APIUtils";
+import ActorPage from "../components/ActorPage";
 import ErrorMessage from "../components/ErrorMessage";
-import DetailsPage from "../components/DetailsPage";
 import "../css/Detailspage.scss";
 
-class DetailspageContainer extends Component {
+class ActorPageContainer extends Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired, // from react-router
-    currentMovie: PropTypes.object.isRequired,
-    setCurrentMovie: PropTypes.func.isRequired,
+    currentActor: PropTypes.object.isRequired,
+    setCurrentActor: PropTypes.func.isRequired,
   }
   state = {
     error: "",
@@ -19,7 +19,7 @@ class DetailspageContainer extends Component {
   }
 
   componentDidMount() {
-    if (this.props.currentMovie && this.props.currentMovie.id !== this.props.match.params.id) {
+    if (this.props.currentActor && this.props.currentActor.id !== this.props.match.params.id) {
       this.getDetails();
     }
   }
@@ -31,27 +31,18 @@ class DetailspageContainer extends Component {
   }
 
   getDetails() {
-    const { mediaType, id } = this.props.match.params;
+    const { id } = this.props.match.params;
     this.setState({ hasLoaded: false });
-
-    if (mediaType === "movie") {
-      getMovieInfo(id)
-        .then(this.processResponse)
-        .catch((error) => {
-          this.setState({ error: error.toString() });
-        });
-    } else if (mediaType === "tv") {
-      getTVInfo(id)
-        .then(this.processResponse)
-        .catch((error) => {
-          this.setState({ error: error.toString() });
-        });
-    }
+    getPersonDetails(id)
+      .then(this.processResponse)
+      .catch((error) => {
+        this.setState({ error: error.toString() });
+      });
   }
 
-  processResponse = (currentMovie) => {
-    if (!currentMovie) return;
-    this.props.setCurrentMovie(currentMovie);
+  processResponse = (personDetails) => {
+    if (!personDetails) return;
+    this.props.setCurrentActor(personDetails);
     this.setState({ hasLoaded: true });
   }
 
@@ -68,13 +59,13 @@ class DetailspageContainer extends Component {
         </div>
       );
     }
-    if (!this.state.hasLoaded || !this.props.currentMovie) {
+    if (!this.state.hasLoaded) {
       return <div style={{ marginTop: "100px" }} className="container">Loading...</div>;
     }
     return (
-      <DetailsPage currentMovie={this.props.currentMovie} />
+      <ActorPage currentActor={this.props.currentActor} />
     );
   }
 }
 
-export default DetailspageContainer;
+export default ActorPageContainer;
