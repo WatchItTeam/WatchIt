@@ -1,5 +1,5 @@
 # Project details
-Updated May 7th
+Updated May 18th
 
 ## What has been done
 * Custom Webpack setup, Babel, ESLint, Sass
@@ -15,19 +15,17 @@ Updated May 7th
     * The movie details page fetches movie info including data such as rating, runtime, cast, trailers, etc.
     * Different API calls for top, upcoming, genres etc.
 * Login / sign up with Firebase
-
-For more details, feel free to check the closed issues in our issue tracker
-
-## What we plan to do
-* Add list functionality
+* Added list functionality
     * Functionality to add to lists
     * Delete from lists
     * Fetch list entries from Firebase
     * Episode lists for tv shows to be able to mark individual episodes as seen
-* More responsive header (login/sign up fields get cut off at some resolutions)
+* Added a detail page for actors
+
+For more details, feel free to check the closed issues in our issue tracker
+
 
 ### If we have time
-* Add a detail page for actors
 * Profile page with watch stats
 * Misc minor issues.
 

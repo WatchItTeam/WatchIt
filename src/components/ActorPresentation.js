@@ -7,7 +7,6 @@ import "../css/ActorPresentation.scss";
 
 function checkSocialMedia(externalIDs) {
   const socialMedia = [];
-  console.log(externalIDs);
   if (externalIDs.facebook_id) {
     socialMedia.push((
       <a href={`https://www.facebook.com/${externalIDs.facebook_id}`} key="facebook">
@@ -46,10 +45,10 @@ function ActorPresentation({ currentActor }) {
       knowncredits += currentActor.combined_credits.crew.length;
     }
   }
-  console.log(currentActor);
+
   return (
-    <div className="presentation">
-      <div>
+    <div className="actor-presentation">
+      <div className="actor-facts">
         <ImageWithFallback
           className="poster"
           src={currentActor.profile_path}
@@ -58,21 +57,30 @@ function ActorPresentation({ currentActor }) {
           mediaType="person"
         />
         <h1 className="personal">Personal Information</h1>
+
         <h2>Place of Birth</h2>
         <p>{currentActor.place_of_birth || "Not available"}</p>
+
         <h2>Birthday</h2>
         <p>{currentActor.birthday || "Not available"}</p>
+
         <h2>Known Credits</h2>
         <p>{knowncredits}</p>
+
         <h2>Official Homepage</h2>
         {currentActor.homepage ? <a href={`${currentActor.homepage}`}>Link</a> : "Not available"}
+
         <h2>Social Media</h2>
         {checkSocialMedia(currentActor.external_ids)}
       </div>
-      <div>
+      <div className="main-info">
         <h1>{currentActor.name}</h1>
-        <p>Biography:</p>
-        {currentActor.biography ? currentActor.biography.split("\n").map(text => text && <p key={text}>{text}</p>) : "Not available"}
+        <h2>Biography</h2>
+        {currentActor.biography ?
+          currentActor.biography.split("\n").map(text => text && <p key={text}>{text}</p>)
+          :
+          "Not available"
+        }
       </div>
     </div>
   );

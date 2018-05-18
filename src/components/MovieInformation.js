@@ -32,7 +32,7 @@ function MovieInformation({ currentMovie }) {
                       <FontAwesomeIcon icon="image" />
                     </div>
                     <p>
-                      <b className="nameBorder" >{person.name}</b><br /> {person.character}
+                      <b className="name-border" >{person.name}</b><br /> {person.character}
                     </p>
                   </Link>
                 </div>
@@ -41,9 +41,13 @@ function MovieInformation({ currentMovie }) {
             return (
               <div className="card" key={person.id}>
                 <Link to={`/person/${person.id}`}>
-                  <img className="cast" src={`https://image.tmdb.org/t/p/w200/${person.profile_path}`} alt="cast" />
+                  <img
+                    className="cast"
+                    src={`https://image.tmdb.org/t/p/w200/${person.profile_path}`}
+                    alt={person.name}
+                  />
                   <p>
-                    <b className="nameBorder" >{person.name}</b><br /> {person.character}
+                    <b className="name-border" >{person.name}</b><br /> {person.character}
                   </p>
                 </Link>
               </div>);
@@ -55,7 +59,7 @@ function MovieInformation({ currentMovie }) {
 
   let recommendations;
   if (currentMovie.recommendations.results.length === 0) {
-    recommendations = <div className="botPadding">No recommendations to show</div>;
+    recommendations = <div className="bot-padding">No recommendations to show</div>;
   } else {
     recommendations = (
       <Scroll arrayLength={currentMovie.recommendations.results.length}>
@@ -83,7 +87,7 @@ function MovieInformation({ currentMovie }) {
   }
 
   return (
-    <div className="movieInfo">
+    <section className="movie-info">
       <h2>Story</h2>
       {currentMovie.overview}
       <h2>Trailers</h2>
@@ -94,7 +98,7 @@ function MovieInformation({ currentMovie }) {
         You may also like
       </h2>
       {recommendations}
-    </div>
+    </section>
   );
 }
 

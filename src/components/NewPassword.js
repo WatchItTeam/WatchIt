@@ -33,7 +33,7 @@ class NewPassword extends Component {
           <p>Enter your email below to reset your password</p>
           <form onSubmit={this.retrievePasswordClick}>
             <input
-              id="emailBar"
+              id="email-bar"
               className="emailReset"
               type="email"
               value={this.state.email}

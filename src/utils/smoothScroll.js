@@ -39,7 +39,7 @@ export default function smoothScrollTo(element, scrollTarget, animDuration) {
     return x * x * (3 - (2 * x));
   };
 
-  return new Promise(((resolve, reject) => {
+  return new Promise(((resolve) => {
     // This is to keep track of where the element's scrollLeft is
     // supposed to be, based on what we're doing
     let previousTop = element.scrollLeft;
@@ -47,7 +47,9 @@ export default function smoothScrollTo(element, scrollTarget, animDuration) {
     // This is like a think function from a game loop
     const scrollFrame = () => {
       if (element.scrollLeft !== previousTop) {
-        reject(new Error("interrupted"));
+        // reject(new Error("interrupted"));
+        // ^ can be used if you need to detect if
+        // scroll has been interrupted
         return;
       }
 
