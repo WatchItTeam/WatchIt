@@ -14,6 +14,7 @@ import SearchpageContainer from "./SearchpageContainer";
 import Sidebar from "../components/Sidebar";
 import DynamicHeader from "../containers/DynamicHeader";
 import DetailspageContainer from "./DetailspageContainer";
+import ActorPageContainer from "./ActorPageContainer";
 import UserList from "../containers/UserList";
 import BrowseMoviesContainer from "./BrowseMoviesContainer";
 import BrowseTvContainer from "./BrowseTvContainer";
@@ -50,12 +51,17 @@ class App extends Component {
     nowPlayingMovies: [],
     nowAiringTVShows: [],
     currentMovie: {},
+    currentActor: {},
     searchResults: {
       results: [],
       currentPage: null,
       totalResults: null,
       totalPages: null,
     },
+  }
+
+  setCurrentActor = (currentActor) => {
+    this.setState({ currentActor });
   }
 
   setCurrentMovie = (currentMovie) => {
@@ -104,6 +110,7 @@ class App extends Component {
       nowAiringTVShows,
       searchResults,
       currentMovie,
+      currentActor,
     } = this.state;
 
     const sidebarOverlay = (
@@ -184,6 +191,16 @@ class App extends Component {
                     {...props}
                     currentMovie={currentMovie}
                     setCurrentMovie={this.setCurrentMovie}
+                  />)}
+              />
+              <Route
+                exact
+                path="/person/:id"
+                render={props => (
+                  <ActorPageContainer
+                    {...props}
+                    currentActor={currentActor}
+                    setCurrentActor={this.setCurrentActor}
                   />)}
               />
               <Route

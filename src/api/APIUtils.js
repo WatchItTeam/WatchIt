@@ -170,3 +170,9 @@ export async function multiSearch(query, page = 1) {
   const res = await fetch(multiSearchUrl);
   return checkResponse(res);
 }
+
+export function getPersonDetails(id) {
+  const personURL = `${baseUrl}/person/${id}?api_key=${API_KEY}&append_to_response=combined_credits,images,external_ids`;
+  return fetch(personURL)
+    .then(checkResponse);
+}
