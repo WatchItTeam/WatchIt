@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import ActorPresentation from "./ActorPresentation";
 
-
 /**
  * Markup for the actors page
  */

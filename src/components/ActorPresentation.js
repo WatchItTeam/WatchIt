@@ -7,7 +7,6 @@ import "../css/ActorPresentation.scss";
 
 function checkSocialMedia(externalIDs) {
   const socialMedia = [];
-  console.log(externalIDs);
   if (externalIDs.facebook_id) {
     socialMedia.push((
       <a href={`https://www.facebook.com/${externalIDs.facebook_id}`} key="facebook">
@@ -46,10 +45,10 @@ function ActorPresentation({ currentActor }) {
       knowncredits += currentActor.combined_credits.crew.length;
     }
   }
-  console.log(currentActor);
+
   return (
-    <div className="presentation">
-      <div>
+    <div className="actor-presentation">
+      <div className="actor-facts">
         <ImageWithFallback
           className="poster"
           src={currentActor.profile_path}
@@ -74,9 +73,9 @@ function ActorPresentation({ currentActor }) {
         <h2>Social Media</h2>
         {checkSocialMedia(currentActor.external_ids)}
       </div>
-      <div>
+      <div className="main-info">
         <h1>{currentActor.name}</h1>
-        <p>Biography:</p>
+        <h2>Biography</h2>
         {currentActor.biography ?
           currentActor.biography.split("\n").map(text => text && <p key={text}>{text}</p>)
           :
