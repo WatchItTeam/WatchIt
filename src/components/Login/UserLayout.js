@@ -99,7 +99,6 @@ UserLayout.defaultProps = {
 UserLayout.propTypes = {
   onSignOutClick: PropTypes.func.isRequired,
   signInClick: PropTypes.func.isRequired,
-  signUpClick: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   email: PropTypes.string,
   password: PropTypes.string,
