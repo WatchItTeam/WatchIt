@@ -47,9 +47,9 @@ class SearchpageContainer extends Component {
     this.search(query);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const query = this.getQuery();
-    if (query !== this.state.query) {
+    if ((this.props.location !== prevProps.location) || (query !== this.state.query)) {
       this.search(query);
     }
   }
@@ -62,6 +62,8 @@ class SearchpageContainer extends Component {
   async search(query) {
     if (!query) return;
 
+    this.setState({ error: null });
+
     try {
       this.setState({ query, isLoading: true });
       const resp = await multiSearch(query);
@@ -72,7 +74,6 @@ class SearchpageContainer extends Component {
         totalResults: resp.total_results,
       });
     } catch (error) {
-      console.error(error);
       this.setState({ error });
     }
 
