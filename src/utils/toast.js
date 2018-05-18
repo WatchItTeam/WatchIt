@@ -13,3 +13,9 @@ export function errorToast(text) {
 export function infoToast(text) {
   toast.info(text);
 }
+
+export function removeToast(text) {
+  toast(text, {
+    className: "removeToast",
+  });
+}
