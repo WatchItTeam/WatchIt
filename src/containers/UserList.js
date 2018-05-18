@@ -64,9 +64,7 @@ class UserList extends Component {
   deleteEntry = (movie) => {
     removeFromList(movie.id)
       .then(() => {
-        successToast(`Successfuly removed ${movie.title}`);
-        const newList = this.state.listEntries.filter(item => item.id !== movie.id);
-        this.setState({ listEntries: newList });
+        removeToast(`Removed ${movie.title} from ${this.state.listDisplayName}`);
       }).catch(() => {
         this.setState({ error: true });
       });
