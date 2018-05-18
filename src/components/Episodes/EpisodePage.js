@@ -10,7 +10,7 @@ function mapSeasonsToTabs(numberOfSeasons, showId) {
   const tabLinks = {
     All: `${baseUrl}/all`,
   };
-  for (let i = 1; i < numberOfSeasons; i++) {
+  for (let i = 1; i <= numberOfSeasons; i++) {
     tabLinks[i] = `${baseUrl}/${i}`;
   }
   return tabLinks;
