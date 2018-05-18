@@ -9,9 +9,7 @@ import ActorPresentation from "./ActorPresentation";
 function ActorPage({ currentActor }) {
   return (
     <div>
-      {<ActorPresentation currentActor={currentActor} />
-        /* <ActorDetails movie={currentMovie} />}
-        <ActorFilmography currentMovie={currentMovie} /> */}
+      <ActorPresentation currentActor={currentActor} />
     </div>
   );
 }

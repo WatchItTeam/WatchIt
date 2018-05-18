@@ -29,6 +29,9 @@ function checkSocialMedia(externalIDs) {
       </a>
     ));
   }
+  if (socialMedia.length === 0) {
+    return "Not available";
+  }
   return socialMedia;
 }
 
