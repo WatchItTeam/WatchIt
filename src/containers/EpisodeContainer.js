@@ -94,9 +94,20 @@ class EpisodeContainer extends Component {
     setEpisodeStatus(id, episodeNumber, false);
   }
 
-  setSeason = (seasonNumber, hasWatched) => {
-    const { episodes, currentShow } = this.state;
-    setSeasonStatus(currentShow.id, seasonNumber, episodes.length, hasWatched);
+  // passed down to EpisodePage -> Season
+  setSeason = (seasonNumber, add) => {
+    const { episodes, statusOfCurrentMovie, currentShow } = this.state;
+    setSeasonStatus(currentShow.id, seasonNumber, episodes.length, add);
+
+    // if show isn't in list, add to watching by default
+    if (!statusOfCurrentMovie && add) {
+      try {
+        addToList(currentShow, watchStates.watching);
+        successToast(`Added ${currentShow.title} to ${parseName(watchStates.watching)}`);
+      } catch (error) {
+        errorToast("Something went wrong, please try again");
+      }
+    }
   }
 
   render() {
