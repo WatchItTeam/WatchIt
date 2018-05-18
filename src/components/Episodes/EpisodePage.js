@@ -5,6 +5,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import InfiniteScroll from "react-infinite-scroller";
 import Season from "./Season";
 import Tabs from "../Tabs";
+import "../../css/EpisodePage.scss";
 
 function mapSeasonsToTabs(numberOfSeasons, showId) {
   const baseUrl = `/tv/${showId}/episodes`;
@@ -77,9 +78,9 @@ function EpisodePage({
   }
 
   return (
-    <section className="container">
+    <section className="container episode-page">
       <Link to={`/tv/${showId}`}>
-        <h1>
+        <h1 className="show-title">
           <FontAwesomeIcon icon="arrow-left" />
           &nbsp;
           {title}
