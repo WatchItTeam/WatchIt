@@ -53,7 +53,11 @@ class EpisodeContainer extends Component {
 
     let seasonFetch;
     if (seasonNumber === "all") {
-      this.setState({ seasons: {} });
+      // reset all season data
+      this.setState({
+        currentSeason: 1,
+        seasons: {},
+      });
       seasonFetch = getSeasonFromId(id, this.state.currentSeason);
     } else {
       seasonFetch = getSeasonFromId(id, (seasonNumber || 1));
