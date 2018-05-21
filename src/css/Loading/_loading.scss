@@ -1,0 +1,11 @@
+$light: #f3f3f3;
+$dark: #e9e9e9;
+
+@keyframes skeleton-animation {
+  0% { background: $light; }
+  100% { background: $dark; }
+}
+
+@mixin skeleton-anim {
+  animation: skeleton-animation 0.7s ease infinite alternate;
+}
