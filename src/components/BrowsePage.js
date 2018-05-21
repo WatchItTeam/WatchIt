@@ -7,6 +7,7 @@ import BrowseGenresContainer from "../containers/BrowseGenresContainer";
 import PosterGrid from "./PosterGrid";
 import BrowseYear from "./BrowseYear";
 import ErrorMessage from "./ErrorMessage";
+import LoadingGrid from "./Loading/LoadingGrid";
 
 function BrowsePage({
   movies,
@@ -23,8 +24,6 @@ function BrowsePage({
   totalPages,
   loadMoreFunc }) {
   let titleTabs;
-  let statusMsg;
-
   if (type === "movies") {
     titleTabs = (
       <div>
@@ -39,20 +38,13 @@ function BrowsePage({
       </div>);
   }
 
+  let statusMsg;
   if (error) {
     statusMsg = (
       <ErrorMessage>{error}</ErrorMessage>
     );
   } else if (isLoading) {
-    statusMsg = (
-      <div>
-        Loading...
-      </div>
-    );
-  } else {
-    statusMsg = (
-      <div />
-    );
+    statusMsg = <LoadingGrid />;
   }
 
   return (
