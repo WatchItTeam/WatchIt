@@ -12,6 +12,17 @@ class HomepageContainer extends Component {
     setNowAiringTVShows: PropTypes.func.isRequired,
   }
 
+  // if the movies and series props aren't empty, don't show loading indicators
+  static getDerivedStateFromProps(props) {
+    if (props.movies.length !== 0 && props.series.length !== 0) {
+      return {
+        loadingMovies: false,
+        loadingShows: false,
+      };
+    }
+    return null;
+  }
+
   state = {
     error: false,
     loadingMovies: true,
