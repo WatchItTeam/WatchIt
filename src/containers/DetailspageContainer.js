@@ -15,7 +15,7 @@ class DetailspageContainer extends Component {
   }
   state = {
     error: "",
-    hasLoaded: false,
+    isLoading: true,
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class DetailspageContainer extends Component {
 
   getDetails() {
     const { mediaType, id } = this.props.match.params;
-    this.setState({ hasLoaded: false });
+    this.setState({ isLoading: true });
 
     if (mediaType === "movie") {
       getMovieInfo(id)
@@ -52,7 +52,7 @@ class DetailspageContainer extends Component {
   processResponse = (currentMovie) => {
     if (!currentMovie) return;
     this.props.setCurrentMovie(currentMovie);
-    this.setState({ hasLoaded: true });
+    this.setState({ isLoading: false });
   }
 
   render() {
@@ -68,11 +68,9 @@ class DetailspageContainer extends Component {
         </div>
       );
     }
-    if (!this.state.hasLoaded || !this.props.currentMovie) {
-      return <div style={{ marginTop: "100px" }} className="container">Loading...</div>;
-    }
+
     return (
-      <DetailsPage currentMovie={this.props.currentMovie} />
+      <DetailsPage currentMovie={this.props.currentMovie} isLoading={this.state.isLoading} />
     );
   }
 }
