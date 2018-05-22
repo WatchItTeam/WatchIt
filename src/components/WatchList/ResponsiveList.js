@@ -14,9 +14,8 @@ function ResponsiveList({
   onMove,
 }) {
   let lists;
-  if (isLoading) {
-    lists = "Loading...";
-  } else if (entries.length === 0) {
+
+  if (entries.length === 0 && !isLoading) {
     lists = "Nothing in this list";
   } else {
     lists = (
@@ -27,6 +26,7 @@ function ResponsiveList({
             isEditMode={isEditMode}
             deleteEntry={deleteEntry}
             onMove={onMove}
+            isLoading={isLoading}
           />
         </Desktop>
         <Mobile>

@@ -1,0 +1,28 @@
+@import "loading";
+
+.loading-table-list-row {
+  .poster-name {
+    display: flex;
+    align-items: center;
+  }
+
+  .poster {
+    height: 75px;
+  }
+
+  .short-text {
+    height: 1em;
+    width: 20px;
+    display: inline-block;
+  }
+
+  .long-text {
+    height: 1em;
+    width: 100px;
+    display: inline-block;
+  }
+
+  .poster, .short-text, .long-text {
+    @include skeleton-anim;
+  }
+}

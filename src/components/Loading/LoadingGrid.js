@@ -1,11 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
 import LoadingCard from "./LoadingCard";
 import "../../css/PosterGrid.scss";
 
-function LoadingGrid({ amount }) {
+function LoadingGrid() {
   const loadingCards = [];
-  for (let i = 0; i < amount; i++) {
+  const numberOfCards = 18;
+
+  for (let i = 0; i < numberOfCards; i++) {
     loadingCards.push(<LoadingCard key={i} />);
   }
   return (
@@ -14,13 +15,5 @@ function LoadingGrid({ amount }) {
     </div>
   );
 }
-
-LoadingGrid.defaultProps = {
-  amount: 18,
-};
-
-LoadingGrid.propTypes = {
-  amount: PropTypes.number,
-};
 
 export default LoadingGrid;
