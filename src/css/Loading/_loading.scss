@@ -1,5 +1,5 @@
-$light: #f3f3f3;
-$dark: #e9e9e9;
+$light: #ebebeb;
+$dark: darken($light, 10%);
 
 @keyframes skeleton-animation {
   0% { background: $light; }
