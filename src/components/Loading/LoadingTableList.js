@@ -20,9 +20,7 @@ function LoadingTableList() {
     ));
   }
 
-  return (
-    tableRows
-  );
+  return tableRows;
 }
 
 export default LoadingTableList;

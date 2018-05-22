@@ -7,5 +7,5 @@ $dark: darken($light, 10%);
 }
 
 @mixin skeleton-anim {
-  animation: skeleton-animation 0.7s ease infinite alternate;
+  animation: skeleton-animation 300ms ease infinite alternate;
 }

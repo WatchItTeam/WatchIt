@@ -35,6 +35,7 @@ function ResponsiveList({
             isEditMode={isEditMode}
             deleteEntry={deleteEntry}
             onMove={onMove}
+            isLoading={isLoading}
           />
         </Mobile>
       </div>
