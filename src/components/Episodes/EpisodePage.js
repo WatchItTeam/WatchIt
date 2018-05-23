@@ -5,6 +5,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import InfiniteScroll from "react-infinite-scroller";
 import Season from "./Season";
 import Tabs from "../Tabs";
+import LoadingEpisodePage from "../Loading/LoadingEpisodePage";
 import "../../css/EpisodePage.scss";
 
 function mapSeasonsToTabs(numberOfSeasons, showId) {
@@ -33,9 +34,7 @@ function EpisodePage({
   loadAndAppend,
 }) {
   if (isLoading) {
-    return (
-      <div className="container">Loading...</div>
-    );
+    return <LoadingEpisodePage />;
   }
 
   let content;
