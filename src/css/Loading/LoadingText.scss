@@ -7,15 +7,15 @@
   margin-right: 7px; // spaces between "words"
 
   &.word {
-    width: 25px;
+    width: 3ch;
   }
 
   &.short {
-    width: 100px;
+    width: 10ch;
   }
 
   &.long {
-    width: 150px;
+    width: 15ch;
     max-width: 70%;
   }
 
