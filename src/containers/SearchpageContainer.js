@@ -102,14 +102,6 @@ class SearchpageContainer extends Component {
     const { results, currentPage, totalPages, totalResults } = searchResults;
     const { query, error, isLoading } = this.state;
 
-    if (isLoading) {
-      return (
-        <div className="container">
-          Loading...
-        </div>
-      );
-    }
-
     if (error) {
       return (
         <div className="container">
@@ -127,6 +119,7 @@ class SearchpageContainer extends Component {
         totalResults={totalResults}
         query={query}
         loadMoreFunc={this.loadMoreAndAppend}
+        isLoading={isLoading}
       />
     );
   }

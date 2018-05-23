@@ -2,14 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroller";
 import PosterGrid from "./PosterGrid";
+import LoadingGrid from "./Loading/LoadingGrid";
 import "../css/Searchpage.scss";
 
 /**
  * Markup for the search page
  */
-function Searchpage({ results, currentPage, totalPages, totalResults, query, loadMoreFunc }) {
+function Searchpage({
+  results, currentPage, totalPages, totalResults, query, loadMoreFunc, isLoading,
+}) {
   let content;
-  if (results.length === 0) {
+  if (isLoading) {
+    content = <LoadingGrid />;
+  } else if (results.length === 0) {
     content = "No results :(";
   } else {
     content = <PosterGrid movies={results} />;
@@ -46,6 +51,7 @@ Searchpage.propTypes = {
   totalPages: PropTypes.number,
   totalResults: PropTypes.number,
   loadMoreFunc: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default Searchpage;
