@@ -10,19 +10,6 @@
   .poster {
     @include skeleton-anim;
     height: 120px;
-  }
-
-  .short-text {
-    @include skeleton-anim;
-    height: 1em;
-    width: 20px;
-    display: inline-block;
-  }
-
-  .long-text {
-    @include skeleton-anim;
-    height: 1em;
-    width: 100px;
-    display: inline-block;
+    border-radius: 4px;
   }
 }

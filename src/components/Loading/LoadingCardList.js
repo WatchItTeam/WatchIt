@@ -1,4 +1,5 @@
 import React from "react";
+import LoadingText from "./LoadingText";
 import "../../css/Loading/LoadingCardList.scss";
 
 function LoadingCardList() {
@@ -10,20 +11,20 @@ function LoadingCardList() {
       <li className="card-list-item loading-card-list-item">
         <div className="poster" />
         <h1 className="title">
-          <div className="long-text" />
+          <LoadingText type="long" />
         </h1>
         <div className="info">
           <div className="progress">
-            <div className="short-text" />
+            <LoadingText type="word" />
           </div>
           <div className="rating">
-            <div className="short-text" />
+            <LoadingText type="word" />
           </div>
           <div className="added">
-            <div className="long-text" />
+            <LoadingText type="long" />
           </div>
           <div className="media-type">
-            <div className="short-text" />
+            <LoadingText type="word" />
           </div>
         </div>
       </li>

@@ -1,4 +1,5 @@
 import React from "react";
+import LoadingText from "./LoadingText";
 import "../../css/Loading/LoadingTableList.scss";
 
 function LoadingTableList() {
@@ -10,12 +11,12 @@ function LoadingTableList() {
       <tr key={i} className="loading-table-list-row">
         <td className="poster-name">
           <div className="poster" />
-          <div className="long-text" />
+          <LoadingText type="long" />
         </td>
-        <td><div className="short-text" /></td>
-        <td><div className="short-text" /></td>
-        <td><div className="long-text" /></td>
-        <td><div className="long-text" /></td>
+        <td><LoadingText type="word" /></td>
+        <td><LoadingText type="word" /></td>
+        <td><LoadingText type="long" /></td>
+        <td><LoadingText type="long" /></td>
       </tr>
     ));
   }
