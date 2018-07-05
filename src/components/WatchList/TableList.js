@@ -5,7 +5,7 @@ import moment from "moment-mini";
 import ListDeleteBtn from "./ListDeleteBtn";
 import ListMoveBtn from "./ListMoveBtn";
 import PosterCard from "../PosterCard";
-
+import LoadingTableList from "../Loading/LoadingTableList";
 import "../../css/TableList.scss";
 
 function checkProgress(movie) {
@@ -19,7 +19,39 @@ function checkProgress(movie) {
   return movie.progress || "-";
 }
 
-function TableList({ entries, isEditMode, deleteEntry, onMove }) {
+function TableList({ entries, isEditMode, deleteEntry, onMove, isLoading }) {
+  let content;
+  if (isLoading) {
+    content = <LoadingTableList />;
+  } else {
+    content = (
+      entries.map(movie => (
+        <tr key={movie.id}>
+          <td className="poster-name">
+            <PosterCard
+              className="poster"
+              key={movie.id}
+              id={movie.id}
+              linkTo={`/${(movie.media_type)}/${movie.id}`}
+              title={movie.title}
+              posterPath={movie.poster_path}
+              releaseDate={movie.release_date}
+              mediaType={movie.media_type}
+              voteAverage={movie.vote_average}
+            />
+          </td>
+          <td>{movie.media_type}</td>
+          <td>{movie.vote_average || "-"}</td>
+          <td>
+            {checkProgress(movie)}
+          </td>
+          <td>{moment(movie.added.toDate()).fromNow()}</td>
+          {isEditMode && <td><ListMoveBtn onClick={() => onMove(movie)} /></td>}
+          {isEditMode && <td><ListDeleteBtn onClick={() => deleteEntry(movie)} /></td>}
+        </tr>
+      ))
+    );
+  }
   return (
     <table className="watch-list-table">
       <thead>
@@ -35,31 +67,7 @@ function TableList({ entries, isEditMode, deleteEntry, onMove }) {
       </thead>
       <tbody>
         {
-          entries.map(movie => (
-            <tr key={movie.id}>
-              <td className="poster-name">
-                <PosterCard
-                  className="poster"
-                  key={movie.id}
-                  id={movie.id}
-                  linkTo={`/${(movie.media_type)}/${movie.id}`}
-                  title={movie.title}
-                  posterPath={movie.poster_path}
-                  releaseDate={movie.release_date}
-                  mediaType={movie.media_type}
-                  voteAverage={movie.vote_average}
-                />
-              </td>
-              <td>{movie.media_type}</td>
-              <td>{movie.vote_average || "-"}</td>
-              <td>
-                {checkProgress(movie)}
-              </td>
-              <td>{moment(movie.added.toDate()).fromNow()}</td>
-              {isEditMode && <td><ListMoveBtn onClick={() => onMove(movie)} /></td>}
-              {isEditMode && <td><ListDeleteBtn onClick={() => deleteEntry(movie)} /></td>}
-            </tr>
-          ))
+          content
         }
       </tbody>
     </table>
@@ -71,6 +79,7 @@ TableList.propTypes = {
   isEditMode: PropTypes.bool.isRequired,
   deleteEntry: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default TableList;

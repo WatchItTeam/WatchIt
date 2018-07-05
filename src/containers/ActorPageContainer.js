@@ -15,7 +15,7 @@ class ActorPageContainer extends Component {
   }
   state = {
     error: "",
-    hasLoaded: false,
+    isLoading: true,
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class ActorPageContainer extends Component {
 
   getDetails() {
     const { id } = this.props.match.params;
-    this.setState({ hasLoaded: false });
+    this.setState({ isLoading: true });
     getPersonDetails(id)
       .then(this.processResponse)
       .catch((error) => {
@@ -43,7 +43,7 @@ class ActorPageContainer extends Component {
   processResponse = (personDetails) => {
     if (!personDetails) return;
     this.props.setCurrentActor(personDetails);
-    this.setState({ hasLoaded: true });
+    this.setState({ isLoading: false });
   }
 
   render() {
@@ -59,11 +59,9 @@ class ActorPageContainer extends Component {
         </div>
       );
     }
-    if (!this.state.hasLoaded) {
-      return <div style={{ marginTop: "100px" }} className="container">Loading...</div>;
-    }
+
     return (
-      <ActorPage currentActor={this.props.currentActor} />
+      <ActorPage currentActor={this.props.currentActor} isLoading={this.state.isLoading} />
     );
   }
 }

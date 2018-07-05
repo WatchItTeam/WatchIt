@@ -1,6 +1,7 @@
 // the normal image
 .img-with-fb {
   max-width: 100%;
+  background: #eeeeee; // shows a light grey background before image is fully loaded
   object-fit: cover;
 }
 

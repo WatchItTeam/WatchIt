@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 import DetailsBanner from "./DetailsBanner";
 import DetailsTitle from "./DetailsTitle";
 import MovieInformation from "./MovieInformation";
+import LoadingDetailsPage from "./Loading/LoadingDetailsPage";
 
 /**
  * Markup for the details page
  */
-function DetailsPage({ currentMovie }) {
+function DetailsPage({ currentMovie, isLoading }) {
+  if (isLoading) return <LoadingDetailsPage />;
+
   return (
     <div id="detailspage">
       <DetailsBanner backdropPath={currentMovie.backdrop_path} />
@@ -19,6 +22,7 @@ function DetailsPage({ currentMovie }) {
 
 DetailsPage.propTypes = {
   currentMovie: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default DetailsPage;
