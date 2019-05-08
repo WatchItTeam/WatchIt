@@ -1,6 +1,6 @@
 {
   "name": "watchit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A web app for browsing movies and TV shows",
   "main": "index.js",
   "scripts": {
