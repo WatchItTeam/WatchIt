@@ -16,15 +16,15 @@ class EpisodeMobileItem extends Component {
     seasonNumber: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-  }
+  };
 
   state = {
     isOpen: false,
-  }
+  };
 
   toggle = () => {
     this.setState(state => ({ isOpen: !state.isOpen }));
-  }
+  };
 
   render() {
     const { toggle } = this;
@@ -70,16 +70,10 @@ class EpisodeMobileItem extends Component {
       mobileItem = (
         <div className="expandedItemBox">
           <div className="expandedTitleBar">
-            <div className="episodeNumber">
-              {episodeNumber}
-            </div>
-            <div className="episodeTitleBox">
-              {name}
-            </div>
+            <div className="episodeNumber">{episodeNumber}</div>
+            <div className="episodeTitleBox">{name}</div>
           </div>
-          <div className="expandedDescriptionBox">
-            {description}
-          </div>
+          <div className="expandedDescriptionBox">{description}</div>
           <button className="expandBoxButton" onClick={toggle} />
         </div>
       );
@@ -87,28 +81,20 @@ class EpisodeMobileItem extends Component {
       mobileItem = (
         <div className="episodeMobileItem">
           <div>
-            <div className="episodeNumber">
-              {episodeNumber}
-            </div>
+            <div className="episodeNumber">{episodeNumber}</div>
           </div>
-          <div className="episodeMobileTitle">
-            {name}
-          </div>
+          <div className="episodeMobileTitle">{name}</div>
           <button className="expandBoxButton" onClick={toggle} />
-          <SignedIn>
-            {() => checkBox}
-          </SignedIn>
+          <SignedIn>{() => checkBox}</SignedIn>
           {/* put an empty div so the three column layout still works */}
-          <SignedOut><div /></SignedOut>
+          <SignedOut>
+            <div />
+          </SignedOut>
         </div>
       );
     }
 
-    return (
-      <div>
-        {mobileItem}
-      </div>
-    );
+    return <div>{mobileItem}</div>;
   }
 }
 

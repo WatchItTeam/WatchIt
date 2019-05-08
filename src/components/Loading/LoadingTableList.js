@@ -7,18 +7,26 @@ function LoadingTableList() {
   const numberOfRows = 4;
 
   for (let i = 0; i < numberOfRows; i++) {
-    tableRows.push((
+    tableRows.push(
       <tr key={i} className="loading-table-list-row">
         <td className="poster-name">
           <div className="poster" />
           <LoadingText type="long" />
         </td>
-        <td><LoadingText type="word" /></td>
-        <td><LoadingText type="word" /></td>
-        <td><LoadingText type="long" /></td>
-        <td><LoadingText type="long" /></td>
-      </tr>
-    ));
+        <td>
+          <LoadingText type="word" />
+        </td>
+        <td>
+          <LoadingText type="word" />
+        </td>
+        <td>
+          <LoadingText type="long" />
+        </td>
+        <td>
+          <LoadingText type="long" />
+        </td>
+      </tr>,
+    );
   }
 
   return tableRows;

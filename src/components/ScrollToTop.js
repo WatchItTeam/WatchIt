@@ -11,7 +11,7 @@ class ScrollToTop extends Component {
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
-  }
+  };
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {

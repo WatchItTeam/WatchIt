@@ -10,14 +10,14 @@ import "../../css/SignUpPage.scss";
 class SignUpPage extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
-  }
+  };
 
   state = {
     email: "",
     password: "",
   };
 
-  onSubmit = (event) => {
+  onSubmit = event => {
     event.preventDefault();
     const { email, password } = this.state;
     signUp(email, password)
@@ -25,29 +25,25 @@ class SignUpPage extends Component {
         successToast("Succesfully signed up!");
         this.props.history.push("/"); // redirect to home
       })
-      .catch((error) => {
+      .catch(error => {
         errorToast(error.message);
       });
-  }
+  };
 
-  handleChange = (event) => {
+  handleChange = event => {
     if (event.target.type === "email") {
       this.setState({ email: event.target.value });
     }
     if (event.target.type === "password") {
       this.setState({ password: event.target.value });
     }
-  }
+  };
 
   render() {
     const { email, password } = this.state;
     return (
       <div className="container signup-page">
-        <SignedIn>
-          {
-            () => <Redirect to="/" />
-          }
-        </SignedIn>
+        <SignedIn>{() => <Redirect to="/" />}</SignedIn>
         <h1>Sign up</h1>
         <form onSubmit={this.onSubmit}>
           <input

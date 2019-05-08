@@ -52,7 +52,7 @@ const htmlFile = "index.html";
 // (ensure the homepage value does not contain a trailing slash)
 // and use "" as public url in development since Webpack Dev Server will serve
 // the project at localhost:3000, aka from the root
-const publicUrl = production ? (packagejson.homepage || "") : "";
+const publicUrl = production ? packagejson.homepage || "" : "";
 
 // common config options for both dev and prod
 const config = {
@@ -70,9 +70,7 @@ const config = {
       },
     ],
   },
-  plugins: [
-    new Dotenv({ systemvars: true }),
-  ],
+  plugins: [new Dotenv({ systemvars: true })],
 };
 
 let merged;
@@ -135,10 +133,12 @@ if (production) {
       }),
       // Copy all static files to the build folder except HTML files, which
       // should be handled by HtmlWebpackPlugin
-      new CopyWebpackPlugin([{
-        from: contentBaseDir,
-        ignore: ["*.html"],
-      }]),
+      new CopyWebpackPlugin([
+        {
+          from: contentBaseDir,
+          ignore: ["*.html"],
+        },
+      ]),
     ],
   });
 } else {

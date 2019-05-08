@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import { multiSearch } from "../api/APIUtils";
 import Searchpage from "../components/Searchpage";
 
-
 class SearchpageContainer extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
@@ -16,12 +15,15 @@ class SearchpageContainer extends Component {
       totalPages: PropTypes.number,
     }).isRequired,
     setSearchResults: PropTypes.func.isRequired,
-  }
+  };
 
   static getDerivedStateFromProps(props) {
     // is true if the user arrives at the search page by backing from
     // the details page of a search result
-    if (props.history.action === "POP" && props.searchResults.results.length !== 0) {
+    if (
+      props.history.action === "POP" &&
+      props.searchResults.results.length !== 0
+    ) {
       const url = new URLSearchParams(props.location.search);
       const query = url.get("query");
 
@@ -36,7 +38,7 @@ class SearchpageContainer extends Component {
     query: "",
     isLoading: false,
     error: null,
-  }
+  };
 
   componentDidMount() {
     // if the component is mounted by the user backing in the browser,
@@ -49,7 +51,10 @@ class SearchpageContainer extends Component {
 
   componentDidUpdate(prevProps) {
     const query = this.getQuery();
-    if ((this.props.location !== prevProps.location) || (query !== this.state.query)) {
+    if (
+      this.props.location !== prevProps.location ||
+      query !== this.state.query
+    ) {
       this.search(query);
     }
   }
@@ -95,7 +100,7 @@ class SearchpageContainer extends Component {
       console.error(error);
       this.setState({ error });
     }
-  }
+  };
 
   render() {
     const { searchResults } = this.props;
@@ -106,7 +111,8 @@ class SearchpageContainer extends Component {
       return (
         <div className="container">
           Looks like something went wrong :(
-          <br />Are you offline?
+          <br />
+          Are you offline?
         </div>
       );
     }

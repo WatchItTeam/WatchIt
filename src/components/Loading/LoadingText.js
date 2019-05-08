@@ -33,7 +33,8 @@ function LoadingText({ type }) {
 }
 
 LoadingText.propTypes = {
-  type: PropTypes.oneOf(["word", "short", "long", "half", "xl", "paragraph"]).isRequired,
+  type: PropTypes.oneOf(["word", "short", "long", "half", "xl", "paragraph"])
+    .isRequired,
 };
 
 export default LoadingText;

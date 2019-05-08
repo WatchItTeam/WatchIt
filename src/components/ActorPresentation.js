@@ -8,25 +8,31 @@ import "../css/ActorPresentation.scss";
 function checkSocialMedia(externalIDs) {
   const socialMedia = [];
   if (externalIDs.facebook_id) {
-    socialMedia.push((
-      <a href={`https://www.facebook.com/${externalIDs.facebook_id}`} key="facebook">
+    socialMedia.push(
+      <a
+        href={`https://www.facebook.com/${externalIDs.facebook_id}`}
+        key="facebook"
+      >
         <FontAwesomeIcon size="2x" icon={["fab", "facebook-square"]} />
-      </a>
-    ));
+      </a>,
+    );
   }
   if (externalIDs.instagram_id) {
-    socialMedia.push((
-      <a href={`https://www.instagram.com/${externalIDs.instagram_id}`} key="instagram">
+    socialMedia.push(
+      <a
+        href={`https://www.instagram.com/${externalIDs.instagram_id}`}
+        key="instagram"
+      >
         <FontAwesomeIcon size="2x" icon={["fab", "instagram"]} />
-      </a>
-    ));
+      </a>,
+    );
   }
   if (externalIDs.instagram_id) {
-    socialMedia.push((
+    socialMedia.push(
       <a href={`https://twitter.com/${externalIDs.twitter_id}`} key="twitter">
         <FontAwesomeIcon size="2x" icon={["fab", "twitter-square"]} />
-      </a>
-    ));
+      </a>,
+    );
   }
   if (socialMedia.length === 0) {
     return "Not available";
@@ -68,7 +74,11 @@ function ActorPresentation({ currentActor }) {
         <p>{knowncredits}</p>
 
         <h2>Official Homepage</h2>
-        {currentActor.homepage ? <a href={`${currentActor.homepage}`}>Link</a> : "Not available"}
+        {currentActor.homepage ? (
+          <a href={`${currentActor.homepage}`}>Link</a>
+        ) : (
+          "Not available"
+        )}
 
         <h2>Social Media</h2>
         {checkSocialMedia(currentActor.external_ids)}
@@ -76,11 +86,11 @@ function ActorPresentation({ currentActor }) {
       <div className="main-info">
         <h1>{currentActor.name}</h1>
         <h2>Biography</h2>
-        {currentActor.biography ?
-          currentActor.biography.split("\n").map(text => text && <p key={text}>{text}</p>)
-          :
-          "Not available"
-        }
+        {currentActor.biography
+          ? currentActor.biography
+              .split("\n")
+              .map(text => text && <p key={text}>{text}</p>)
+          : "Not available"}
       </div>
     </div>
   );

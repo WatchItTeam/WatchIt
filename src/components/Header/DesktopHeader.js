@@ -10,7 +10,10 @@ import "../../css/Header.scss";
  * The header for desktop, which includes search bar and user info
  */
 function DesktopHeader({
-  setSearchbarValue, searchbarValue, searchHandler, toggleSidebar,
+  setSearchbarValue,
+  searchbarValue,
+  searchHandler,
+  toggleSidebar,
 }) {
   return (
     <header id="app-header-desktop" className="app-header">

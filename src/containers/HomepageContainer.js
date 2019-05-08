@@ -10,7 +10,7 @@ class HomepageContainer extends Component {
     series: PropTypes.array.isRequired,
     setNowPlayingMovies: PropTypes.func.isRequired,
     setNowAiringTVShows: PropTypes.func.isRequired,
-  }
+  };
 
   // if the movies and series props aren't empty, don't show loading indicators
   static getDerivedStateFromProps(props) {
@@ -27,27 +27,29 @@ class HomepageContainer extends Component {
     error: false,
     loadingMovies: true,
     loadingShows: true,
-  }
+  };
 
   componentDidMount() {
     const { movies: m, series: s } = this.props;
     if (m.length !== 0 && s.length !== 0) return;
 
     getNowPlayingMovies()
-      .then((movies) => {
+      .then(movies => {
         if (!movies) return;
         this.props.setNowPlayingMovies(movies.splice(0, 18));
         this.setState({ loadingMovies: false });
-      }).catch(() => {
+      })
+      .catch(() => {
         this.setState({ error: true, loadingMovies: false });
       });
 
     getNowAiringTVShows()
-      .then((series) => {
+      .then(series => {
         if (!series) return;
         this.props.setNowAiringTVShows(series.splice(0, 18));
         this.setState({ loadingShows: false });
-      }).catch(() => {
+      })
+      .catch(() => {
         this.setState({ error: true, loadingShows: false });
       });
   }

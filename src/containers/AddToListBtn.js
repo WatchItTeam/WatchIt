@@ -2,8 +2,18 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import firebase from "../Firebase/firebase";
-import { addToList, fetchOneFromList, updateWatchStatus, removeFromList } from "../Firebase/lists";
-import { successToast, errorToast, infoToast, removeToast } from "../utils/toast";
+import {
+  addToList,
+  fetchOneFromList,
+  updateWatchStatus,
+  removeFromList,
+} from "../Firebase/lists";
+import {
+  successToast,
+  errorToast,
+  infoToast,
+  removeToast,
+} from "../utils/toast";
 import { withUser } from "../Firebase/UserContext";
 import { normalizeMovie } from "../api/APIUtils";
 import parseName from "../utils/parseName";
@@ -16,19 +26,19 @@ class AddToListBtn extends Component {
     currentMovie: PropTypes.object.isRequired,
     /* Comes from the withUser function */
     user: PropTypes.object.isRequired,
-  }
+  };
 
   state = {
     isLoading: false,
     modalIsOpen: false,
     /* the watch status/list the current movie is in, if the user has already added it */
     statusOfCurrentMovie: null,
-  }
+  };
 
   componentDidMount() {
     // wait until the user has signed in to check their watch status
     // of the current movie
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.checkStatusOfCurrentMovie();
       }
@@ -53,17 +63,17 @@ class AddToListBtn extends Component {
 
   showModal = () => {
     this.setState({ modalIsOpen: true });
-  }
+  };
 
   hideModal = () => {
     this.setState({ modalIsOpen: false });
-  }
+  };
 
   /**
    * Adds the current movie to the list that the user selects
    * from the ListPickerModal
    */
-  onModalSubmit = async (selectedList) => {
+  onModalSubmit = async selectedList => {
     this.setState({ isLoading: true });
 
     const { currentMovie } = this.props;
@@ -82,9 +92,9 @@ class AddToListBtn extends Component {
       errorToast(`Something went wrong when adding ${movie.title}`);
     }
     this.setState({ isLoading: false });
-  }
+  };
 
-  onModalRemove = async (selectedList) => {
+  onModalRemove = async selectedList => {
     this.setState({ isLoading: true });
 
     const { currentMovie } = this.props;
@@ -97,7 +107,7 @@ class AddToListBtn extends Component {
       errorToast(`Something went wrong when trying to remove ${movie.title}`);
     }
     this.setState({ isLoading: false });
-  }
+  };
 
   render() {
     const { isLoading, modalIsOpen, statusOfCurrentMovie } = this.state;

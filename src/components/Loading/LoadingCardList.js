@@ -7,7 +7,7 @@ function LoadingCardList() {
   const numberOfItems = 4;
 
   for (let i = 0; i < numberOfItems; i++) {
-    items.push((
+    items.push(
       <li className="card-list-item loading-card-list-item">
         <div className="poster" />
         <h1 className="title">
@@ -27,8 +27,8 @@ function LoadingCardList() {
             <LoadingText type="word" />
           </div>
         </div>
-      </li>
-    ));
+      </li>,
+    );
   }
 
   return items;

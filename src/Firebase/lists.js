@@ -57,17 +57,12 @@ export function addToList(movie, watchStatus) {
   /* eslint-disable camelcase */
   const user = getUserID();
   if (!user) throw new Error("User is not logged in");
-  if (!watchStatus) throw new Error("watchStatus must be defined to add to list");
+  if (!watchStatus)
+    throw new Error("watchStatus must be defined to add to list");
 
   // we don't need to save the _entire_ movie object, so we pick out the
   // properties we want in order to save space and speed up read/writes
   const {
-    id, media_type, title, poster_path, release_date, release_year, vote_average,
-  } = normalizeMovie(movie);
-  return db.doc(`users/${user}/list/${id}`).set({
-    watch_status: watchStatus,
-    added: new Date(),
-    episodes_watched: {},
     id,
     media_type,
     title,
@@ -75,7 +70,22 @@ export function addToList(movie, watchStatus) {
     release_date,
     release_year,
     vote_average,
-  }, { merge: true });
+  } = normalizeMovie(movie);
+  return db.doc(`users/${user}/list/${id}`).set(
+    {
+      watch_status: watchStatus,
+      added: new Date(),
+      episodes_watched: {},
+      id,
+      media_type,
+      title,
+      poster_path,
+      release_date,
+      release_year,
+      vote_average,
+    },
+    { merge: true },
+  );
 }
 
 export function updateWatchStatus(movie, watchStatus) {
@@ -102,13 +112,20 @@ export function removeFromList(movieID) {
  *   // and each time the list changes in Firebase
  * })
  */
-export async function fetchAllFromList(userId, watchStatus, mediaType, updateList) {
+export async function fetchAllFromList(
+  userId,
+  watchStatus,
+  mediaType,
+  updateList,
+) {
   let req;
   if (mediaType === "all") {
-    req = await db.collection(`/users/${userId}/list`)
+    req = await db
+      .collection(`/users/${userId}/list`)
       .where("watch_status", "==", watchStatus);
   } else {
-    req = await db.collection(`/users/${userId}/list`)
+    req = await db
+      .collection(`/users/${userId}/list`)
       .where("watch_status", "==", watchStatus)
       .where("media_type", "==", mediaType);
   }
@@ -120,11 +137,11 @@ export async function fetchAllFromList(userId, watchStatus, mediaType, updateLis
  * Returns a promise that resolves to the movie (if exits) or null.
  */
 export function fetchOneFromList(userId, movieId) {
-  return db.doc(`/users/${userId}/list/${movieId}`)
+  return db
+    .doc(`/users/${userId}/list/${movieId}`)
     .get()
     .then(doc => doc.data());
 }
-
 
 /**
  * Takes a season number and episode number and transforms them
@@ -147,22 +164,35 @@ export function episodeString(season, episode) {
  *
  * setEpisodeStatus(1230, 1, 1, true); // set SE1E1 as watched
  */
-export function setEpisodeStatus(showId, seasonNumber, episodeNumber, hasWatched) {
+export function setEpisodeStatus(
+  showId,
+  seasonNumber,
+  episodeNumber,
+  hasWatched,
+) {
   const user = getUserID();
   if (!user) throw new Error("User is not logged in");
   if (!episodeNumber) throw new Error("Invalid episodeNumber");
 
-  return db.doc(`users/${user}/list/${showId}`).set({
-    episodes_watched: {
-      [episodeString(seasonNumber, episodeNumber)]: hasWatched,
+  return db.doc(`users/${user}/list/${showId}`).set(
+    {
+      episodes_watched: {
+        [episodeString(seasonNumber, episodeNumber)]: hasWatched,
+      },
     },
-  }, { merge: true });
+    { merge: true },
+  );
 }
 
 /**
  * Sets a whole season of a show as watched.
  */
-export function setSeasonStatus(showId, seasonNumber, seasonLength, hasWatched) {
+export function setSeasonStatus(
+  showId,
+  seasonNumber,
+  seasonLength,
+  hasWatched,
+) {
   const user = getUserID();
   if (!user) throw new Error("User is not logged in");
 
@@ -170,9 +200,12 @@ export function setSeasonStatus(showId, seasonNumber, seasonLength, hasWatched) 
   for (let i = 1; i <= seasonLength; i++) {
     episodesWatched[episodeString(seasonNumber, i)] = hasWatched;
   }
-  return db.doc(`users/${user}/list/${showId}`).set({
-    episodes_watched: episodesWatched,
-  }, { merge: true });
+  return db.doc(`users/${user}/list/${showId}`).set(
+    {
+      episodes_watched: episodesWatched,
+    },
+    { merge: true },
+  );
 }
 
 /**

@@ -22,27 +22,28 @@ function BrowsePage({
   setSearchbarValue,
   currentPage,
   totalPages,
-  loadMoreFunc }) {
+  loadMoreFunc,
+}) {
   let titleTabs;
   if (type === "movies") {
     titleTabs = (
       <div>
         <h1>{`Browse movies ${genreTitle}`}</h1>
         <Tabs links={tabLinks} />
-      </div>);
+      </div>
+    );
   } else if (type === "shows") {
     titleTabs = (
       <div>
         <h1>{`Browse TV shows ${genreTitle}`}</h1>
         <Tabs links={tabLinks} />
-      </div>);
+      </div>
+    );
   }
 
   let statusMsg;
   if (error) {
-    statusMsg = (
-      <ErrorMessage>{error}</ErrorMessage>
-    );
+    statusMsg = <ErrorMessage>{error}</ErrorMessage>;
   } else if (isLoading) {
     statusMsg = <LoadingGrid />;
   }

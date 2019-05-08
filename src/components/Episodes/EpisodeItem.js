@@ -27,19 +27,13 @@ function EpisodeItem({
 
   if (watched) {
     checkBox = (
-      <button
-        className="episodeCheckbox"
-        onClick={() => removeEpisode(show)}
-      >
+      <button className="episodeCheckbox" onClick={() => removeEpisode(show)}>
         <FontAwesomeIcon icon={CheckCircle} />
       </button>
     );
   } else {
     checkBox = (
-      <button
-        className="episodeCheckbox"
-        onClick={() => addEpisode(show)}
-      >
+      <button className="episodeCheckbox" onClick={() => addEpisode(show)}>
         <FontAwesomeIcon icon={Circle} />
       </button>
     );
@@ -62,13 +56,9 @@ function EpisodeItem({
           &nbsp;
           {name}
         </h1>
-        <div className="episodeTextContent">
-          {description}
-        </div>
+        <div className="episodeTextContent">{description}</div>
       </div>
-      <SignedIn>
-        {() => checkBox}
-      </SignedIn>
+      <SignedIn>{() => checkBox}</SignedIn>
     </div>
   );
 }

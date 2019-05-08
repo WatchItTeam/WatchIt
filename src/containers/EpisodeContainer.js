@@ -6,7 +6,11 @@ import { successToast, errorToast } from "../utils/toast";
 import parseName from "../utils/parseName";
 import { withUser } from "../Firebase/UserContext";
 import {
-  setEpisodeStatus, onShowSnapshot, addToList, watchStates, setSeasonStatus,
+  setEpisodeStatus,
+  onShowSnapshot,
+  addToList,
+  watchStates,
+  setSeasonStatus,
 } from "../Firebase/lists";
 
 class EpisodeContainer extends Component {
@@ -15,7 +19,7 @@ class EpisodeContainer extends Component {
     currentMovie: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired, // from react router
     user: PropTypes.object.isRequired, // from withUser
-  }
+  };
 
   state = {
     currentSeason: 1, // only used when browsing All seasons
@@ -33,7 +37,7 @@ class EpisodeContainer extends Component {
   componentDidMount() {
     // wait until the user has signed in to check their watch status
     // of the current movie
-    this.props.user.onChange((user) => {
+    this.props.user.onChange(user => {
       if (user) {
         this.checkCurrentShow(user);
       }
@@ -60,35 +64,38 @@ class EpisodeContainer extends Component {
       });
       seasonFetch = getSeasonFromId(id, this.state.currentSeason);
     } else {
-      seasonFetch = getSeasonFromId(id, (seasonNumber || 1));
+      seasonFetch = getSeasonFromId(id, seasonNumber || 1);
     }
 
     const { currentMovie } = this.props;
     if (!currentMovie || currentMovie.id !== id) {
-      getTVInfo(this.props.match.params.id)
-        .then((show) => {
-          this.setState({
-            title: show.name,
-            currentShow: normalizeMovie(show),
-            numberOfSeasons: show.number_of_seasons,
-          });
+      getTVInfo(this.props.match.params.id).then(show => {
+        this.setState({
+          title: show.name,
+          currentShow: normalizeMovie(show),
+          numberOfSeasons: show.number_of_seasons,
         });
+      });
     }
 
-    seasonFetch.then((episodes) => {
-      this.setState(prevState => ({
-        seasons: {
-          ...prevState.seasons,
-          [seasonNumber === "all" ? this.state.currentSeason : seasonNumber]: episodes,
-        },
-        isLoading: false,
-      }));
-    }).catch((err) => {
-      this.setState({
-        errorMsg: err.toString(),
-        isLoading: false,
+    seasonFetch
+      .then(episodes => {
+        this.setState(prevState => ({
+          seasons: {
+            ...prevState.seasons,
+            [seasonNumber === "all"
+              ? this.state.currentSeason
+              : seasonNumber]: episodes,
+          },
+          isLoading: false,
+        }));
+      })
+      .catch(err => {
+        this.setState({
+          errorMsg: err.toString(),
+          isLoading: false,
+        });
       });
-    });
   }
 
   loadAndAppend = async () => {
@@ -102,11 +109,11 @@ class EpisodeContainer extends Component {
         [currentSeason + 1]: nextSeason,
       },
     }));
-  }
+  };
 
   checkCurrentShow(user) {
     const { id } = this.props.match.params;
-    this.unsubscribe = onShowSnapshot(user.uid, id, (doc) => {
+    this.unsubscribe = onShowSnapshot(user.uid, id, doc => {
       const data = doc.data();
       if (!data) return;
 
@@ -130,33 +137,42 @@ class EpisodeContainer extends Component {
     if (!statusOfCurrentMovie) {
       try {
         addToList(currentShow, watchStates.watching);
-        successToast(`Added ${currentShow.title} to ${parseName(watchStates.watching)}`);
+        successToast(
+          `Added ${currentShow.title} to ${parseName(watchStates.watching)}`,
+        );
       } catch (error) {
         errorToast("Something went wrong, please try again");
       }
     }
-  }
+  };
 
   // passed down to EpisodePage -> Season -> EpisodeItem / EpisodeMobileItem
   removeEpisode = ({ id, seasonNumber, episodeNumber }) => {
     setEpisodeStatus(id, seasonNumber, episodeNumber, false);
-  }
+  };
 
   // passed down to EpisodePage -> Season
   setSeason = (seasonNumber, add) => {
     const { seasons, statusOfCurrentMovie, currentShow } = this.state;
-    setSeasonStatus(currentShow.id, seasonNumber, seasons[seasonNumber].length, add);
+    setSeasonStatus(
+      currentShow.id,
+      seasonNumber,
+      seasons[seasonNumber].length,
+      add,
+    );
 
     // if show isn't in list, add to watching by default
     if (!statusOfCurrentMovie && add) {
       try {
         addToList(currentShow, watchStates.watching);
-        successToast(`Added ${currentShow.title} to ${parseName(watchStates.watching)}`);
+        successToast(
+          `Added ${currentShow.title} to ${parseName(watchStates.watching)}`,
+        );
       } catch (error) {
         errorToast("Something went wrong, please try again");
       }
     }
-  }
+  };
 
   render() {
     const { id, seasonNumber } = this.props.match.params;

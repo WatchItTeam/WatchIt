@@ -39,9 +39,7 @@ function DetailsTitle({ movie }) {
     isMovie = true;
     infoLine = (
       <div className="info">
-        {
-          genres.map(genre => genre.name).join(", ")
-        }
+        {genres.map(genre => genre.name).join(", ")}
         <span> • </span>
         {minutesToHours(runtime)}
         <span> • </span>
@@ -49,13 +47,13 @@ function DetailsTitle({ movie }) {
       </div>
     );
   } else {
-    const endingYear = (status === "Ended" || status === "Canceled") ?
-      moment(lastAirDate).format("YYYY") : "";
+    const endingYear =
+      status === "Ended" || status === "Canceled"
+        ? moment(lastAirDate).format("YYYY")
+        : "";
     infoLine = (
       <div className="info">
-        {
-          genres.map(genre => genre.name).join(", ")
-        }
+        {genres.map(genre => genre.name).join(", ")}
         <span> • </span>
         {minutesToHours(episodeRunTime[0])} per episode
         <span> • </span>
@@ -88,7 +86,6 @@ function DetailsTitle({ movie }) {
     );
   }
 
-
   const displayName = title || name;
   const displayDate = releaseDate || firstAirDate;
 
@@ -106,15 +103,14 @@ function DetailsTitle({ movie }) {
           {`${displayName} (${moment(displayDate).format("YYYY")})`}
           &nbsp;
           <span className="rating">
-            <span className="star-icon"><FontAwesomeIcon icon="star" /></span> {rating}
+            <span className="star-icon">
+              <FontAwesomeIcon icon="star" />
+            </span>{" "}
+            {rating}
           </span>
         </h1>
-        <div className="info">
-          {infoLine}
-        </div>
-        <div className="bottom">
-          {buttons}
-        </div>
+        <div className="info">{infoLine}</div>
+        <div className="bottom">{buttons}</div>
       </div>
     </div>
   );

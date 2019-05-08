@@ -9,7 +9,6 @@ import Trailers from "./Trailers";
 import "../css/MovieInfo.scss";
 import "../css/Scroll.scss";
 
-
 /**
  * Markup for the main content of the movie details page
  */
@@ -18,70 +17,72 @@ function MovieInformation({ currentMovie }) {
   if (currentMovie.credits.cast.length === 0) {
     cast = <div>No cast to show</div>;
   } else {
-    const castSorted =
-    currentMovie.credits.cast.sort((a, b) => a.order - b.order);
+    const castSorted = currentMovie.credits.cast.sort(
+      (a, b) => a.order - b.order,
+    );
     cast = (
       <Scroll arrayLength={castSorted.length}>
-        {
-          castSorted.map((person) => {
-            if (person.profile_path === null) {
-              return (
-                <div key={person.id}>
-                  <Link to={`/person/${person.id}`}>
-                    <div className="no-poster">
-                      <FontAwesomeIcon icon="image" />
-                    </div>
-                    <p>
-                      <b className="name-border" >{person.name}</b><br /> {person.character}
-                    </p>
-                  </Link>
-                </div>
-              );
-            }
+        {castSorted.map(person => {
+          if (person.profile_path === null) {
             return (
-              <div className="card" key={person.id}>
+              <div key={person.id}>
                 <Link to={`/person/${person.id}`}>
-                  <img
-                    className="cast"
-                    src={`https://image.tmdb.org/t/p/w200/${person.profile_path}`}
-                    alt={person.name}
-                  />
+                  <div className="no-poster">
+                    <FontAwesomeIcon icon="image" />
+                  </div>
                   <p>
-                    <b className="name-border" >{person.name}</b><br /> {person.character}
+                    <b className="name-border">{person.name}</b>
+                    <br /> {person.character}
                   </p>
                 </Link>
-              </div>);
-          })
-        }
+              </div>
+            );
+          }
+          return (
+            <div className="card" key={person.id}>
+              <Link to={`/person/${person.id}`}>
+                <img
+                  className="cast"
+                  src={`https://image.tmdb.org/t/p/w200/${person.profile_path}`}
+                  alt={person.name}
+                />
+                <p>
+                  <b className="name-border">{person.name}</b>
+                  <br /> {person.character}
+                </p>
+              </Link>
+            </div>
+          );
+        })}
       </Scroll>
     );
   }
 
   let recommendations;
   if (currentMovie.recommendations.results.length === 0) {
-    recommendations = <div className="bot-padding">No recommendations to show</div>;
+    recommendations = (
+      <div className="bot-padding">No recommendations to show</div>
+    );
   } else {
     recommendations = (
       <Scroll arrayLength={currentMovie.recommendations.results.length}>
-        {
-          currentMovie.recommendations.results.map((mov) => {
-            const movie = normalizeMovie(mov);
-            return (
-              <div className="card" key={movie.id}>
-                <PosterCard
-                  key={movie.id}
-                  id={movie.id}
-                  linkTo={`/${(movie.media_type)}/${movie.id}`}
-                  title={movie.title}
-                  posterPath={movie.poster_path}
-                  releaseDate={movie.release_date}
-                  mediaType={movie.media_type}
-                  voteAverage={movie.vote_average}
-                />
-              </div>
-            );
-          })
-        }
+        {currentMovie.recommendations.results.map(mov => {
+          const movie = normalizeMovie(mov);
+          return (
+            <div className="card" key={movie.id}>
+              <PosterCard
+                key={movie.id}
+                id={movie.id}
+                linkTo={`/${movie.media_type}/${movie.id}`}
+                title={movie.title}
+                posterPath={movie.poster_path}
+                releaseDate={movie.release_date}
+                mediaType={movie.media_type}
+                voteAverage={movie.vote_average}
+              />
+            </div>
+          );
+        })}
       </Scroll>
     );
   }
@@ -94,9 +95,7 @@ function MovieInformation({ currentMovie }) {
       <Trailers trailers={currentMovie.videos.results} />
       <h2>Cast</h2>
       {cast}
-      <h2>
-        You may also like
-      </h2>
+      <h2>You may also like</h2>
       {recommendations}
     </section>
   );

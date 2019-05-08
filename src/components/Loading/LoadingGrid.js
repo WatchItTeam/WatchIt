@@ -9,11 +9,7 @@ function LoadingGrid() {
   for (let i = 0; i < numberOfCards; i++) {
     loadingCards.push(<LoadingCard key={i} />);
   }
-  return (
-    <div className="poster-grid">
-      {loadingCards}
-    </div>
-  );
+  return <div className="poster-grid">{loadingCards}</div>;
 }
 
 export default LoadingGrid;

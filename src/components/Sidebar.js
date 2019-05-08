@@ -37,17 +37,18 @@ function Sidebar({ isOpen }) {
           <SignedIn>
             {user => (
               <nav>
-                {
-                  // dynamically create a link to each list
-                  // instead of hard coding
-                  Object.values(watchStates).map(watchState => (
-                    <PosterCardDropTarget key={watchState} targetName={watchState}>
-                      <SidebarNavLink to={`/user/${user.uid}/${watchState}/`}>
-                        {parseName(watchState)}
-                      </SidebarNavLink>
-                    </PosterCardDropTarget>
-                  ))
-                }
+                {// dynamically create a link to each list
+                // instead of hard coding
+                Object.values(watchStates).map(watchState => (
+                  <PosterCardDropTarget
+                    key={watchState}
+                    targetName={watchState}
+                  >
+                    <SidebarNavLink to={`/user/${user.uid}/${watchState}/`}>
+                      {parseName(watchState)}
+                    </SidebarNavLink>
+                  </PosterCardDropTarget>
+                ))}
               </nav>
             )}
           </SignedIn>
@@ -57,7 +58,9 @@ function Sidebar({ isOpen }) {
         </section>
         <Desktop>
           {/* Don't display this tip on mobile since drag and drop only works on desktop */}
-          <p className="tip-text">Tip: You can add to lists with drag and drop</p>
+          <p className="tip-text">
+            Tip: You can add to lists with drag and drop
+          </p>
         </Desktop>
       </div>
     </div>

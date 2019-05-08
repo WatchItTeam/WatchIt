@@ -11,28 +11,27 @@ class LoginHandler extends Component {
     password: "",
   };
 
-  signInClick = (event) => {
+  signInClick = event => {
     event.preventDefault();
     const { email, password } = this.state;
-    signIn(email, password)
-      .catch((error) => {
-        errorToast(error.message);
-      });
-  }
+    signIn(email, password).catch(error => {
+      errorToast(error.message);
+    });
+  };
 
   signOutClick = () => {
     signOut();
     this.setState({ email: "", password: "" });
-  }
+  };
 
-  handleChange = (event) => {
+  handleChange = event => {
     if (event.target.type === "email") {
       this.setState({ email: event.target.value });
     }
     if (event.target.type === "password") {
       this.setState({ password: event.target.value });
     }
-  }
+  };
 
   render() {
     const { email, password } = this.state;

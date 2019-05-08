@@ -30,7 +30,7 @@ const SEARCH_DEBOUNCE_TIME = 500;
 class App extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired, // from react-router
-  }
+  };
 
   /**
    * This function makes the sidebar close whenever
@@ -59,50 +59,50 @@ class App extends Component {
       totalResults: null,
       totalPages: null,
     },
-  }
+  };
 
-  setCurrentActor = (currentActor) => {
+  setCurrentActor = currentActor => {
     this.setState({ currentActor });
-  }
+  };
 
-  setCurrentMovie = (currentMovie) => {
+  setCurrentMovie = currentMovie => {
     this.setState({ currentMovie });
-  }
+  };
 
-  setNowPlayingMovies = (nowPlayingMovies) => {
+  setNowPlayingMovies = nowPlayingMovies => {
     this.setState({ nowPlayingMovies });
-  }
+  };
 
-  setNowAiringTVShows = (nowAiringTVShows) => {
+  setNowAiringTVShows = nowAiringTVShows => {
     this.setState({ nowAiringTVShows });
-  }
+  };
 
-  setSearchResults = (searchResults) => {
+  setSearchResults = searchResults => {
     this.setState({ searchResults });
-  }
+  };
 
   toggleSidebar = () => {
     this.setState({ sidebarIsOpen: !this.state.sidebarIsOpen });
-  }
+  };
 
   closeSidebar = () => {
     this.setState({ sidebarIsOpen: false });
-  }
+  };
 
-  searchHandler = (query) => {
+  searchHandler = query => {
     this.setSearchbarValue(query);
     this.search(query);
-  }
+  };
 
-  search = createDebouncedFunc((query) => {
+  search = createDebouncedFunc(query => {
     // don't need to search if the user just clears the search bar
     if (query === "") return;
     this.props.history.push(`/search?query=${query}`);
-  }, SEARCH_DEBOUNCE_TIME)
+  }, SEARCH_DEBOUNCE_TIME);
 
-  setSearchbarValue = (searchWords) => {
+  setSearchbarValue = searchWords => {
     this.setState({ searchWords });
-  }
+  };
 
   render() {
     const {
@@ -156,33 +156,26 @@ class App extends Component {
                     series={nowAiringTVShows}
                     setNowPlayingMovies={this.setNowPlayingMovies}
                     setNowAiringTVShows={this.setNowAiringTVShows}
-                  />)}
+                  />
+                )}
               />
               <Route
                 exact
                 path="/shows"
-                render={() => (
-                  <Redirect to="/shows/popular" />
-                )}
+                render={() => <Redirect to="/shows/popular" />}
               />
               <Route
                 path="/shows/:filter/:id?"
-                render={props => (
-                  <BrowseTvContainer {...props} />
-                )}
+                render={props => <BrowseTvContainer {...props} />}
               />
               <Route
                 exact
                 path="/movies"
-                render={() => (
-                  <Redirect to="/movies/popular" />
-                )}
+                render={() => <Redirect to="/movies/popular" />}
               />
               <Route
                 path="/movies/:filter/:id?"
-                render={props => (
-                  <BrowseMoviesContainer {...props} />
-                )}
+                render={props => <BrowseMoviesContainer {...props} />}
               />
               <Route
                 exact
@@ -192,7 +185,8 @@ class App extends Component {
                     {...props}
                     currentMovie={currentMovie}
                     setCurrentMovie={this.setCurrentMovie}
-                  />)}
+                  />
+                )}
               />
               <Route
                 exact
@@ -202,7 +196,8 @@ class App extends Component {
                     {...props}
                     currentActor={currentActor}
                     setCurrentActor={this.setCurrentActor}
-                  />)}
+                  />
+                )}
               />
               <Route
                 exact
@@ -225,16 +220,16 @@ class App extends Component {
                   />
                 )}
               />
-              <Route exact path="/user/:userId/:listName/" render={() => <Redirect to="all" />} />
+              <Route
+                exact
+                path="/user/:userId/:listName/"
+                render={() => <Redirect to="all" />}
+              />
               <Route
                 path={`/user/:userId/:listName(${listNames})/:mediaType(all|movie|tv)`}
                 component={UserList}
               />
-              <Route
-                exact
-                path="/forgot_password"
-                component={NewPassword}
-              />
+              <Route exact path="/forgot_password" component={NewPassword} />
               <Route path="/signup" component={SignUpPage} />
               <Route component={NotFoundPage} />
             </Switch>

@@ -12,14 +12,17 @@ class DetailspageContainer extends Component {
     match: PropTypes.object.isRequired, // from react-router
     currentMovie: PropTypes.object.isRequired,
     setCurrentMovie: PropTypes.func.isRequired,
-  }
+  };
   state = {
     error: "",
     isLoading: true,
-  }
+  };
 
   componentDidMount() {
-    if (this.props.currentMovie && this.props.currentMovie.id !== this.props.match.params.id) {
+    if (
+      this.props.currentMovie &&
+      this.props.currentMovie.id !== this.props.match.params.id
+    ) {
       this.getDetails();
     }
   }
@@ -37,23 +40,23 @@ class DetailspageContainer extends Component {
     if (mediaType === "movie") {
       getMovieInfo(id)
         .then(this.processResponse)
-        .catch((error) => {
+        .catch(error => {
           this.setState({ error: error.toString() });
         });
     } else if (mediaType === "tv") {
       getTVInfo(id)
         .then(this.processResponse)
-        .catch((error) => {
+        .catch(error => {
           this.setState({ error: error.toString() });
         });
     }
   }
 
-  processResponse = (currentMovie) => {
+  processResponse = currentMovie => {
     if (!currentMovie) return;
     this.props.setCurrentMovie(currentMovie);
     this.setState({ isLoading: false });
-  }
+  };
 
   render() {
     if (this.state.error) {
@@ -70,7 +73,10 @@ class DetailspageContainer extends Component {
     }
 
     return (
-      <DetailsPage currentMovie={this.props.currentMovie} isLoading={this.state.isLoading} />
+      <DetailsPage
+        currentMovie={this.props.currentMovie}
+        isLoading={this.state.isLoading}
+      />
     );
   }
 }

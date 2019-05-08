@@ -8,7 +8,11 @@ import { Mobile, Desktop } from "../Responsive";
 import PrimaryButton from "../PrimaryButton";
 
 function UserLayout({
-  onSignOutClick, handleChange, signInClick, email, password,
+  onSignOutClick,
+  handleChange,
+  signInClick,
+  email,
+  password,
 }) {
   // Render user info if signed in, signin-bars otherwise
   return (
@@ -20,7 +24,9 @@ function UserLayout({
               {/* Github style avatar generated based in the user's uid */}
               <img
                 className="user-img"
-                src={`https://avatars.dicebear.com/v2/identicon/${user.uid}.svg`}
+                src={`https://avatars.dicebear.com/v2/identicon/${
+                  user.uid
+                }.svg`}
                 alt="User avatar"
               />
               {user.email}
@@ -28,7 +34,7 @@ function UserLayout({
                 <FontAwesomeIcon icon="sign-out-alt" /> Sign out
               </button>
             </div>
-        )}
+          )}
         </SignedIn>
         <SignedOut>
           <div className="user-info">
@@ -50,10 +56,14 @@ function UserLayout({
                     onChange={handleChange}
                     placeholder="Password"
                   />
-                  <Link className="forgot-password" to="/forgot_password">Forgot password</Link>
+                  <Link className="forgot-password" to="/forgot_password">
+                    Forgot password
+                  </Link>
                 </div>
                 <button className="login-btn">Log in</button>
-                <Link className="signup-button" to="/signup">Sign up</Link>
+                <Link className="signup-button" to="/signup">
+                  Sign up
+                </Link>
               </div>
             </form>
           </div>
@@ -82,7 +92,9 @@ function UserLayout({
               <PrimaryButton>Log in</PrimaryButton>
             </div>
             <div className="signup-btn-mobile">
-              <Link className="signup-button" to="/signup">Sign up</Link>
+              <Link className="signup-button" to="/signup">
+                Sign up
+              </Link>
             </div>
           </form>
         </div>

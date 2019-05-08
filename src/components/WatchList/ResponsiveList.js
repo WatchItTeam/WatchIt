@@ -9,8 +9,14 @@ import { SignedIn } from "../UserState/UserState";
 import "../../css/ResponsiveList.scss";
 
 function ResponsiveList({
-  isLoading, listDisplayName, tabLinks, entries,
-  toggleEditMode, deleteEntry, isEditMode, listUserId,
+  isLoading,
+  listDisplayName,
+  tabLinks,
+  entries,
+  toggleEditMode,
+  deleteEntry,
+  isEditMode,
+  listUserId,
   onMove,
 }) {
   let lists;
@@ -42,19 +48,26 @@ function ResponsiveList({
     );
   }
 
-  const btnContent = isEditMode ? "Done" : <div><FontAwesomeIcon icon="edit" /> Edit</div>;
+  const btnContent = isEditMode ? (
+    "Done"
+  ) : (
+    <div>
+      <FontAwesomeIcon icon="edit" /> Edit
+    </div>
+  );
 
   return (
     <section className="watch-list container">
       <div className="title-bar">
         <h1>{listDisplayName}</h1>
         <SignedIn>
-          {(user) => {
+          {user => {
             if (user.uid === listUserId) {
               return (
                 <button className="edit-btn" onClick={toggleEditMode}>
                   {btnContent}
-                </button>);
+                </button>
+              );
             }
             return null;
           }}

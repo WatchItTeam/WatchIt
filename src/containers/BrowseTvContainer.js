@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import BrowsePage from "../components/BrowsePage";
-import { getShowsFromType, getGenreShows, getShowGenres, getShowsFromYear } from "../api/APIUtils";
+import {
+  getShowsFromType,
+  getGenreShows,
+  getShowGenres,
+  getShowsFromYear,
+} from "../api/APIUtils";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 
 class BrowseTvContainer extends Component {
@@ -17,11 +22,10 @@ class BrowseTvContainer extends Component {
   };
 
   componentDidMount() {
-    getShowGenres()
-      .then((genres) => {
-        this.setState({ genres });
-        this.getMoviesFromTab();
-      });
+    getShowGenres().then(genres => {
+      this.setState({ genres });
+      this.getMoviesFromTab();
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -30,23 +34,23 @@ class BrowseTvContainer extends Component {
     }
   }
 
-  searchHandler = (query) => {
+  searchHandler = query => {
     this.setSearchbarValue(query);
     this.search(query);
-  }
+  };
 
-  search = createDebouncedFunc((query) => {
+  search = createDebouncedFunc(query => {
     // don't need to search if the user just clears the search bar
     if (query === "") return;
     this.props.history.push(`/shows/year/${query}`);
-  })
+  });
 
-  setSearchbarValue = (searchWords) => {
+  setSearchbarValue = searchWords => {
     this.setState({ searchWords });
-  }
+  };
 
   setGenreTitle(id) {
-    this.state.genres.forEach((genre) => {
+    this.state.genres.forEach(genre => {
       if (genre.id.toString() === id) {
         this.setState({ genreTitle: `(${genre.name})` });
       }
@@ -65,25 +69,37 @@ class BrowseTvContainer extends Component {
     });
     if (filter === "top_rated") {
       getShowsFromType("top_rated", this.state.currentPage)
-        .then(movies => this.setState({ movies: movies.results,
-          isLoading: false,
-          totalPages: movies.total_pages }))
+        .then(movies =>
+          this.setState({
+            movies: movies.results,
+            isLoading: false,
+            totalPages: movies.total_pages,
+          }),
+        )
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch tv shows :(" });
         });
     } else if (filter === "airing_today") {
       getShowsFromType("airing_today")
-        .then(movies => this.setState({ movies: movies.results,
-          isLoading: false,
-          totalPages: movies.total_pages }))
+        .then(movies =>
+          this.setState({
+            movies: movies.results,
+            isLoading: false,
+            totalPages: movies.total_pages,
+          }),
+        )
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch tv shows :(" });
         });
     } else if (filter === "popular") {
       getShowsFromType("popular")
-        .then(movies => this.setState({ movies: movies.results,
-          isLoading: false,
-          totalPages: movies.total_pages }))
+        .then(movies =>
+          this.setState({
+            movies: movies.results,
+            isLoading: false,
+            totalPages: movies.total_pages,
+          }),
+        )
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch tv shows :(" });
         });
@@ -91,9 +107,13 @@ class BrowseTvContainer extends Component {
       if (id) {
         this.setGenreTitle(id);
         getGenreShows(id)
-          .then(movies => this.setState({ movies: movies.results,
-            isLoading: false,
-            totalPages: movies.total_pages }))
+          .then(movies =>
+            this.setState({
+              movies: movies.results,
+              isLoading: false,
+              totalPages: movies.total_pages,
+            }),
+          )
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch tv shows :(" });
           });
@@ -109,7 +129,7 @@ class BrowseTvContainer extends Component {
       // instead of resetting the searchbar
       if (id || searchWords) {
         getShowsFromYear(id || searchWords)
-          .then((movies) => {
+          .then(movies => {
             if (movies.length === 0) {
               this.setState({
                 error: "The database could not find any shows from that year",
@@ -147,7 +167,7 @@ class BrowseTvContainer extends Component {
            movies that already was fetched before. */
       const index = this.state.movies.concat(resp.results);
       const resArr = [];
-      index.forEach((item) => {
+      index.forEach(item => {
         const i = resArr.findIndex(x => x.id === item.id);
         if (i <= -1) {
           resArr.push(item);
@@ -156,11 +176,12 @@ class BrowseTvContainer extends Component {
       this.setState({
         movies: resArr,
         currentPage: resp.page,
-        totalPages: resp.total_pages });
+        totalPages: resp.total_pages,
+      });
     } catch (error) {
       this.setState({ error });
     }
-  }
+  };
 
   render() {
     const tabLinks = {

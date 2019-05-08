@@ -15,7 +15,8 @@ function ListPickerRadio({ value, current, onChange }) {
         value={value}
         checked={value === current}
         onChange={onChange}
-      /> {parseName(value)}
+      />{" "}
+      {parseName(value)}
     </label>
   );
 }

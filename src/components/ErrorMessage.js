@@ -6,9 +6,7 @@ import "../css/ErrorMessage.scss";
  * Generic reusable component for showing error messages
  */
 function ErrorMessage({ children }) {
-  return (
-    <div className="error-text">{children}</div>
-  );
+  return <div className="error-text">{children}</div>;
 }
 
 ErrorMessage.propTypes = {

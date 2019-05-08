@@ -10,13 +10,13 @@ import { normalizeMovie } from "../api/APIUtils";
 function PosterGrid({ movies }) {
   return (
     <div className="poster-grid">
-      {movies.map((mov) => {
+      {movies.map(mov => {
         const movie = normalizeMovie(mov);
         return (
           <PosterCard
             key={movie.id}
             id={movie.id}
-            linkTo={`/${(movie.media_type)}/${movie.id}`}
+            linkTo={`/${movie.media_type}/${movie.id}`}
             title={movie.title}
             posterPath={movie.poster_path}
             releaseDate={movie.release_date}

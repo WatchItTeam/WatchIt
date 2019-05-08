@@ -7,7 +7,9 @@ import "../css/SidebarNavLink.scss";
  * if you are on the url they link to
  */
 function SidebarNavLink(props) {
-  return <NavLink {...props} className="sidebar-navlink" activeClassName="active" />;
+  return (
+    <NavLink {...props} className="sidebar-navlink" activeClassName="active" />
+  );
 }
 
 export default SidebarNavLink;

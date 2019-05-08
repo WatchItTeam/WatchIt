@@ -12,14 +12,17 @@ class ActorPageContainer extends Component {
     match: PropTypes.object.isRequired, // from react-router
     currentActor: PropTypes.object.isRequired,
     setCurrentActor: PropTypes.func.isRequired,
-  }
+  };
   state = {
     error: "",
     isLoading: true,
-  }
+  };
 
   componentDidMount() {
-    if (this.props.currentActor && this.props.currentActor.id !== this.props.match.params.id) {
+    if (
+      this.props.currentActor &&
+      this.props.currentActor.id !== this.props.match.params.id
+    ) {
       this.getDetails();
     }
   }
@@ -35,16 +38,16 @@ class ActorPageContainer extends Component {
     this.setState({ isLoading: true });
     getPersonDetails(id)
       .then(this.processResponse)
-      .catch((error) => {
+      .catch(error => {
         this.setState({ error: error.toString() });
       });
   }
 
-  processResponse = (personDetails) => {
+  processResponse = personDetails => {
     if (!personDetails) return;
     this.props.setCurrentActor(personDetails);
     this.setState({ isLoading: false });
-  }
+  };
 
   render() {
     if (this.state.error) {
@@ -61,7 +64,10 @@ class ActorPageContainer extends Component {
     }
 
     return (
-      <ActorPage currentActor={this.props.currentActor} isLoading={this.state.isLoading} />
+      <ActorPage
+        currentActor={this.props.currentActor}
+        isLoading={this.state.isLoading}
+      />
     );
   }
 }

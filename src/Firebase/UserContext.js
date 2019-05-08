@@ -16,19 +16,19 @@ const { Provider, Consumer: UserConsumer } = createContext();
 export class UserProvider extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
-  }
+  };
 
   state = {
     user: {
       status: "loading",
-      onChange: (callback) => {
+      onChange: callback => {
         auth.onAuthStateChanged(callback);
       },
     },
-  }
+  };
 
   componentDidMount() {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(user => {
       const status = user ? "signedIn" : "signedOut";
       const userObj = { ...user, status };
       this.setState(prevState => ({
@@ -41,11 +41,7 @@ export class UserProvider extends Component {
   }
 
   render() {
-    return (
-      <Provider value={this.state.user}>
-        {this.props.children}
-      </Provider>
-    );
+    return <Provider value={this.state.user}>{this.props.children}</Provider>;
   }
 }
 
@@ -59,9 +55,7 @@ export class UserProvider extends Component {
 export function withUser(Comp) {
   return function ComponentWithUser(props) {
     return (
-      <UserConsumer>
-        {user => <Comp {...props} user={user} />}
-      </UserConsumer>
+      <UserConsumer>{user => <Comp {...props} user={user} />}</UserConsumer>
     );
   };
 }

@@ -25,12 +25,12 @@ class Modal extends Component {
     onEnter: PropTypes.func,
     className: PropTypes.string,
     children: PropTypes.node.isRequired,
-  }
+  };
 
   static defaultProps = {
     className: "",
     onEnter: () => {}, // no op function
-  }
+  };
 
   componentDidMount() {
     window.addEventListener("keydown", this.keyListener);
@@ -44,29 +44,39 @@ class Modal extends Component {
   /**
    * Listen for keydown events so the user can close the modal with Esc
    */
-  keyListener = (event) => {
+  keyListener = event => {
     const { isOpen, onEnter } = this.props;
     if (event.key === "Escape" && isOpen) {
       this.cancelModal();
     } else if (event.key === "Enter" && isOpen) {
       onEnter();
     }
-  }
+  };
 
   /**
    * What happens when the cancel button is pressed or if the user clicks outside
    */
   cancelModal = () => {
     this.props.hideFunc(); // hide the modal
-  }
+  };
 
   render() {
-    const { isOpen, children, className, hideFunc, onEnter, ...rest } = this.props;
+    const {
+      isOpen,
+      children,
+      className,
+      hideFunc,
+      onEnter,
+      ...rest
+    } = this.props;
     const { cancelModal } = this;
     return (
       <Fragment>
         {/* The actual modal */}
-        <div {...rest} className={`${className} modal ${isOpen ? "open" : "closed"}`}>
+        <div
+          {...rest}
+          className={`${className} modal ${isOpen ? "open" : "closed"}`}
+        >
           {children}
         </div>
 

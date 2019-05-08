@@ -24,33 +24,37 @@ function TableList({ entries, isEditMode, deleteEntry, onMove, isLoading }) {
   if (isLoading) {
     content = <LoadingTableList />;
   } else {
-    content = (
-      entries.map(movie => (
-        <tr key={movie.id}>
-          <td className="poster-name">
-            <PosterCard
-              className="poster"
-              key={movie.id}
-              id={movie.id}
-              linkTo={`/${(movie.media_type)}/${movie.id}`}
-              title={movie.title}
-              posterPath={movie.poster_path}
-              releaseDate={movie.release_date}
-              mediaType={movie.media_type}
-              voteAverage={movie.vote_average}
-            />
-          </td>
-          <td>{movie.media_type}</td>
-          <td>{movie.vote_average || "-"}</td>
+    content = entries.map(movie => (
+      <tr key={movie.id}>
+        <td className="poster-name">
+          <PosterCard
+            className="poster"
+            key={movie.id}
+            id={movie.id}
+            linkTo={`/${movie.media_type}/${movie.id}`}
+            title={movie.title}
+            posterPath={movie.poster_path}
+            releaseDate={movie.release_date}
+            mediaType={movie.media_type}
+            voteAverage={movie.vote_average}
+          />
+        </td>
+        <td>{movie.media_type}</td>
+        <td>{movie.vote_average || "-"}</td>
+        <td>{checkProgress(movie)}</td>
+        <td>{moment(movie.added.toDate()).fromNow()}</td>
+        {isEditMode && (
           <td>
-            {checkProgress(movie)}
+            <ListMoveBtn onClick={() => onMove(movie)} />
           </td>
-          <td>{moment(movie.added.toDate()).fromNow()}</td>
-          {isEditMode && <td><ListMoveBtn onClick={() => onMove(movie)} /></td>}
-          {isEditMode && <td><ListDeleteBtn onClick={() => deleteEntry(movie)} /></td>}
-        </tr>
-      ))
-    );
+        )}
+        {isEditMode && (
+          <td>
+            <ListDeleteBtn onClick={() => deleteEntry(movie)} />
+          </td>
+        )}
+      </tr>
+    ));
   }
   return (
     <table className="watch-list-table">
@@ -65,11 +69,7 @@ function TableList({ entries, isEditMode, deleteEntry, onMove, isLoading }) {
           {isEditMode && <th className="delete-text">Delete</th>}
         </tr>
       </thead>
-      <tbody>
-        {
-          content
-        }
-      </tbody>
+      <tbody>{content}</tbody>
     </table>
   );
 }

@@ -10,9 +10,7 @@ function SecondaryButton(props) {
   if (!props.to) {
     return <button {...props} className="secondary-btn" />;
   }
-  return (
-    <Link {...props} className="secondary-btn" />
-  );
+  return <Link {...props} className="secondary-btn" />;
 }
 
 SecondaryButton.defaultProps = {

@@ -7,7 +7,9 @@ function TitleGrid({ links }) {
   return (
     <div className="title-grid">
       {Object.entries(links).map(([name, url]) => (
-        <NavLink key={name} className="title-element" exact to={url}>{name}</NavLink>
+        <NavLink key={name} className="title-element" exact to={url}>
+          {name}
+        </NavLink>
       ))}
     </div>
   );

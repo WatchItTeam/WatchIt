@@ -11,7 +11,7 @@ class Scroll extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
     arrayLength: PropTypes.number.isRequired,
-  }
+  };
 
   state = {
     width: 0,
@@ -33,34 +33,35 @@ class Scroll extends Component {
   updateWindowDimensions = () => {
     this.setState({ width: window.innerWidth });
     this.checkArrows(this.scrollRef.current);
-  }
+  };
 
-  checkArrows = (elem) => {
-    const hasScrolledToEnd = (elem.scrollLeft >= elem.scrollWidth - elem.offsetWidth);
-    const hasScrolledToStart = (elem.scrollLeft <= 0);
+  checkArrows = elem => {
+    const hasScrolledToEnd =
+      elem.scrollLeft >= elem.scrollWidth - elem.offsetWidth;
+    const hasScrolledToStart = elem.scrollLeft <= 0;
     this.setState({
       hasScrolledToEnd,
       hasScrolledToStart,
     });
-  }
+  };
 
-  onScroll = (event) => {
+  onScroll = event => {
     this.checkArrows(event.target);
-  }
+  };
 
   scrollRight = () => {
     const elem = this.scrollRef.current;
     const { offsetWidth, scrollLeft } = elem;
     const scrollDistance = offsetWidth * 0.66;
     smoothScrollTo(elem, scrollLeft + scrollDistance, 400);
-  }
+  };
 
   scrollLeft = () => {
     const elem = this.scrollRef.current;
     const { offsetWidth, scrollLeft } = elem;
     const scrollDistance = offsetWidth * 0.66;
     smoothScrollTo(elem, scrollLeft - scrollDistance, 400);
-  }
+  };
 
   render() {
     const { hasScrolledToEnd, hasScrolledToStart } = this.state;
@@ -70,22 +71,31 @@ class Scroll extends Component {
     const sidebarWidth = 250;
 
     // is true if there are enough elements so that scroll is enabled
-    const isOverFlow = (this.props.arrayLength * imageWidth) > (this.state.width - sidebarWidth);
+    const isOverFlow =
+      this.props.arrayLength * imageWidth > this.state.width - sidebarWidth;
 
     // don't show arrows if scrolled to the end/beginning
     const showLeftArrow = !hasScrolledToStart && isOverFlow;
     const showRightArrow = !hasScrolledToEnd && isOverFlow;
 
     // add the "hidden" class if the arrows shouldn't be visible
-    const leftArrowClasses = `leftbutton scroll-button ${!showLeftArrow ? "hidden" : ""}`;
-    const rightArrowClasses = `rightbutton scroll-button ${!showRightArrow ? "hidden" : ""}`;
+    const leftArrowClasses = `leftbutton scroll-button ${
+      !showLeftArrow ? "hidden" : ""
+    }`;
+    const rightArrowClasses = `rightbutton scroll-button ${
+      !showRightArrow ? "hidden" : ""
+    }`;
 
     return (
       <div className="outer-div">
         <button className={leftArrowClasses} onClick={this.scrollLeft}>
           <FontAwesomeIcon icon="angle-left" />
         </button>
-        <div className="scrolling-wrapper-flexbox" ref={this.scrollRef} onScroll={this.onScroll}>
+        <div
+          className="scrolling-wrapper-flexbox"
+          ref={this.scrollRef}
+          onScroll={this.onScroll}
+        >
           {this.props.children}
         </div>
         <button className={rightArrowClasses} onClick={this.scrollRight}>

@@ -6,25 +6,24 @@ import "../css/Scroll.scss";
 class Trailers extends Component {
   static propTypes = {
     trailers: PropTypes.array.isRequired,
-  }
+  };
 
   state = {
     index: 0,
-  }
+  };
 
   scrollRight = () => {
     const { index } = this.state;
     this.setState({
       index: (index + 1) % this.props.trailers.length,
     });
-  }
+  };
 
   scrollLeft = () => {
     let { index } = this.state;
-    index = index === 0 ? (index - 1) +
-    this.props.trailers.length : index - 1;
+    index = index === 0 ? index - 1 + this.props.trailers.length : index - 1;
     this.setState({ index });
-  }
+  };
 
   render() {
     if (this.props.trailers.length === 0) {
@@ -34,7 +33,9 @@ class Trailers extends Component {
     const trailerFrame = (
       <div className="embed-container">
         <iframe
-          src={`https://www.youtube.com/embed/${this.props.trailers[this.state.index].key}`}
+          src={`https://www.youtube.com/embed/${
+            this.props.trailers[this.state.index].key
+          }`}
           frameBorder="0"
           title={this.state.currentTrailer}
           allowFullScreen
@@ -43,11 +44,7 @@ class Trailers extends Component {
     );
 
     if (this.props.trailers.length === 1) {
-      return (
-        <div className="outer-div">
-          {trailerFrame}
-        </div>
-      );
+      return <div className="outer-div">{trailerFrame}</div>;
     }
     return (
       <div className="outer-div">

@@ -16,7 +16,8 @@ const RESOURCE_NOT_FOUND = 34;
  * See https://api.themoviedb.org/3/configuration?api_key=YOURKEY for
  * examples of image sizes
  */
-export const getFullImgPath = (imgPath, size = "original") => `${baseImgUrl}${size}${imgPath}`;
+export const getFullImgPath = (imgPath, size = "original") =>
+  `${baseImgUrl}${size}${imgPath}`;
 
 /**
  * Takes a full date in the format YYYY-MM-DD and returns the year
@@ -77,7 +78,8 @@ export function normalizeMovie(movie) {
 async function checkResponse(res) {
   const json = await res.json();
   if (json.status_code === API_ERROR_CODE) throw new Error("Invalid API key");
-  if (json.status_code === RESOURCE_NOT_FOUND) throw new Error("Couldn't find anything =(");
+  if (json.status_code === RESOURCE_NOT_FOUND)
+    throw new Error("Couldn't find anything =(");
 
   return json;
 }
@@ -98,8 +100,7 @@ export function getNowAiringTVShows() {
 
 export function getMovieInfo(id) {
   const currentMovieUrl = `${baseUrl}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits,recommendations`;
-  return fetch(currentMovieUrl)
-    .then(checkResponse);
+  return fetch(currentMovieUrl).then(checkResponse);
 }
 
 export async function getTVInfo(id) {
@@ -124,38 +125,32 @@ export function getShowGenres() {
 
 export function getGenreMovies(genre, page = 1) {
   const genreMovieUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genre}`;
-  return fetch(genreMovieUrl)
-    .then(checkResponse);
+  return fetch(genreMovieUrl).then(checkResponse);
 }
 
 export function getGenreShows(genre, page = 1) {
   const genreMovieUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=${page}&with_genres=${genre}`;
-  return fetch(genreMovieUrl)
-    .then(checkResponse);
+  return fetch(genreMovieUrl).then(checkResponse);
 }
 
 export function getMoviesFromType(type, page = 1) {
   const moviesUrl = `${baseUrl}/movie/${type}?api_key=${API_KEY}&language=en-US&page=${page}`;
-  return fetch(moviesUrl)
-    .then(checkResponse);
+  return fetch(moviesUrl).then(checkResponse);
 }
 
 export function getShowsFromType(type, page = 1) {
   const moviesUrl = `${baseUrl}/tv/${type}?api_key=${API_KEY}&language=en-US&page=${page}`;
-  return fetch(moviesUrl)
-    .then(checkResponse);
+  return fetch(moviesUrl).then(checkResponse);
 }
 
 export function getMoviesFromYear(year, page = 1) {
   const moviesUrl = `${baseUrl}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}&primary_release_year=${year}`;
-  return fetch(moviesUrl)
-    .then(checkResponse);
+  return fetch(moviesUrl).then(checkResponse);
 }
 
 export function getShowsFromYear(year, page = 1) {
   const moviesUrl = `${baseUrl}/discover/tv?api_key=${API_KEY}&sort_by=popularity.desc&page=${page}&first_air_date_year=${year}`;
-  return fetch(moviesUrl)
-    .then(checkResponse);
+  return fetch(moviesUrl).then(checkResponse);
 }
 
 export function getSeasonFromId(id, season) {
@@ -173,6 +168,5 @@ export async function multiSearch(query, page = 1) {
 
 export function getPersonDetails(id) {
   const personURL = `${baseUrl}/person/${id}?api_key=${API_KEY}&append_to_response=combined_credits,images,external_ids`;
-  return fetch(personURL)
-    .then(checkResponse);
+  return fetch(personURL).then(checkResponse);
 }

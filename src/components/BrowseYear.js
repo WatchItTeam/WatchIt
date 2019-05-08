@@ -14,7 +14,8 @@ function BrowseYear({
   statusMsg,
   currentPage,
   totalPages,
-  loadMoreFunc }) {
+  loadMoreFunc,
+}) {
   return (
     <Route
       path="/(movies|shows)/year/"

@@ -33,13 +33,17 @@ export default function smoothScrollTo(element, scrollTarget, animDuration) {
 
   // based on http://en.wikipedia.org/wiki/Smoothstep
   const smoothStep = (start, end, point) => {
-    if (point <= start) { return 0; }
-    if (point >= end) { return 1; }
+    if (point <= start) {
+      return 0;
+    }
+    if (point >= end) {
+      return 1;
+    }
     const x = (point - start) / (end - start); // interpolation
-    return x * x * (3 - (2 * x));
+    return x * x * (3 - 2 * x);
   };
 
-  return new Promise(((resolve) => {
+  return new Promise(resolve => {
     // This is to keep track of where the element's scrollLeft is
     // supposed to be, based on what we're doing
     let previousTop = element.scrollLeft;
@@ -56,7 +60,7 @@ export default function smoothScrollTo(element, scrollTarget, animDuration) {
       // set the scrollLeft for this frame
       const now = Date.now();
       const point = smoothStep(startTime, endTime, now);
-      const frameTop = Math.round(startTop + (distance * point));
+      const frameTop = Math.round(startTop + distance * point);
       element.scrollLeft = frameTop;
 
       // check if we're done!
@@ -68,8 +72,10 @@ export default function smoothScrollTo(element, scrollTarget, animDuration) {
       // If we were supposed to scroll but didn't, then we
       // probably hit the limit, so consider it done; not
       // interrupted.
-      if (element.scrollLeft === previousTop
-        && element.scrollLeft !== frameTop) {
+      if (
+        element.scrollLeft === previousTop &&
+        element.scrollLeft !== frameTop
+      ) {
         resolve();
         return;
       }
@@ -81,5 +87,5 @@ export default function smoothScrollTo(element, scrollTarget, animDuration) {
 
     // boostrap the animation process
     setTimeout(scrollFrame, 0);
-  }));
+  });
 }

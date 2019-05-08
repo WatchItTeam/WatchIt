@@ -9,7 +9,13 @@ import "../css/Searchpage.scss";
  * Markup for the search page
  */
 function Searchpage({
-  results, currentPage, totalPages, totalResults, query, loadMoreFunc, isLoading,
+  results,
+  currentPage,
+  totalPages,
+  totalResults,
+  query,
+  loadMoreFunc,
+  isLoading,
 }) {
   let content;
   if (isLoading) {
@@ -23,7 +29,8 @@ function Searchpage({
   return (
     <section id="searchpage" className="container">
       <p className="info">
-        Page {currentPage} of {totalPages}. Showing {results.length} results of {totalResults}
+        Page {currentPage} of {totalPages}. Showing {results.length} results of{" "}
+        {totalResults}
       </p>
       <section>
         <h1>Search results for {query}</h1>

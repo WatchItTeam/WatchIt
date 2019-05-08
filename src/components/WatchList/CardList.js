@@ -25,8 +25,8 @@ function CardList({ entries, isEditMode, deleteEntry, onMove, isLoading }) {
   if (isLoading) {
     content = <LoadingCardList />;
   } else {
-    content = entries.map((movie) => {
-      const icon = (movie.media_type === "movie") ? "film" : "tv";
+    content = entries.map(movie => {
+      const icon = movie.media_type === "movie" ? "film" : "tv";
       const url = `/${movie.media_type}/${movie.id}`;
       return (
         <div key={movie.id} className="card-list-item-wrapper">
@@ -40,7 +40,7 @@ function CardList({ entries, isEditMode, deleteEntry, onMove, isLoading }) {
             <h1 className="title">
               <Link to={url}>
                 {movie.title} ({movie.release_year})
-                    </Link>
+              </Link>
             </h1>
             <div className="info">
               <div className="progress">{checkProgress(movie)}</div>
@@ -48,7 +48,9 @@ function CardList({ entries, isEditMode, deleteEntry, onMove, isLoading }) {
                 <FontAwesomeIcon icon="star" />
                 {movie.vote_average || "-"}
               </div>
-              <div className="added">Added {moment(movie.added.toDate()).fromNow()}</div>
+              <div className="added">
+                Added {moment(movie.added.toDate()).fromNow()}
+              </div>
               <div className="media-type">
                 <FontAwesomeIcon icon={icon} />
               </div>
@@ -64,11 +66,7 @@ function CardList({ entries, isEditMode, deleteEntry, onMove, isLoading }) {
   }
   return (
     <div className="card-list">
-      <ul>
-        {
-          content
-        }
-      </ul>
+      <ul>{content}</ul>
     </div>
   );
 }

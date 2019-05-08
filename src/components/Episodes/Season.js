@@ -24,9 +24,19 @@ function wholeSeasonIsWatched(watchedEpisodes, seasonLength, seasonNumber) {
 }
 
 function Season({
-  episodes, watchedEpisodes, seasonNumber, addEpisode, removeEpisode, showId, setSeason,
+  episodes,
+  watchedEpisodes,
+  seasonNumber,
+  addEpisode,
+  removeEpisode,
+  showId,
+  setSeason,
 }) {
-  const seasonComplete = wholeSeasonIsWatched(watchedEpisodes, episodes.length, seasonNumber);
+  const seasonComplete = wholeSeasonIsWatched(
+    watchedEpisodes,
+    episodes.length,
+    seasonNumber,
+  );
 
   let seasonBtn;
   if (!seasonComplete) {
@@ -48,9 +58,7 @@ function Season({
       <div className="title-bar">
         <h2>{`Season ${seasonNumber}`}</h2>
         <div>
-          <SignedIn>
-            {() => seasonBtn}
-          </SignedIn>
+          <SignedIn>{() => seasonBtn}</SignedIn>
         </div>
       </div>
       {episodes.map(episode => (
@@ -62,7 +70,11 @@ function Season({
               name={episode.name}
               addEpisode={addEpisode}
               removeEpisode={removeEpisode}
-              watched={isWatched(watchedEpisodes, seasonNumber, episode.episode_number)}
+              watched={isWatched(
+                watchedEpisodes,
+                seasonNumber,
+                episode.episode_number,
+              )}
               description={episode.overview}
               showId={showId}
             />
@@ -75,7 +87,11 @@ function Season({
               poster={episode.still_path}
               addEpisode={addEpisode}
               removeEpisode={removeEpisode}
-              watched={isWatched(watchedEpisodes, seasonNumber, episode.episode_number)}
+              watched={isWatched(
+                watchedEpisodes,
+                seasonNumber,
+                episode.episode_number,
+              )}
               description={episode.overview}
               showId={showId}
             />

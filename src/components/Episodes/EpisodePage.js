@@ -46,20 +46,18 @@ function EpisodePage({
         loadMore={loadAndAppend}
         hasMore={seasonNumber !== numberOfSeasons}
       >
-        {
-          Object.entries(seasons).map(([num, episodes]) => (
-            <Season
-              key={num}
-              episodes={episodes}
-              watchedEpisodes={watchedEpisodes}
-              seasonNumber={parseInt(num, 10)}
-              addEpisode={addEpisode}
-              removeEpisode={removeEpisode}
-              showId={showId}
-              setSeason={setSeason}
-            />
-          ))
-        }
+        {Object.entries(seasons).map(([num, episodes]) => (
+          <Season
+            key={num}
+            episodes={episodes}
+            watchedEpisodes={watchedEpisodes}
+            seasonNumber={parseInt(num, 10)}
+            addEpisode={addEpisode}
+            removeEpisode={removeEpisode}
+            showId={showId}
+            setSeason={setSeason}
+          />
+        ))}
       </InfiniteScroll>
     );
   } else {
@@ -101,7 +99,8 @@ EpisodePage.propTypes = {
   errorMsg: PropTypes.string,
   numberOfSeasons: PropTypes.number.isRequired,
   watchedEpisodes: PropTypes.object.isRequired,
-  seasonNumber: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  seasonNumber: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
   isLoading: PropTypes.bool.isRequired,
   addEpisode: PropTypes.func.isRequired,
   removeEpisode: PropTypes.func.isRequired,

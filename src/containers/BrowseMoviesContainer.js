@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import BrowsePage from "../components/BrowsePage";
-import { getMoviesFromType, getGenreMovies, getMovieGenres, getMoviesFromYear } from "../api/APIUtils";
+import {
+  getMoviesFromType,
+  getGenreMovies,
+  getMovieGenres,
+  getMoviesFromYear,
+} from "../api/APIUtils";
 import createDebouncedFunc from "../utils/createDebouncedFunc";
 
 class BrowseMoviesContainer extends Component {
@@ -14,14 +19,13 @@ class BrowseMoviesContainer extends Component {
     searchWords: "",
     currentPage: 1,
     totalPages: 1,
-  }
+  };
 
   componentDidMount() {
-    getMovieGenres()
-      .then((genres) => {
-        this.setState({ genres });
-        this.getMoviesFromTab();
-      });
+    getMovieGenres().then(genres => {
+      this.setState({ genres });
+      this.getMoviesFromTab();
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -30,23 +34,23 @@ class BrowseMoviesContainer extends Component {
     }
   }
 
-  searchHandler = (query) => {
+  searchHandler = query => {
     this.setSearchbarValue(query);
     this.search(query);
-  }
+  };
 
-  search = createDebouncedFunc((query) => {
+  search = createDebouncedFunc(query => {
     // don't need to search if the user just clears the search bar
     if (query === "") return;
     this.props.history.push(`/movies/year/${query}`);
-  })
+  });
 
-  setSearchbarValue = (searchWords) => {
+  setSearchbarValue = searchWords => {
     this.setState({ searchWords });
-  }
+  };
 
   setGenreTitle(id) {
-    this.state.genres.forEach((genre) => {
+    this.state.genres.forEach(genre => {
       if (genre.id.toString() === id) {
         this.setState({ genreTitle: `(${genre.name})` });
       }
@@ -65,25 +69,37 @@ class BrowseMoviesContainer extends Component {
     });
     if (filter === "top_rated") {
       getMoviesFromType("top_rated")
-        .then(movies => this.setState({ movies: movies.results,
-          isLoading: false,
-          totalPages: movies.total_pages }))
+        .then(movies =>
+          this.setState({
+            movies: movies.results,
+            isLoading: false,
+            totalPages: movies.total_pages,
+          }),
+        )
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch movies :(" });
         });
     } else if (filter === "upcoming") {
       getMoviesFromType("upcoming")
-        .then(movies => this.setState({ movies: movies.results,
-          isLoading: false,
-          totalPages: movies.total_pages }))
+        .then(movies =>
+          this.setState({
+            movies: movies.results,
+            isLoading: false,
+            totalPages: movies.total_pages,
+          }),
+        )
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch movies :(" });
         });
     } else if (filter === "popular") {
       getMoviesFromType("popular", this.state.currentPage)
-        .then(movies => this.setState({ movies: movies.results,
-          isLoading: false,
-          totalPages: movies.total_pages }))
+        .then(movies =>
+          this.setState({
+            movies: movies.results,
+            isLoading: false,
+            totalPages: movies.total_pages,
+          }),
+        )
         .catch(() => {
           this.setState({ error: "Oops! Could not fetch movies :(" });
         });
@@ -91,9 +107,13 @@ class BrowseMoviesContainer extends Component {
       if (id) {
         this.setGenreTitle(id);
         getGenreMovies(id)
-          .then(movies => this.setState({ movies: movies.results,
-            isLoading: false,
-            totalPages: movies.total_pages }))
+          .then(movies =>
+            this.setState({
+              movies: movies.results,
+              isLoading: false,
+              totalPages: movies.total_pages,
+            }),
+          )
           .catch(() => {
             this.setState({ error: "Oops! Could not fetch movies :(" });
           });
@@ -109,7 +129,7 @@ class BrowseMoviesContainer extends Component {
       // instead of resetting the searchbar
       if (id || searchWords) {
         getMoviesFromYear(id || searchWords)
-          .then((movies) => {
+          .then(movies => {
             if (movies.length === 0) {
               this.setState({
                 error: "The database could not find any movies from that year",
@@ -147,7 +167,7 @@ class BrowseMoviesContainer extends Component {
            movies that already was fetched before. */
       const index = this.state.movies.concat(resp.results);
       const resArr = [];
-      index.forEach((item) => {
+      index.forEach(item => {
         const i = resArr.findIndex(x => x.id === item.id);
         if (i <= -1) {
           resArr.push(item);
@@ -161,7 +181,7 @@ class BrowseMoviesContainer extends Component {
     } catch (error) {
       this.setState({ error });
     }
-  }
+  };
 
   render() {
     const tabLinks = {

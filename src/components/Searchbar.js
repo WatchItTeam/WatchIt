@@ -12,26 +12,26 @@ class Searchbar extends Component {
     value: PropTypes.string.isRequired,
     search: PropTypes.func.isRequired,
     setSearchbarValue: PropTypes.func.isRequired,
-  }
+  };
 
   inputRef = React.createRef();
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault();
     const { value } = this.inputRef.current;
     this.props.search(value);
-  }
+  };
 
-  onChange = (e) => {
+  onChange = e => {
     const { value } = e.target;
     this.props.search(value);
-  }
+  };
 
-  clearText = (e) => {
+  clearText = e => {
     e.preventDefault();
     this.props.setSearchbarValue("");
     this.inputRef.current.focus();
-  }
+  };
 
   render() {
     const { onChange, onSubmit } = this;

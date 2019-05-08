@@ -7,7 +7,9 @@ function allTab(links) {
   if (links.All) {
     return (
       <li>
-        <NavLink className="tab-link" to={links.All}>All</NavLink>
+        <NavLink className="tab-link" to={links.All}>
+          All
+        </NavLink>
       </li>
     );
   }
@@ -18,19 +20,17 @@ function Tabs({ links }) {
   return (
     <nav className="tabs">
       <ul>
-        {
-          // if there is a tab called All, always put it first
-          allTab(links)
-        }
-        {
-          Object.entries(links)
-            .filter(([name]) => name !== "All")
-            .map(([name, url]) => (
-              <li key={name}>
-                <NavLink className="tab-link" to={url}>{name}</NavLink>
-              </li>
-          ))
-        }
+        {// if there is a tab called All, always put it first
+        allTab(links)}
+        {Object.entries(links)
+          .filter(([name]) => name !== "All")
+          .map(([name, url]) => (
+            <li key={name}>
+              <NavLink className="tab-link" to={url}>
+                {name}
+              </NavLink>
+            </li>
+          ))}
       </ul>
     </nav>
   );

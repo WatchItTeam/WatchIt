@@ -7,7 +7,7 @@ class BrowseGenresContainer extends Component {
     return { genreId: props.match.params.id };
   }
 
-  state = { genreId: 0 }
+  state = { genreId: 0 };
 
   render() {
     return (

@@ -19,11 +19,11 @@ class ListPickerModal extends Component {
     onSubmit: PropTypes.func.isRequired,
     statusOfCurrent: PropTypes.string,
     onRemove: PropTypes.func.isRequired,
-  }
+  };
 
   static defaultProps = {
     statusOfCurrent: "",
-  }
+  };
 
   /**
    * We read the value of statusOfCurrent so that if the currentMovie
@@ -36,12 +36,12 @@ class ListPickerModal extends Component {
     };
   }
 
-  state = { current: "" }
+  state = { current: "" };
   formRef = React.createRef();
 
-  onRadioChange = (event) => {
+  onRadioChange = event => {
     this.setState({ current: event.target.value });
-  }
+  };
 
   /**
    * What happens when the cancel button is pressed or if the user clicks outside
@@ -49,7 +49,7 @@ class ListPickerModal extends Component {
   cancelModal = () => {
     this.formRef.current.reset();
     this.props.hideFunc();
-  }
+  };
 
   /**
    * When the user clicks on save, call the onSubmit prop function
@@ -65,46 +65,49 @@ class ListPickerModal extends Component {
       onSubmit(current);
     }
     hideFunc();
-  }
+  };
 
   onRemoveClick = () => {
     const { onRemove, hideFunc, statusOfCurrent } = this.props;
     onRemove(statusOfCurrent);
     hideFunc();
-  }
+  };
 
   render() {
     const { isOpen, hideFunc, statusOfCurrent } = this.props;
     const { current } = this.state;
     const { cancelModal, onRadioChange, onSaveClick } = this;
     return (
-      <Modal className="listpicker-modal" isOpen={isOpen} hideFunc={hideFunc} onEnter={onSaveClick}>
-        {
-          statusOfCurrent && (
-            <div className="trash-icon-button" >
-              <button onClick={this.onRemoveClick}>
-                <FontAwesomeIcon className="trash-icon" icon="trash-alt" />
-              </button>
-            </div>
-          )
-        }
+      <Modal
+        className="listpicker-modal"
+        isOpen={isOpen}
+        hideFunc={hideFunc}
+        onEnter={onSaveClick}
+      >
+        {statusOfCurrent && (
+          <div className="trash-icon-button">
+            <button onClick={this.onRemoveClick}>
+              <FontAwesomeIcon className="trash-icon" icon="trash-alt" />
+            </button>
+          </div>
+        )}
         <h1 className="addTo">Add to:</h1>
         <form ref={this.formRef}>
-          {
-            // dynamically add a radio button for each watch state
-            // instead of hard coding them
-            Object.values(watchStates).map(state => (
-              <ListPickerRadio
-                key={state}
-                value={state}
-                current={current}
-                onChange={onRadioChange}
-              />
-            ))
-          }
+          {// dynamically add a radio button for each watch state
+          // instead of hard coding them
+          Object.values(watchStates).map(state => (
+            <ListPickerRadio
+              key={state}
+              value={state}
+              current={current}
+              onChange={onRadioChange}
+            />
+          ))}
         </form>
         <div className="buttons">
-          <button className="cancel-btn" onClick={cancelModal}>Cancel</button>
+          <button className="cancel-btn" onClick={cancelModal}>
+            Cancel
+          </button>
           <PrimaryButton onClick={onSaveClick}>Save</PrimaryButton>
         </div>
       </Modal>

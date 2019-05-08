@@ -20,20 +20,28 @@ class PosterCard extends Component {
     linkTo: PropTypes.string.isRequired,
     releaseDate: PropTypes.string,
     mediaType: PropTypes.string.isRequired,
-  }
+  };
 
   static defaultProps = {
     releaseDate: "",
     posterPath: "",
-  }
+  };
 
   render() {
-    const { id, title, posterPath, linkTo, releaseDate, mediaType, connectDragSource } = this.props;
+    const {
+      id,
+      title,
+      posterPath,
+      linkTo,
+      releaseDate,
+      mediaType,
+      connectDragSource,
+    } = this.props;
     const releaseYear = releaseDate ? ` (${getYearFromDate(releaseDate)})` : "";
 
     const fallbackUrl = `/${mediaType}/${id}`;
 
-    return connectDragSource((
+    return connectDragSource(
       <div>
         <Link className="poster-card" to={linkTo || fallbackUrl} draggable>
           <ImageWithFallback
@@ -44,11 +52,12 @@ class PosterCard extends Component {
             className="poster"
           />
           <p className="title">
-            {title}{releaseYear}
+            {title}
+            {releaseYear}
           </p>
         </Link>
-      </div>
-    ));
+      </div>,
+    );
   }
 }
 

@@ -22,7 +22,7 @@
 export default function createDebouncedFunc(fn, time = 500) {
   let timeout;
 
-  return function () {
+  return function() {
     const functionCall = () => fn.apply(this, arguments);
 
     clearTimeout(timeout);

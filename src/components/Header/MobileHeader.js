@@ -21,10 +21,13 @@ class MobileHeader extends Component {
     searchHandler: PropTypes.func.isRequired,
     setSearchbarValue: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
-  }
+  };
 
   static getDerivedStateFromProps(props, state) {
-    if (state.location !== props.location && !props.location.pathname.includes("search")) {
+    if (
+      state.location !== props.location &&
+      !props.location.pathname.includes("search")
+    ) {
       return {
         searchIsVisible: false,
         location: props.location,
@@ -36,7 +39,7 @@ class MobileHeader extends Component {
   state = {
     searchIsVisible: false,
     modalIsVisible: false,
-  }
+  };
 
   componentDidUpdate(prevProps) {
     if (this.state.searchIsVisible) {
@@ -53,23 +56,26 @@ class MobileHeader extends Component {
 
   showSearch = () => {
     this.setState({ searchIsVisible: true });
-  }
+  };
 
   hideSearch = () => {
     this.setState({ searchIsVisible: false });
-  }
+  };
 
   showModal = () => {
     this.setState({ modalIsVisible: true });
-  }
+  };
 
   hideModal = () => {
     this.setState({ modalIsVisible: false });
-  }
+  };
 
   render() {
     const {
-      toggleSidebar, setSearchbarValue, searchbarValue, searchHandler,
+      toggleSidebar,
+      setSearchbarValue,
+      searchbarValue,
+      searchHandler,
     } = this.props;
 
     if (this.state.searchIsVisible) {
@@ -93,25 +99,28 @@ class MobileHeader extends Component {
         <button id="toggle-btn" onClick={toggleSidebar}>
           <FontAwesomeIcon icon="bars" />
         </button>
-        <div id="header-title">
-          {document.title}
-        </div>
+        <div id="header-title">{document.title}</div>
         <button id="header-search-btn" onClick={this.showSearch}>
           <FontAwesomeIcon icon="search" />
         </button>
         <SignedIn>
-          {() => ( // Shows signout-icon if user is signed in, login icon otherwise
+          {() => (
+            // Shows signout-icon if user is signed in, login icon otherwise
             <button id="signout-mobile-btn" onClick={signOut}>
               <FontAwesomeIcon icon="sign-out-alt" />
             </button>
-            )}
+          )}
         </SignedIn>
         <SignedOut>
           <Fragment>
             <button id="signin-mobile-btn" onClick={this.showModal}>
               <FontAwesomeIcon icon="user" />
             </button>
-            <Modal className="loginModal" isOpen={this.state.modalIsVisible} hideFunc={this.hideModal}>
+            <Modal
+              className="loginModal"
+              isOpen={this.state.modalIsVisible}
+              hideFunc={this.hideModal}
+            >
               <LoginHandler />
             </Modal>
           </Fragment>

@@ -4,15 +4,25 @@ import ResponsiveList from "../components/WatchList/ResponsiveList";
 import parseName from "../utils/parseName";
 import ErrorMessage from "../components/ErrorMessage";
 import ListPickerModal from "./ListPickerModal";
-import { successToast, errorToast, infoToast, removeToast } from "../utils/toast";
+import {
+  successToast,
+  errorToast,
+  infoToast,
+  removeToast,
+} from "../utils/toast";
 import { normalizeMovie } from "../api/APIUtils";
-import { fetchAllFromList, removeFromList, sortBy, updateWatchStatus } from "../Firebase/lists";
+import {
+  fetchAllFromList,
+  removeFromList,
+  sortBy,
+  updateWatchStatus,
+} from "../Firebase/lists";
 
 class UserList extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-  }
+  };
 
   static getDerivedStateFromProps(props) {
     // set the display name of the list
@@ -29,7 +39,7 @@ class UserList extends Component {
     listEntries: [],
     modalIsOpen: false,
     currentMovie: null,
-  }
+  };
 
   componentDidMount() {
     this.fetchList();
@@ -48,41 +58,49 @@ class UserList extends Component {
   async fetchList() {
     this.setState({ isLoading: true });
     const { userId, listName, mediaType } = this.props.match.params;
-    this.unsubscribe = await fetchAllFromList(userId, listName, mediaType, (snapshot) => {
-      const entries = snapshot.docs.map(doc => doc.data());
-      const sorted = sortBy(entries, "title");
-      this.setState({ listEntries: sorted, isLoading: false });
-    });
+    this.unsubscribe = await fetchAllFromList(
+      userId,
+      listName,
+      mediaType,
+      snapshot => {
+        const entries = snapshot.docs.map(doc => doc.data());
+        const sorted = sortBy(entries, "title");
+        this.setState({ listEntries: sorted, isLoading: false });
+      },
+    );
   }
 
   toggleEditMode = () => {
     this.setState({
       isEditMode: !this.state.isEditMode,
     });
-  }
+  };
 
-  deleteEntry = (movie) => {
+  deleteEntry = movie => {
     removeFromList(movie.id)
       .then(() => {
-        removeToast(`Removed ${movie.title} from ${this.state.listDisplayName}`);
-      }).catch(() => {
+        removeToast(
+          `Removed ${movie.title} from ${this.state.listDisplayName}`,
+        );
+      })
+      .catch(() => {
         this.setState({ error: true });
       });
-  }
+  };
 
-  showModal = (currentMovie) => {
+  showModal = currentMovie => {
     this.setState({ modalIsOpen: true, currentMovie });
-  }
+  };
 
   hideModal = () => {
     this.setState({ modalIsOpen: false });
-  }
+  };
 
   /**
    * Adds the current movie to the list that the user selects
    * from the ListPickerModal
    */
-  onModalSubmit = async (selectedList) => {
+  onModalSubmit = async selectedList => {
     this.setState({ isLoading: true });
 
     const { currentMovie } = this.state;
@@ -94,9 +112,9 @@ class UserList extends Component {
       errorToast(`Something went wrong when adding ${movie.title}`);
     }
     this.setState({ isLoading: false });
-  }
+  };
 
-  onModalRemove = async (selectedList) => {
+  onModalRemove = async selectedList => {
     this.setState({ isLoading: true });
 
     const { currentMovie } = this.state;
@@ -108,10 +126,16 @@ class UserList extends Component {
       errorToast(`Something went wrong when trying to remove ${movie.title}`);
     }
     this.setState({ isLoading: false });
-  }
+  };
 
   render() {
-    const { isLoading, error, listDisplayName, listEntries, isEditMode } = this.state;
+    const {
+      isLoading,
+      error,
+      listDisplayName,
+      listEntries,
+      isEditMode,
+    } = this.state;
 
     if (error) {
       return (

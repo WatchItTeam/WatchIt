@@ -8,7 +8,7 @@ import Header from "../components/Header/Header";
 class DynamicHeader extends Component {
   state = {
     normal: false, // only affects the dark header
-  }
+  };
 
   handleScroll = () => {
     if (window.scrollY > 300 && !this.state.normal) {
@@ -16,7 +16,7 @@ class DynamicHeader extends Component {
     } else if (window.scrollY < 300 && this.state.normal) {
       this.setState({ normal: false });
     }
-  }
+  };
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
@@ -31,13 +31,17 @@ class DynamicHeader extends Component {
 
     // Dark header which transitions to normal after scrolling 300px
     const darkHeader = (
-      <div className={this.state.normal ? "header-wrapper" : "header-wrapper dark"}>
+      <div
+        className={this.state.normal ? "header-wrapper" : "header-wrapper dark"}
+      >
         {headerComp}
       </div>
     );
 
     // default header
-    const defaultHeader = <div className="header-wrapper default">{headerComp}</div>;
+    const defaultHeader = (
+      <div className="header-wrapper default">{headerComp}</div>
+    );
 
     return (
       <Switch>

@@ -13,7 +13,7 @@ function BrowseGenre({ genres, type }) {
           exact
           path="/movies/genre/:id?"
           render={() => {
-            genres.forEach((genre) => {
+            genres.forEach(genre => {
               genreLinks[genre.name] = `/movies/genre/${genre.id}`;
             });
             return <TitleGrid links={genreLinks} />;
@@ -31,7 +31,7 @@ function BrowseGenre({ genres, type }) {
             exact
             path="/shows/genre/:id?"
             render={() => {
-              genres.forEach((genre) => {
+              genres.forEach(genre => {
                 genreLinks[genre.name] = `/shows/genre/${genre.id}`;
               });
               return <TitleGrid links={genreLinks} />;
