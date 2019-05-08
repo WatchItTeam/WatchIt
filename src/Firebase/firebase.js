@@ -1,5 +1,6 @@
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 
 // Initialize Firebase
 const config = {
@@ -14,9 +15,7 @@ const firebaseApp = firebase.initializeApp(config);
 
 // Initialize the Firestore database
 const db = firebase.firestore();
-db.settings({
-  timestampsInSnapshots: true, // firebase prints an error in the console without this
-});
+const auth = firebase.auth();
 
-export { db };
+export { db, auth };
 export default firebaseApp;

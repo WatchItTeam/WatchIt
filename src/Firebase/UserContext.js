@@ -1,6 +1,6 @@
 import React, { Component, createContext } from "react";
 import PropTypes from "prop-types";
-import firebaseApp from "./firebase";
+import { auth } from "./firebase";
 
 const { Provider, Consumer: UserConsumer } = createContext();
 
@@ -22,13 +22,13 @@ export class UserProvider extends Component {
     user: {
       status: "loading",
       onChange: (callback) => {
-        firebaseApp.auth().onAuthStateChanged(callback);
+        auth.onAuthStateChanged(callback);
       },
     },
   }
 
   componentDidMount() {
-    firebaseApp.auth().onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       const status = user ? "signedIn" : "signedOut";
       const userObj = { ...user, status };
       this.setState(prevState => ({
