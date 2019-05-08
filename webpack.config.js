@@ -16,6 +16,7 @@
  * npm i -D interpolate-html-plugin copy-webpack-plugin
  * npm i -D html-webpack-plugin extract-text-webpack-plugin@^4.0.0-beta.0
  * npm i -D babel-core babel-loader babel-preset-react babel-preset-env
+ * npm i -D dotenv-webpack
  */
 
 const path = require("path");
@@ -26,6 +27,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const InterpolateHtmlPlugin = require("interpolate-html-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 const packagejson = require("./package.json");
 
 const production = process.env.NODE_ENV === "production";
@@ -56,7 +58,7 @@ const publicUrl = production ? (packagejson.homepage || "") : "";
 const config = {
   entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, outputDirName),
+    path: outputDirName,
     filename: jsBundleName,
   },
   module: {
@@ -68,6 +70,9 @@ const config = {
       },
     ],
   },
+  plugins: [
+    new Dotenv(),
+  ],
 };
 
 let merged;
@@ -108,7 +113,7 @@ if (production) {
       // inject bundles into our HTML file and minify
       new HtmlWebpackPlugin({
         filename: htmlFile,
-        template: path.resolve(__dirname, `${contentBaseDir}/${htmlFile}`),
+        template: path.resolve(contentBaseDir, htmlFile),
         minify: {
           removeComments: true,
           collapseWhitespace: true,

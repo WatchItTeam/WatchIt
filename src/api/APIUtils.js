@@ -1,7 +1,7 @@
 /**
  * This file contains helper functions to use TheMovieDB API
  */
-import API_KEY from "./APIkey";
+const API_KEY = process.env.TMDB_API_KEY;
 
 const baseImgUrl = "https://image.tmdb.org/t/p/";
 
