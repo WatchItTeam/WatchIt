@@ -35,10 +35,10 @@ const jsBundleName = "app.bundle.js";
 const cssBundleName = "style.bundle.css";
 
 // this dir should contain the entry point HTML and other static files
-const contentBaseDir = "./public";
+const contentBaseDir = path.resolve(__dirname, "public");
 
 // where the built files should be
-const outputDirName = "./dist";
+const outputDirName = path.resolve(__dirname, "dist");
 
 // file name of entry HTML file
 const htmlFile = "index.html";
