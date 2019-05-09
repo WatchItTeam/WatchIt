@@ -1,32 +1,25 @@
 /**
  * One Webpack config for both dev and production.
- * Has support for Es6+ using Babel and Sass
- * Also works with React
- * Uses Webpack Dev Server in development for hot reloading
+ * Has support for Es6+ using Babel and Sass.
+ * Also works with React.
+ * Uses Webpack Dev Server in development for hot reloading.
  *
  * Put Babel settings in a separate file called .babelrc
  *
  * Script to build: NODE_ENV=production webpack
  * Script to dev: webpack-dev-server --open --hot --inline
- *
- * Dependencies in this config:
- * npm i -D webpack webpack-cli webpack-dev-server
- * npm i -D uglifyjs-webpack-plugin clean-webpack-plugin webpack-merge
- * npm i -D node-sass sass-loader css-loader style-loader
- * npm i -D interpolate-html-plugin copy-webpack-plugin
- * npm i -D html-webpack-plugin extract-text-webpack-plugin@^4.0.0-beta.0
- * npm i -D babel-core babel-loader babel-preset-react babel-preset-env
- * npm i -D dotenv-webpack
  */
 
 const path = require("path");
 const url = require("url");
 const merge = require("webpack-merge");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const InterpolateHtmlPlugin = require("interpolate-html-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const TerserJSPlugin = require("terser-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const packagejson = require("./package.json");
 
@@ -81,25 +74,16 @@ if (production) {
     },
     // minify JS, set process.env.NODE_ENV = "production" and other optimizations
     mode: "production",
+    optimization: {
+      minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    },
     // source map type
     devtool: "source-map",
     module: {
       rules: [
         {
           test: /\.(scss|css)$/,
-          use: ExtractTextPlugin.extract({
-            use: [
-              {
-                loader: "css-loader",
-                options: { sourceMap: true },
-              },
-              {
-                loader: "sass-loader",
-                options: { sourceMap: true },
-              },
-            ],
-            fallback: "style-loader",
-          }),
+          use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
         },
       ],
     },
@@ -107,7 +91,9 @@ if (production) {
       // clean up dist dir
       new CleanWebpackPlugin([outputDirName]),
       // output CSS bundle
-      new ExtractTextPlugin(cssBundleName),
+      new MiniCssExtractPlugin({
+        filename: cssBundleName,
+      }),
       // inject bundles into our HTML file and minify
       new HtmlWebpackPlugin({
         filename: htmlFile,
