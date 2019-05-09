@@ -1,4 +1,5 @@
-import "babel-polyfill"; // async await
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import "whatwg-fetch"; // fetch polyfill
 import "url-search-params-polyfill"; // URLSearchParams polyfill
 import "normalize.css";

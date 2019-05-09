@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --open --hot --inline --host 0.0.0.0 --public localhost:3000",
-    "build": "NODE_ENV=production webpack"
+    "build": "NODE_ENV=production webpack --display=minimal"
   },
   "repository": {
     "type": "git",
@@ -19,13 +19,13 @@
   },
   "homepage": "https://watchit.fun",
   "devDependencies": {
-    "babel-core": "^6.26.2",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^8.2.3",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
+    "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
@@ -56,7 +56,7 @@
     "@fortawesome/fontawesome-free-regular": "^5.0.13",
     "@fortawesome/fontawesome-free-solid": "^5.0.10",
     "@fortawesome/react-fontawesome": "0.0.18",
-    "babel-polyfill": "^6.26.0",
+    "core-js": "^3.0.1",
     "firebase": "^6.0.1",
     "moment-mini": "^2.19.4",
     "normalize.css": "^8.0.0",
@@ -69,6 +69,7 @@
     "react-responsive": "^4.1.0",
     "react-router-dom": "^4.2.2",
     "react-toastify": "^4.0.1",
+    "regenerator-runtime": "^0.13.2",
     "url-search-params-polyfill": "^3.0.0",
     "whatwg-fetch": "^2.0.4"
   }
