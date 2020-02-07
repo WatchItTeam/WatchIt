@@ -1,6 +1,6 @@
 import React from "react";
 import LoadingText from "./LoadingText";
-import "../../css/Loading/LoadingCardList.scss";
+import "./LoadingCardList.scss";
 
 function LoadingCardList() {
   const items = [];

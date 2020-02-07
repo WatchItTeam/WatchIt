@@ -1,6 +1,6 @@
 import React from "react";
 import LoadingText from "./LoadingText";
-import "../../css/Loading/LoadingTableList.scss";
+import "./LoadingTableList.scss";
 
 function LoadingTableList() {
   const tableRows = [];

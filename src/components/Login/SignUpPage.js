@@ -5,7 +5,7 @@ import { signUp } from "../../Firebase/UserUtils";
 import { errorToast, successToast } from "../../utils";
 import { SignedIn } from "../UserState/UserState";
 import PrimaryButton from "../PrimaryButton";
-import "../../css/SignUpPage.scss";
+import "./SignUpPage.scss";
 
 class SignUpPage extends Component {
   static propTypes = {

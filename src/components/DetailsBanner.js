@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ImageWithFallback from "./ImageWithFallback";
-import "../css/DetailsBanner.scss";
+import "./DetailsBanner.scss";
 
 /**
  * The backdrop banner for the movie details page

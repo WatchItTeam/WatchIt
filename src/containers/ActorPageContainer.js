@@ -4,7 +4,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { getPersonDetails } from "../api/tmdb";
 import ActorPage from "../components/ActorPage";
 import ErrorMessage from "../components/ErrorMessage";
-import "../css/Detailspage.scss";
+import "./ActorPageContainer.scss";
 
 class ActorPageContainer extends Component {
   static propTypes = {

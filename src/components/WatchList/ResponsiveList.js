@@ -6,7 +6,7 @@ import Tabs from "../Tabs";
 import TableList from "./TableList";
 import CardList from "./CardList";
 import { SignedIn } from "../UserState/UserState";
-import "../../css/ResponsiveList.scss";
+import "./ResponsiveList.scss";
 
 function ResponsiveList({
   isLoading,

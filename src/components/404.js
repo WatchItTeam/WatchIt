@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PrimaryButton from "./PrimaryButton";
-import "../css/404.scss";
+import "./404.scss";
 
 function NotFoundPage({ history }) {
   return (

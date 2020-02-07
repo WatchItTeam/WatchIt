@@ -7,7 +7,7 @@ import { getFullImgPath } from "../../api/tmdb";
 import ListDeleteBtn from "./ListDeleteBtn";
 import ListMoveBtn from "./ListMoveBtn";
 import LoadingCardList from "../Loading/LoadingCardList";
-import "../../css/CardList.scss";
+import "./CardList.scss";
 
 function checkProgress(movie) {
   if (movie.media_type === "tv") {

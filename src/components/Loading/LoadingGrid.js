@@ -1,6 +1,6 @@
 import React from "react";
 import LoadingCard from "./LoadingCard";
-import "../../css/PosterGrid.scss";
+import "../PosterGrid.scss";
 
 function LoadingGrid() {
   const loadingCards = [];

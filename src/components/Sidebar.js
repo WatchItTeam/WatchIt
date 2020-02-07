@@ -7,7 +7,7 @@ import SidebarNavLink from "./SidebarNavLink";
 import PosterCardDropTarget from "./PosterCardDropTarget";
 import { SignedIn, SignedOut } from "./UserState/UserState";
 import { Desktop } from "./Responsive";
-import "../css/Sidebar.scss";
+import "./Sidebar.scss";
 
 /**
  * Markup for the sidebar

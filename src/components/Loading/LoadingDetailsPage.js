@@ -1,5 +1,5 @@
 import React from "react";
-import "../../css/Loading/LoadingDetailsPage.scss";
+import "./LoadingDetailsPage.scss";
 
 function LoadingDetailsPage() {
   return (

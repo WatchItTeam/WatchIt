@@ -2,10 +2,10 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import "../../css/LoginButton.scss";
 import { SignedIn, SignedOut } from "../UserState/UserState";
 import { Mobile, Desktop } from "../Responsive";
 import PrimaryButton from "../PrimaryButton";
+import "./LoginButton.scss";
 
 function UserLayout({
   onSignOutClick,

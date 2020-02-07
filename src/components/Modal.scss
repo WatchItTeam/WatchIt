@@ -1,4 +1,4 @@
-@import "global";
+@import "../global";
 
 .modal {
   position: fixed;
@@ -43,5 +43,5 @@
     pointer-events: none;
   }
   // removes the black overlay that iOS puts on top of clickable items
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

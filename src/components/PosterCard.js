@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { DragSource } from "react-dnd";
 import { getYearFromDate } from "../api/tmdb";
 import ImageWithFallback from "./ImageWithFallback";
-import "../css/PosterCard.scss";
+import "./PosterCard.scss";
 
 /**
  * Reusable component for showing a movie poster and title

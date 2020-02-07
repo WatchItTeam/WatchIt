@@ -1,4 +1,4 @@
-@import "global";
+@import "../../global";
 
 .signup-button {
   text-decoration: underline;
@@ -13,7 +13,7 @@
 }
 
 .signup-button:hover {
-  opacity:0.6;
+  opacity: 0.6;
 }
 
 .password-div {
@@ -36,7 +36,8 @@
 }
 
 .login-barsMobile {
-  #email-bar, #pass-bar{
+  #email-bar,
+  #pass-bar {
     width: 100%;
   }
 }

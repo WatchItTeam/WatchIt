@@ -23,7 +23,7 @@ import { createDebouncedFunc } from "../utils";
 import NewPassword from "../components/NewPassword";
 import NotFoundPage from "../components/404";
 import SignUpPage from "../components/Login/SignUpPage";
-import "../css/App.scss";
+import "./App.scss";
 
 const SEARCH_DEBOUNCE_TIME = 500;
 

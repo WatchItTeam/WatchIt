@@ -1,4 +1,4 @@
-@import "global";
+@import "../global";
 
 .details-title {
   padding: 0 var(--container-padding);
@@ -28,7 +28,7 @@
       font-size: 36px;
 
       .star-icon {
-        color: #FFDE4D;
+        color: #ffde4d;
       }
     }
 

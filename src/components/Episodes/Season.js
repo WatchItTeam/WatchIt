@@ -8,7 +8,7 @@ import PrimaryButton from "../PrimaryButton";
 import SecondaryButton from "../SecondaryButton";
 import { episodeString } from "../../Firebase/lists";
 import { SignedIn } from "../UserState/UserState";
-import "../../css/Season.scss";
+import "./Season.scss";
 
 function isWatched(watchedEpisodes, seasonNumber, episodeNumber) {
   if (!watchedEpisodes) return false;

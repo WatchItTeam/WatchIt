@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { getFullImgPath } from "../api/tmdb";
-import "../css/ImageWithFallback.scss";
+import "./ImageWithFallback.scss";
 
 /**
  * Reusable image component which displays a fallback if src is null/undefined

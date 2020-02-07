@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import "../css/Modal.scss";
+import "./Modal.scss";
 
 /**
  * A reusable modal/popup component.

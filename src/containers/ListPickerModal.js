@@ -5,7 +5,7 @@ import { watchStates } from "../Firebase/lists";
 import Modal from "../components/Modal";
 import PrimaryButton from "../components/PrimaryButton";
 import ListPickerRadio from "../components/ListPickerRadio";
-import "../css/ListPickerModal.scss";
+import "../components/ListPickerModal.scss";
 
 /**
  * Component for the popup modal that appears when clicking the

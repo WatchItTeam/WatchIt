@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { resetPassword } from "../Firebase/UserUtils";
 import { successToast, errorToast } from "../toast";
 import PrimaryButton from "../components/PrimaryButton";
-import "../css/NewPassword.scss";
+import "./NewPassword.scss";
 
 class NewPassword extends Component {
   state = {

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import UserLayout from "./UserLayout";
 import { errorToast } from "../../utils";
-import "../../css/LoginHandler.scss";
 import { signIn, signOut } from "../../Firebase/UserUtils";
+import "./LoginHandler.scss";
 
 class LoginHandler extends Component {
   state = {

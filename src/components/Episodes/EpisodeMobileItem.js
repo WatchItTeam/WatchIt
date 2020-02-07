@@ -4,7 +4,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import CheckCircle from "@fortawesome/fontawesome-free-solid/faCheckCircle";
 import Circle from "@fortawesome/fontawesome-free-regular/faCircle";
 import { SignedIn, SignedOut } from "../UserState/UserState";
-import "../../css/EpisodeMobileItem.scss";
+import "./EpisodeMobileItem.scss";
 
 class EpisodeMobileItem extends Component {
   static propTypes = {

@@ -6,7 +6,7 @@ import ListDeleteBtn from "./ListDeleteBtn";
 import ListMoveBtn from "./ListMoveBtn";
 import PosterCard from "../PosterCard";
 import LoadingTableList from "../Loading/LoadingTableList";
-import "../../css/TableList.scss";
+import "./TableList.scss";
 
 function checkProgress(movie) {
   if (movie.media_type === "tv") {
