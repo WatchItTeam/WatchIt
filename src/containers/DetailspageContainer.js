@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { getMovieInfo, getTVInfo } from "../api/APIUtils";
+import { getMovieInfo, getTVInfo } from "../api/tmdb";
 import ErrorMessage from "../components/ErrorMessage";
 import DetailsPage from "../components/DetailsPage";
-import "../css/Detailspage.scss";
+import "./ActorPageContainer.scss";
 
 class DetailspageContainer extends Component {
   static propTypes = {

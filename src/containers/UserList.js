@@ -1,16 +1,11 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import ResponsiveList from "../components/WatchList/ResponsiveList";
-import parseName from "../utils/parseName";
+import { parseSnakeCase } from "../utils";
 import ErrorMessage from "../components/ErrorMessage";
 import ListPickerModal from "./ListPickerModal";
-import {
-  successToast,
-  errorToast,
-  infoToast,
-  removeToast,
-} from "../utils/toast";
-import { normalizeMovie } from "../api/APIUtils";
+import { errorToast, infoToast, removeToast } from "../toast";
+import { normalizeMovie } from "../api/tmdb";
 import {
   fetchAllFromList,
   removeFromList,
@@ -27,7 +22,7 @@ class UserList extends Component {
   static getDerivedStateFromProps(props) {
     // set the display name of the list
     const { listName } = props.match.params;
-    const listDisplayName = parseName(listName);
+    const listDisplayName = parseSnakeCase(listName);
     return { listDisplayName };
   }
 
@@ -107,7 +102,7 @@ class UserList extends Component {
     const movie = normalizeMovie(currentMovie);
     try {
       updateWatchStatus(movie, selectedList);
-      infoToast(`${movie.title} moved to ${parseName(selectedList)}`);
+      infoToast(`${movie.title} moved to ${parseSnakeCase(selectedList)}`);
     } catch (error) {
       errorToast(`Something went wrong when adding ${movie.title}`);
     }
@@ -121,7 +116,9 @@ class UserList extends Component {
     const movie = normalizeMovie(currentMovie);
     try {
       await removeFromList(currentMovie.id);
-      removeToast(`Removed ${movie.title} from ${parseName(selectedList)}`);
+      removeToast(
+        `Removed ${movie.title} from ${parseSnakeCase(selectedList)}`,
+      );
     } catch (error) {
       errorToast(`Something went wrong when trying to remove ${movie.title}`);
     }

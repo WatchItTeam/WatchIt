@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import smoothScrollTo from "../utils/smoothScroll";
-import "../css/Scroll.scss";
+import { smoothScrollTo } from "../utils";
+import "./Scroll.scss";
 
 /**
  * Component for a horizontal scrolling list

@@ -1,6 +1,6 @@
 import React from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import "../../css/ListMoveBtn.scss";
+import "./ListMoveBtn.scss";
 
 function ListMoveBtn(props) {
   return (

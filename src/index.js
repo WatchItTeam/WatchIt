@@ -1,4 +1,5 @@
-import "babel-polyfill"; // async await
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import "whatwg-fetch"; // fetch polyfill
 import "url-search-params-polyfill"; // URLSearchParams polyfill
 import "normalize.css";
@@ -8,8 +9,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import fontawesome from "@fortawesome/fontawesome";
 import faSolid from "@fortawesome/fontawesome-free-solid";
 import App from "./containers/App";
-import "./css/index.scss";
-import "./css/responsive.scss";
+import "./index.scss";
+import "./responsive.scss";
 
 fontawesome.library.add(faSolid);
 

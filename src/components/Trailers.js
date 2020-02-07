@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import "../css/Scroll.scss";
+import "./Scroll.scss";
 
 class Trailers extends Component {
   static propTypes = {

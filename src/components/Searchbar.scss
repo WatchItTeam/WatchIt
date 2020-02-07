@@ -1,4 +1,4 @@
-@import "global";
+@import "../global";
 
 .searchbar {
   background: white;
@@ -18,7 +18,8 @@
     line-height: 1;
   }
 
-  .fa-search, .fa-times {
+  .fa-search,
+  .fa-times {
     opacity: 0.5;
   }
 

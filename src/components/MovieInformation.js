@@ -3,11 +3,11 @@ import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import PosterCard from "./PosterCard";
-import { normalizeMovie } from "../api/APIUtils";
+import { normalizeMovie } from "../api/tmdb";
 import Scroll from "./Scroll";
 import Trailers from "./Trailers";
-import "../css/MovieInfo.scss";
-import "../css/Scroll.scss";
+import "./MovieInformation.scss";
+import "./Scroll.scss";
 
 /**
  * Markup for the main content of the movie details page

@@ -1,6 +1,6 @@
 import React from "react";
 import LoadingText from "./LoadingText";
-import "../../css/Loading/LoadingEpisodePage.scss";
+import "./LoadingEpisodePage.scss";
 
 function LoadingEpisodePage() {
   return (

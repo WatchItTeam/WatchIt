@@ -1,6 +1,6 @@
 import React from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import "../../css/ListDeleteBtn.scss";
+import "./ListDeleteBtn.scss";
 
 function ListDeleteBtn(props) {
   return (

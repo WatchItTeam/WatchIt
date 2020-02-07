@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "../css/SidebarNavLink.scss";
+import "./SidebarNavLink.scss";
 
 /**
  * Component for navigation links in the sidebar, which change appearance

@@ -1,4 +1,4 @@
-@import "global";
+@import "../../global";
 
 .card-list {
   ul {
@@ -58,22 +58,31 @@
         "progress rating"
         "added icon";
 
-      .progress { grid-area: progress; }
+      .progress {
+        grid-area: progress;
+      }
       .rating {
         grid-area: rating;
         justify-self: end;
         color: $text-color;
 
-        .fa-star { color: #FFDE4D; }
+        .fa-star {
+          color: #ffde4d;
+        }
       }
-      .added { grid-area: added; }
-      .media-type { grid-area: icon; justify-self: end; }
+      .added {
+        grid-area: added;
+      }
+      .media-type {
+        grid-area: icon;
+        justify-self: end;
+      }
     }
   }
-  .buttonWrapper {        
+  .buttonWrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-}
+  }
 }

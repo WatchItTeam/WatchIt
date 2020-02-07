@@ -14,6 +14,7 @@ module.exports = {
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": 0,
     "react/sort-comp": 0,
+    "no-unused-vars": 1,
     "jsx-a11y/anchor-is-valid": [
       "error",
       {

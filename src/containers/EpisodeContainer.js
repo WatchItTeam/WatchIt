@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import EpisodePage from "../components/Episodes/EpisodePage";
-import { getSeasonFromId, getTVInfo, normalizeMovie } from "../api/APIUtils";
-import { successToast, errorToast } from "../utils/toast";
-import parseName from "../utils/parseName";
+import { getSeasonFromId, getTVInfo, normalizeMovie } from "../api/tmdb";
+import { successToast, errorToast } from "../toast";
+import { parseSnakeCase } from "../utils";
 import { withUser } from "../Firebase/UserContext";
 import {
   setEpisodeStatus,
@@ -138,7 +138,9 @@ class EpisodeContainer extends Component {
       try {
         addToList(currentShow, watchStates.watching);
         successToast(
-          `Added ${currentShow.title} to ${parseName(watchStates.watching)}`,
+          `Added ${currentShow.title} to ${parseSnakeCase(
+            watchStates.watching,
+          )}`,
         );
       } catch (error) {
         errorToast("Something went wrong, please try again");
@@ -166,7 +168,9 @@ class EpisodeContainer extends Component {
       try {
         addToList(currentShow, watchStates.watching);
         successToast(
-          `Added ${currentShow.title} to ${parseName(watchStates.watching)}`,
+          `Added ${currentShow.title} to ${parseSnakeCase(
+            watchStates.watching,
+          )}`,
         );
       } catch (error) {
         errorToast("Something went wrong, please try again");

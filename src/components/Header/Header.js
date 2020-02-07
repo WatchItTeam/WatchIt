@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Desktop, Mobile } from "../Responsive";
 import DesktopHeader from "./DesktopHeader";
 import MobileHeader from "./MobileHeader";
-import "../../css/Header.scss";
+import "./Header.scss";
 
 /**
  * The header, which includes search bar and user info

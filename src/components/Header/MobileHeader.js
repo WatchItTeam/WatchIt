@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Searchbar from "../Searchbar";
-import "../../css/Header.scss";
 import { SignedIn, SignedOut } from "../UserState/UserState";
 import { signOut } from "../../Firebase/UserUtils";
 import Modal from "../Modal";
 import LoginHandler from "../Login/LoginHandler";
+import "./Header.scss";
 
 /**
  * The header for desktop, which includes search bar and user info

@@ -6,8 +6,8 @@ import {
   getGenreMovies,
   getMovieGenres,
   getMoviesFromYear,
-} from "../api/APIUtils";
-import createDebouncedFunc from "../utils/createDebouncedFunc";
+} from "../api/tmdb";
+import { createDebouncedFunc } from "../utils";
 
 class BrowseMoviesContainer extends Component {
   state = {

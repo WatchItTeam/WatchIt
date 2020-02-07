@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "../../css/Loading/LoadingText.scss";
+import "./LoadingText.scss";
 
 function LoadingText({ type }) {
   switch (type) {

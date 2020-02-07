@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Redirect } from "react-router-dom";
 import { signUp } from "../../Firebase/UserUtils";
-import { errorToast, successToast } from "../../utils/toast";
+import { errorToast, successToast } from "../../utils";
 import { SignedIn } from "../UserState/UserState";
 import PrimaryButton from "../PrimaryButton";
-import "../../css/SignUpPage.scss";
+import "./SignUpPage.scss";
 
 class SignUpPage extends Component {
   static propTypes = {

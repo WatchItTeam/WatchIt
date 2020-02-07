@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import "../css/Searchbar.scss";
+import "./Searchbar.scss";
 
 /**
  * Reusable generic searchbar component with event handlers for

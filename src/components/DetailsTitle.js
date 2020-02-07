@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import moment from "moment-mini";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import minutesToHours from "../utils/minutesToHours";
+import { minutesToHours } from "../utils";
 import SecondaryButton from "./SecondaryButton";
 import AddToListBtn from "../containers/AddToListBtn";
 import ImageWithFallback from "./ImageWithFallback";
-import "../css/DetailsTitle.scss";
+import "./DetailsTitle.scss";
 
 /**
  * The title (poster, name, rating etc) for the movie details page

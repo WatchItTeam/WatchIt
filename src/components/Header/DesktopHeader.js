@@ -4,7 +4,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Searchbar from "../Searchbar";
 import LoginHandler from "../Login/LoginHandler";
 import { MediumRes } from "../Responsive";
-import "../../css/Header.scss";
+import "./Header.scss";
 
 /**
  * The header for desktop, which includes search bar and user info

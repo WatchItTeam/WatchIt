@@ -4,7 +4,7 @@ import { Route } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroller";
 import PosterGrid from "./PosterGrid";
 import Searchbar from "./Searchbar";
-import "../css/BrowseYear.scss";
+import "./BrowseYear.scss";
 
 function BrowseYear({
   movies,

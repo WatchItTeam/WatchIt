@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { watchStates } from "../Firebase/lists";
-import parseName from "../utils/parseName";
+import { parseSnakeCase } from "../utils";
 import SidebarNavLink from "./SidebarNavLink";
 import PosterCardDropTarget from "./PosterCardDropTarget";
 import { SignedIn, SignedOut } from "./UserState/UserState";
 import { Desktop } from "./Responsive";
-import "../css/Sidebar.scss";
+import "./Sidebar.scss";
 
 /**
  * Markup for the sidebar
@@ -45,7 +45,7 @@ function Sidebar({ isOpen }) {
                     targetName={watchState}
                   >
                     <SidebarNavLink to={`/user/${user.uid}/${watchState}/`}>
-                      {parseName(watchState)}
+                      {parseSnakeCase(watchState)}
                     </SidebarNavLink>
                   </PosterCardDropTarget>
                 ))}

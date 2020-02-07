@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import "../css/SecondaryButton.scss";
+import "./SecondaryButton.scss";
 
 /**
  * Reusable button with the secondary button style

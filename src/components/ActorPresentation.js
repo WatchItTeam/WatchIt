@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import brands from "@fortawesome/fontawesome-free-brands"; // eslint-disable-line
 import ImageWithFallback from "./ImageWithFallback";
-import "../css/ActorPresentation.scss";
+import "./ActorPresentation.scss";
 
 function checkSocialMedia(externalIDs) {
   const socialMedia = [];

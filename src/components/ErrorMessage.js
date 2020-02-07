@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "../css/ErrorMessage.scss";
+import "./ErrorMessage.scss";
 
 /**
  * Generic reusable component for showing error messages

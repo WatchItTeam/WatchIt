@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroller";
 import PosterGrid from "./PosterGrid";
 import LoadingGrid from "./Loading/LoadingGrid";
-import "../css/Searchpage.scss";
+import "./Searchpage.scss";
 
 /**
  * Markup for the search page
