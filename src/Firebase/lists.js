@@ -1,4 +1,4 @@
-import firebaseApp, { db } from "./firebase";
+import { db, auth } from "./firebase";
 import { normalizeMovie } from "../api/tmdb";
 
 // watching status variables
@@ -9,7 +9,7 @@ export const watchStates = {
   dropped: "dropped",
 };
 
-export const getUserID = () => firebaseApp.auth().currentUser.uid;
+export const getUserID = () => auth.currentUser.uid;
 
 /**
  * Takes in an array and sorts them by some property.
