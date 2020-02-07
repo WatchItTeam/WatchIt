@@ -1,3 +1,58 @@
+/* eslint-disable func-names, prefer-rest-params */
+/**
+ * This creates a debounced version of a function.
+ *
+ * Example usage:
+ * Create the debounced version of search(query):
+ *
+ * const debouncedSearch = createDebouncedFunc((query) => {
+ *   search(query);
+ * }, 1000);
+ *
+ * Then to use it:
+ *
+ * functionThatGetsCalledOften(query) {
+ *   debouncedSearch(query);
+ * }
+ *
+ * @param {Function} fn  Function to debounce
+ * @param {Number} time  How long to debounce
+ * @returns {Function}
+ */
+export function createDebouncedFunc(fn, time = 500) {
+  let timeout;
+
+  return function() {
+    const functionCall = () => fn.apply(this, arguments);
+
+    clearTimeout(timeout);
+    timeout = setTimeout(functionCall, time);
+  };
+}
+/* eslint-enable func-names, prefer-rest-params */
+
+/**
+ * Converts minutes (e.g. 134) to hours and minutes (2h 14min)
+ * @param {Number} minutes
+ */
+export function minutesToHours(minutes) {
+  if (!minutes) return null;
+  if (minutes <= 60) return `${minutes}min`;
+
+  const hours = Math.floor(minutes / 60);
+  const minsLeft = minutes % 60;
+
+  if (minsLeft === 0) return `${hours}h`;
+
+  return `${hours}h ${minsLeft}min`;
+}
+
+/**
+ * Function that converts "a_string_like_this" to "A string like this".
+ */
+export const parseSnakeCase = name =>
+  (name.charAt(0).toUpperCase() + name.slice(1)).replace(/_/g, " ");
+
 /**
  * Takes in an element and smooth scrolls horizontally it to scrollTarget.
  * Taken from: https://coderwall.com/p/hujlhg/smooth-scrolling-without-jquery
@@ -11,7 +66,7 @@
  * @param {Number} scrollTarget
  * @param {Number} animDuration
  */
-export default function smoothScrollTo(element, scrollTarget, animDuration) {
+export function smoothScrollTo(element, scrollTarget, animDuration) {
   /* eslint-disable no-param-reassign */
   /* need to disable this rule so we can reassign element.scrollLeft */
   const target = Math.round(scrollTarget);

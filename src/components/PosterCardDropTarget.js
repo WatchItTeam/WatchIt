@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { DropTarget } from "react-dnd";
-import { successToast, errorToast, infoToast } from "../utils/toast";
-import parseName from "../utils/parseName";
+import { successToast, errorToast, infoToast } from "../toast";
+import { parseSnakeCase } from "../utils";
 import {
   addToList,
   getUserID,
@@ -41,16 +41,22 @@ const listTarget = {
       if (!movie) {
         try {
           addToList(item, props.targetName);
-          successToast(`Added ${item.title} to ${parseName(props.targetName)}`);
+          successToast(
+            `Added ${item.title} to ${parseSnakeCase(props.targetName)}`,
+          );
         } catch (e) {
           errorToast(
-            `Failed to add ${item.title} to ${parseName(props.targetName)}`,
+            `Failed to add ${item.title} to ${parseSnakeCase(
+              props.targetName,
+            )}`,
           );
         }
       } else if (props.targetName === movie.watch_status) {
-        errorToast(`${item.title} exists in ${parseName(props.targetName)}`);
+        errorToast(
+          `${item.title} exists in ${parseSnakeCase(props.targetName)}`,
+        );
       } else {
-        infoToast(`${item.title} moved to ${parseName(props.targetName)}`);
+        infoToast(`${item.title} moved to ${parseSnakeCase(props.targetName)}`);
         updateWatchStatus(movie, props.targetName);
       }
     });

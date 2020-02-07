@@ -7,7 +7,7 @@ import {
   getMovieGenres,
   getMoviesFromYear,
 } from "../api/APIUtils";
-import createDebouncedFunc from "../utils/createDebouncedFunc";
+import { createDebouncedFunc } from "../utils";
 
 class BrowseMoviesContainer extends Component {
   state = {

@@ -19,7 +19,7 @@ import UserList from "../containers/UserList";
 import BrowseMoviesContainer from "./BrowseMoviesContainer";
 import BrowseTvContainer from "./BrowseTvContainer";
 import EpisodeContainer from "./EpisodeContainer";
-import createDebouncedFunc from "../utils/createDebouncedFunc";
+import { createDebouncedFunc } from "../utils";
 import NewPassword from "../components/NewPassword";
 import NotFoundPage from "../components/404";
 import SignUpPage from "../components/Login/SignUpPage";

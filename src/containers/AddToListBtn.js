@@ -1,22 +1,17 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import firebase from "../Firebase/firebase";
+import { auth } from "../Firebase/firebase";
 import {
   addToList,
   fetchOneFromList,
   updateWatchStatus,
   removeFromList,
 } from "../Firebase/lists";
-import {
-  successToast,
-  errorToast,
-  infoToast,
-  removeToast,
-} from "../utils/toast";
+import { successToast, errorToast, infoToast, removeToast } from "../toast";
 import { withUser } from "../Firebase/UserContext";
 import { normalizeMovie } from "../api/APIUtils";
-import parseName from "../utils/parseName";
+import { parseSnakeCase } from "../utils";
 import PrimaryButton from "../components/PrimaryButton";
 import ListPickerModal from "./ListPickerModal";
 
@@ -38,7 +33,7 @@ class AddToListBtn extends Component {
   componentDidMount() {
     // wait until the user has signed in to check their watch status
     // of the current movie
-    firebase.auth().onAuthStateChanged(user => {
+    auth.onAuthStateChanged(user => {
       if (user) {
         this.checkStatusOfCurrentMovie();
       }
@@ -82,10 +77,10 @@ class AddToListBtn extends Component {
       if (this.state.statusOfCurrentMovie) {
         updateWatchStatus(movie, selectedList);
         this.setState({ statusOfCurrentMovie: selectedList });
-        infoToast(`${movie.title} moved to ${parseName(selectedList)}`);
+        infoToast(`${movie.title} moved to ${parseSnakeCase(selectedList)}`);
       } else {
         await addToList(movie, selectedList);
-        successToast(`Added ${movie.title} to ${parseName(selectedList)}`);
+        successToast(`Added ${movie.title} to ${parseSnakeCase(selectedList)}`);
         this.setState({ statusOfCurrentMovie: selectedList });
       }
     } catch (error) {
@@ -101,7 +96,9 @@ class AddToListBtn extends Component {
     const movie = normalizeMovie(currentMovie);
     try {
       await removeFromList(currentMovie.id);
-      removeToast(`Removed ${movie.title} from ${parseName(selectedList)}`);
+      removeToast(
+        `Removed ${movie.title} from ${parseSnakeCase(selectedList)}`,
+      );
       this.setState({ statusOfCurrentMovie: null });
     } catch (error) {
       errorToast(`Something went wrong when trying to remove ${movie.title}`);
@@ -122,7 +119,7 @@ class AddToListBtn extends Component {
         <span>
           <FontAwesomeIcon icon="check-square" />
           &nbsp;
-          {parseName(statusOfCurrentMovie)}
+          {parseSnakeCase(statusOfCurrentMovie)}
         </span>
       );
     } else {

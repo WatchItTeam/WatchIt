@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import parseName from "../utils/parseName";
+import { parseSnakeCase } from "../utils";
 
 /**
  * Radio button with label for the ListPickerModal component
@@ -16,7 +16,7 @@ function ListPickerRadio({ value, current, onChange }) {
         checked={value === current}
         onChange={onChange}
       />{" "}
-      {parseName(value)}
+      {parseSnakeCase(value)}
     </label>
   );
 }
