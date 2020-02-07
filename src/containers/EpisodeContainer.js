@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import EpisodePage from "../components/Episodes/EpisodePage";
-import { getSeasonFromId, getTVInfo, normalizeMovie } from "../api/APIUtils";
+import { getSeasonFromId, getTVInfo, normalizeMovie } from "../api/tmdb";
 import { successToast, errorToast } from "../toast";
 import { parseSnakeCase } from "../utils";
 import { withUser } from "../Firebase/UserContext";

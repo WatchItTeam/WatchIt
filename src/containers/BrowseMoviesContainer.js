@@ -6,7 +6,7 @@ import {
   getGenreMovies,
   getMovieGenres,
   getMoviesFromYear,
-} from "../api/APIUtils";
+} from "../api/tmdb";
 import { createDebouncedFunc } from "../utils";
 
 class BrowseMoviesContainer extends Component {

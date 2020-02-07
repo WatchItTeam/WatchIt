@@ -10,7 +10,7 @@ import {
 } from "../Firebase/lists";
 import { successToast, errorToast, infoToast, removeToast } from "../toast";
 import { withUser } from "../Firebase/UserContext";
-import { normalizeMovie } from "../api/APIUtils";
+import { normalizeMovie } from "../api/tmdb";
 import { parseSnakeCase } from "../utils";
 import PrimaryButton from "../components/PrimaryButton";
 import ListPickerModal from "./ListPickerModal";

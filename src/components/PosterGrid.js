@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PosterCard from "./PosterCard";
 import "../css/PosterGrid.scss";
-import { normalizeMovie } from "../api/APIUtils";
+import { normalizeMovie } from "../api/tmdb";
 
 /**
  * A responsive grid of PosterCards

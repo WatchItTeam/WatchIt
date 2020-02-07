@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { getFullImgPath } from "../api/APIUtils";
+import { getFullImgPath } from "../api/tmdb";
 import "../css/ImageWithFallback.scss";
 
 /**

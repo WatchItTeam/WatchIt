@@ -1,5 +1,5 @@
 import firebaseApp, { db } from "./firebase";
-import { normalizeMovie } from "../api/APIUtils";
+import { normalizeMovie } from "../api/tmdb";
 
 // watching status variables
 export const watchStates = {

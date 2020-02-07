@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { getPersonDetails } from "../api/APIUtils";
+import { getPersonDetails } from "../api/tmdb";
 import ActorPage from "../components/ActorPage";
 import ErrorMessage from "../components/ErrorMessage";
 import "../css/Detailspage.scss";

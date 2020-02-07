@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { getNowPlayingMovies, getNowAiringTVShows } from "../api/APIUtils";
+import { getNowPlayingMovies, getNowAiringTVShows } from "../api/tmdb";
 import Homepage from "../components/Homepage";
 import ErrorMessage from "../components/ErrorMessage";
 

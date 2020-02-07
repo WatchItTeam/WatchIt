@@ -6,7 +6,7 @@ import {
   getGenreShows,
   getShowGenres,
   getShowsFromYear,
-} from "../api/APIUtils";
+} from "../api/tmdb";
 import { createDebouncedFunc } from "../utils";
 
 class BrowseTvContainer extends Component {

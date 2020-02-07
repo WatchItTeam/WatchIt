@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { multiSearch } from "../api/APIUtils";
+import { multiSearch } from "../api/tmdb";
 import Searchpage from "../components/Searchpage";
 
 class SearchpageContainer extends Component {

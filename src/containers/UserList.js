@@ -5,7 +5,7 @@ import { parseSnakeCase } from "../utils";
 import ErrorMessage from "../components/ErrorMessage";
 import ListPickerModal from "./ListPickerModal";
 import { errorToast, infoToast, removeToast } from "../toast";
-import { normalizeMovie } from "../api/APIUtils";
+import { normalizeMovie } from "../api/tmdb";
 import {
   fetchAllFromList,
   removeFromList,

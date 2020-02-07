@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { DragSource } from "react-dnd";
-import { getYearFromDate } from "../api/APIUtils";
+import { getYearFromDate } from "../api/tmdb";
 import ImageWithFallback from "./ImageWithFallback";
 import "../css/PosterCard.scss";
 
